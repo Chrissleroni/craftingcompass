@@ -1,0 +1,34 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+issueTrackerURL = ""
+
+[[mods]]
+modId = "craftingcompass"
+version = "${modVersion}"
+displayName = "CraftingCompass"
+authors = "Kristoffer Oltegen Diehl"
+description = '''
+Recursive crafting-tree planner with JEI integration. Shows what base components you need versus what you have for any recipe.
+'''
+
+[[dependencies.craftingcompass]]
+modId = "neoforge"
+type = "required"
+versionRange = "[4,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.craftingcompass]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${minecraftVersion},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.craftingcompass]]
+modId = "jei"
+type = "optional"
+versionRange = "[19.0.0,)"
+ordering = "AFTER"
+side = "CLIENT"

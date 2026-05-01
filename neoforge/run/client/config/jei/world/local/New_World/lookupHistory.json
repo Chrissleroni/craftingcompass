@@ -1,0 +1,7 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"minecraft:netherite_helmet"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"minecraft:cherry_door"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"recipe":"minecraft:birch_door","recipeType":"minecraft:crafting","bookmarkType":"RECIPE"},
+  {"ingredient":{"id":"minecraft:birch_door"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]
