@@ -7,7 +7,19 @@ import java.util.List;
 
 public interface RecipeProvider {
 
-    record FlatRecipe(List<ItemStack> inputs, ItemStack output) {}
+    record FlatRecipe(List<ItemStack> inputs, ItemStack output, RecipeKind kind) {}
+
+    sealed interface Slot {
+        record Single(Item item, int count) implements Slot {}
+        record Tag(net.minecraft.tags.TagKey<Item> tag, int count) implements Slot {}
+    }
+
+    enum RecipeKind {
+        CRAFTING,
+        SMELTING,
+        STONECUTTING,
+        GENERIC
+    }
 
     List<FlatRecipe> recipesProducing(Item item);
 

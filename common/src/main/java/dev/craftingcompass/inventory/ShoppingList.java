@@ -1,12 +1,16 @@
 package dev.craftingcompass.inventory;
 
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class ShoppingList {
-    public record Entry(Item item, int needed, int have, int missing) {}
+    sealed interface Entry {
+        record ItemEntry(Item item, int needed, int have, int missing) implements Entry {}
+        record TagEntry(TagKey<Item> tag, int needed) implements Entry {} // can't compute "have" easily
+    }
 
     private final List<Entry> entries = new ArrayList<>();
 
