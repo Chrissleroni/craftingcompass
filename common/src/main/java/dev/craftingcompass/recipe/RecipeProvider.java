@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface RecipeProvider {
 
-    record FlatRecipe(List<ItemStack> inputs, ItemStack output, RecipeKind kind) {}
+    record FlatRecipe(List<Slot> inputs, ItemStack output, RecipeKind kind) {}
 
     sealed interface Slot {
         record Single(Item item, int count) implements Slot {}

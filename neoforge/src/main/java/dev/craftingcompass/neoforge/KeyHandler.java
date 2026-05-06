@@ -58,7 +58,7 @@ public final class KeyHandler {
                     resolverProvider,
                     dev.craftingcompass.recipe.IngredientChooser.FIRST,
                     dev.craftingcompass.recipe.StopSet.defaultIntermediates(),
-                    5
+                    8
             );
 
             var tree = resolver.resolve(targetStack, targetStack.getCount());
@@ -74,12 +74,21 @@ public final class KeyHandler {
                 System.out.println("  (no recipes found)");
             } else {
                 for (var entry : shopping.entries()) {
-                    String name = net.minecraft.core.registries.BuiltInRegistries.ITEM
-                            .getKey(entry.item()).toString();
-                    System.out.println("  " + name
-                            + ": need " + entry.needed()
-                            + ", have " + entry.have()
-                            + ", missing " + entry.missing());
+                    switch (entry) {
+                        case dev.craftingcompass.inventory.ShoppingList.Entry.ItemEntry ie -> {
+                            String name = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                                    .getKey(ie.item()).toString();
+                            System.out.println("  " + name
+                                    + ": need " + ie.needed()
+                                    + ", have " + ie.have()
+                                    + ", missing " + ie.missing());
+                        }
+                        case dev.craftingcompass.inventory.ShoppingList.Entry.TagEntry te -> {
+                            System.out.println("  #" + te.tag().location()
+                                    + ": need " + te.needed()
+                                    + " (tag — inventory check skipped)");
+                        }
+                    }
                 }
             }
         }, "CraftingCompass-Resolver");

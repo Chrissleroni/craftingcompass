@@ -4,6 +4,7 @@ import dev.craftingcompass.config.CraftingCompassConfig;
 import dev.craftingcompass.config.DecompositionProfile;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -23,65 +24,140 @@ public final class RecipeTreeResolver {
         this.maxDepth = maxDepth;
     }
 
-    public ResolvedTree resolve(ItemStack target, int amount) {
-        Map<Item, Integer> totals = new LinkedHashMap<>();
-        Set<Item> visiting = new HashSet<>();
-        Set<Item> resolved = new HashSet<>(); // global cache — don't recompute same item twice
-        CraftingNode root = build(target, amount, totals, visiting, resolved, 0);
+    private static final class Totals {
+        final Map<Item, Integer> items = new LinkedHashMap<>();
+        final Map<TagKey<Item>, Integer> tags = new LinkedHashMap<>();
 
-        List<ItemStack> base = new ArrayList<>();
-        totals.forEach((item, count) -> base.add(new ItemStack(item, count)));
-        return new ResolvedTree(root, base);
+        void addItem(Item item, int count) {
+            items.merge(item, count, Integer::sum);
+        }
+
+        void addTag(TagKey<Item> tag, int count) {
+            tags.merge(tag, count, Integer::sum);
+        }
+
+        List<ResolvedTree.BaseRequirement> toList() {
+            List<ResolvedTree.BaseRequirement> out = new ArrayList<>();
+            items.forEach((item, count) -> out.add(new ResolvedTree.BaseRequirement.ItemReq(item, count)));
+            tags.forEach((tag, count) -> out.add(new ResolvedTree.BaseRequirement.TagReq(tag, count)));
+            return out;
+        }
     }
 
-    private CraftingNode build(ItemStack want, int amount, Map<Item, Integer> totals,
+    public ResolvedTree resolve(ItemStack target, int amount) {
+        Totals totals = new Totals();
+        Set<Item> visiting = new HashSet<>();
+        Set<Item> resolved = new HashSet<>();
+
+        RecipeProvider.Slot rootSlot = new RecipeProvider.Slot.Single(target.getItem(), target.getCount());
+        CraftingNode root = build(rootSlot, amount, totals, visiting, resolved, 0);
+
+        return new ResolvedTree(root, totals.toList());
+    }
+
+    private CraftingNode build(RecipeProvider.Slot slot, int amount, Totals totals,
                                Set<Item> visiting, Set<Item> resolved, int depth) {
-        Item item = want.getItem();
+        if (slot instanceof RecipeProvider.Slot.Tag tagSlot) {
+            totals.addTag(tagSlot.tag(), amount);
+            return CraftingNode.leaf(slot, amount);
+        }
+
+        RecipeProvider.Slot.Single single = (RecipeProvider.Slot.Single) slot;
+        Item item = single.item();
 
         if (depth >= maxDepth || visiting.contains(item) || isLeaf(item)) {
-            totals.merge(item, amount, Integer::sum);
-            return CraftingNode.leaf(want, amount);
+            totals.addItem(item, amount);
+            return CraftingNode.leaf(slot, amount);
         }
 
         List<RecipeProvider.FlatRecipe> recipes = provider.recipesProducing(item);
         if (recipes.isEmpty()) {
-            totals.merge(item, amount, Integer::sum);
-            return CraftingNode.leaf(want, amount);
+            totals.addItem(item, amount);
+            return CraftingNode.leaf(slot, amount);
         }
 
-        RecipeProvider.FlatRecipe recipe = recipes.getFirst();
+        RecipeProvider.FlatRecipe recipe = selectBestRecipe(recipes, item);
+        if (recipe == null) {
+            totals.addItem(item, amount);
+            return CraftingNode.leaf(slot, amount);
+        }
+
         int perCraft = Math.max(1, recipe.output().getCount());
         int crafts = (int) Math.ceil(amount / (double) perCraft);
 
         visiting.add(item);
         resolved.add(item);
         List<CraftingNode> children = new ArrayList<>();
-        for (ItemStack ingredientStack : recipe.inputs()) {
-            if (ingredientStack.isEmpty()) continue;
-            // Skip items we've already fully resolved in this tree to avoid
-            // exponential blowup in diamond-shaped dependency graphs
-            if (resolved.contains(ingredientStack.getItem())) {
-                totals.merge(ingredientStack.getItem(),
-                        crafts * ingredientStack.getCount(), Integer::sum);
-                children.add(CraftingNode.leaf(ingredientStack,
-                        crafts * ingredientStack.getCount()));
+
+        for (RecipeProvider.Slot ingredientSlot : recipe.inputs()) {
+            int needed = crafts * slotCount(ingredientSlot);
+
+            if (ingredientSlot instanceof RecipeProvider.Slot.Single s
+                    && resolved.contains(s.item())) {
+                totals.addItem(s.item(), needed);
+                children.add(CraftingNode.leaf(ingredientSlot, needed));
                 continue;
             }
-            children.add(build(ingredientStack, crafts * ingredientStack.getCount(),
-                    totals, visiting, resolved, depth + 1));
-        }
-        visiting.remove(item);
 
-        return new CraftingNode(want, amount, children, false);
+            children.add(build(ingredientSlot, needed, totals, visiting, resolved, depth + 1));
+        }
+
+        visiting.remove(item);
+        return CraftingNode.intermediate(new ItemStack(item), amount, children);
+    }
+
+    private RecipeProvider.FlatRecipe selectBestRecipe(List<RecipeProvider.FlatRecipe> recipes, Item target) {
+        RecipeProvider.FlatRecipe best = null;
+        int bestScore = -1;
+
+        for (RecipeProvider.FlatRecipe recipe : recipes) {
+            if (isDecomposition(recipe)) continue;
+            int score = scoreRecipe(recipe);
+            if (score > bestScore) {
+                bestScore = score;
+                best = recipe;
+            }
+        }
+
+        return best;
+    }
+
+    private static boolean isDecomposition(RecipeProvider.FlatRecipe recipe) {
+        int inputCount = 0;
+        for (RecipeProvider.Slot s : recipe.inputs()) {
+            inputCount += slotCount(s);
+        }
+        return inputCount == 1 && recipe.output().getCount() > 1;
+    }
+
+    private static int scoreRecipe(RecipeProvider.FlatRecipe recipe) {
+        int score = switch (recipe.kind()) {
+            case SMELTING -> 1000;
+            case CRAFTING -> 500;
+            case STONECUTTING -> 100;
+            case GENERIC -> 50;
+        };
+        for (RecipeProvider.Slot s : recipe.inputs()) {
+            score += slotCount(s);
+        }
+        return score;
+    }
+
+    private static int slotCount(RecipeProvider.Slot slot) {
+        return switch (slot) {
+            case RecipeProvider.Slot.Single s -> s.count();
+            case RecipeProvider.Slot.Tag t -> t.count();
+        };
     }
 
     private boolean isLeaf(Item item) {
         if (CraftingCompassConfig.profile == DecompositionProfile.DIRECT) return true;
+        if (stopSet.containsItem(item)) return true;
         if (CraftingCompassConfig.profile == DecompositionProfile.INTERMEDIATES
                 && stopSet.contains(BuiltInRegistries.ITEM.getKey(item))) {
             return true;
         }
-        if (!provider.hasRecipeFor(item)) return true; // raw materials
+        if (!provider.hasRecipeFor(item)) return true;
         return false;
     }
 }

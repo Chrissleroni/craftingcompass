@@ -3,9 +3,7 @@ package dev.craftingcompass.inventory;
 import dev.craftingcompass.recipe.ResolvedTree;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public final class RequirementCalculator {
@@ -13,12 +11,17 @@ public final class RequirementCalculator {
 
     public static ShoppingList compute(ResolvedTree tree, Player player) {
         Map<Item, Integer> have = InventoryScanner.scan(player);
-        Map<Item, Integer> need = new HashMap<>();
-        for (ItemStack stack : tree.baseRequirements()) {
-            need.merge(stack.getItem(), stack.getCount(), Integer::sum);
-        }
         ShoppingList list = new ShoppingList();
-        need.forEach((item, n) -> list.add(item, n, have.getOrDefault(item, 0)));
+
+        for (ResolvedTree.BaseRequirement req : tree.baseRequirements()) {
+            switch (req) {
+                case ResolvedTree.BaseRequirement.ItemReq ir ->
+                        list.add(ir.item(), ir.count(), have.getOrDefault(ir.item(), 0));
+                case ResolvedTree.BaseRequirement.TagReq tr ->
+                        list.addTag(tr.tag(), tr.count());
+            }
+        }
+
         return list;
     }
 }

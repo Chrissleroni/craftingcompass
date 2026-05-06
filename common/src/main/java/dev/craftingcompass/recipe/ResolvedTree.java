@@ -1,7 +1,12 @@
 package dev.craftingcompass.recipe;
 
-import net.minecraft.world.item.ItemStack;
-
 import java.util.List;
 
-public record ResolvedTree(CraftingNode root, List<ItemStack> baseRequirements) {}
+public record ResolvedTree(CraftingNode root, List<BaseRequirement> baseRequirements) {
+
+    public sealed interface BaseRequirement {
+        record ItemReq(net.minecraft.world.item.Item item, int count) implements BaseRequirement {}
+        record TagReq(net.minecraft.tags.TagKey<net.minecraft.world.item.Item> tag, int count)
+                implements BaseRequirement {}
+    }
+}

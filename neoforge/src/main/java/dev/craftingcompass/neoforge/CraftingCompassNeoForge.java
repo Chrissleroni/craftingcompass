@@ -10,14 +10,14 @@ import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(CraftingCompassConstants.MOD_ID)
 public final class CraftingCompassNeoForge {
-    
+
     public CraftingCompassNeoForge(IEventBus modBus) {
         if (FMLEnvironment.getDist() == Dist.CLIENT) {
             modBus.addListener(this::onClientSetup);
             NeoForge.EVENT_BUS.register(new KeyHandler());
         }
     }
-    
+
     private void onClientSetup(FMLClientSetupEvent event) {
         ClientSetup.init();
     }
