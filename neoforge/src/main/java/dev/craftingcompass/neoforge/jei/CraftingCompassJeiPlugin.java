@@ -148,6 +148,13 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             String typeUid = type.getUid().toString();
             RecipeKind kind = classifyCategory(typeUid);
 
+            // Temporary debug — log all categories
+            int[] count = {0};
+            runtime.getRecipeManager().createRecipeLookup(type).get().forEach(r -> count[0]++);
+            System.out.println("[CraftingCompass CAT] " + typeUid
+                    + " (" + count[0] + " recipes)"
+                    + (shouldSkipCategory(typeUid) ? " SKIPPED" : " indexing"));
+
             // Skip categories that aren't actually crafting/transformation recipes.
             // These are things like "Anvil repair", "Brewing" (we don't model fluids),
             // "Animal feeding" (which produces the "horse_food" type bug).
@@ -171,7 +178,7 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
          */
         private static boolean shouldSkipCategory(String uid) {
             String lower = uid.toLowerCase();
-            // Animal/entity interaction "recipes" — JEI has these for info but they
+            // Animal/entity interaction "recipes" — JEI has these for info, but they
             // aren't real recipes that produce items
             if (lower.contains("info") || lower.contains("anvil")
                     || lower.contains("brewing") || lower.contains("fuel")
@@ -186,12 +193,42 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             var recipeManager = runtime.getRecipeManager();
             IIngredientSupplier supplier = recipeManager.getRecipeIngredients(category, recipe);
 
+            // Temporary debug — catch ALL refinedstorage recipes regardless of extraction
+            List<ItemStack> allOutputs = new ArrayList<>();
+            for (ITypedIngredient<?> typed : supplier.getIngredients(RecipeIngredientRole.OUTPUT)) {
+                typed.getIngredient(VanillaTypes.ITEM_STACK).ifPresent(allOutputs::add);
+            }
+            List<ItemStack> allInputs = new ArrayList<>();
+            for (ITypedIngredient<?> typed : supplier.getIngredients(RecipeIngredientRole.INPUT)) {
+                typed.getIngredient(VanillaTypes.ITEM_STACK).ifPresent(allInputs::add);
+            }
+            for (ItemStack out : allOutputs) {
+                String name = BuiltInRegistries.ITEM.getKey(out.getItem()).toString();
+                if (name.contains("storage") || name.contains("housing")) {
+                    System.out.println("[CraftingCompass FOUND] " + name + " x" + out.getCount()
+                            + " in category " + category.getRecipeType().getUid()
+                            + " inputs=" + allInputs.size());
+                }
+            }
+
             List<ItemStack> outputs = extractItemStacks(supplier, RecipeIngredientRole.OUTPUT);
             if (outputs.isEmpty()) return;
 
             List<Slot> inputs = extractSlotsFromJei(supplier);
             if (inputs.isEmpty()) return;
-            if (inputs.size() > 9) return;
+            if (inputs.size() > 25) {
+                for (ItemStack out : outputs) {
+                    String name = BuiltInRegistries.ITEM.getKey(out.getItem()).toString();
+                    if (name.contains("refinedstorage")) {
+                        System.out.println("[CraftingCompass SIZE] " + name
+                                + " had " + inputs.size() + " parsed slots — skipped");
+                        for (Slot s : inputs) {
+                            System.out.println("  " + s);
+                        }
+                    }
+                }
+                return;
+            }
 
             Set<Item> inputItems = new HashSet<>();
             for (Slot s : inputs) {
@@ -221,87 +258,112 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             }
             if (allStacks.isEmpty()) return List.of();
 
+            // Count occurrences of each unique item
             LinkedHashMap<Item, Integer> itemCounts = new LinkedHashMap<>();
             for (ItemStack s : allStacks) {
                 itemCounts.merge(s.getItem(), 1, Integer::sum);
             }
 
-            int uniqueItems = itemCounts.size();
+            List<Slot> result = new ArrayList<>();
 
-            if (uniqueItems > 1) {
-                TagKey<Item> commonTag = findBestCommonTag(itemCounts.keySet());
-                if (commonTag != null) {
-                    int slotsUsed = allStacks.size() / uniqueItems;
-                    return List.of(new Slot.Tag(commonTag, Math.max(1, slotsUsed)));
-                }
+            // Separate items into "multi-occurrence" (definite single-item slots)
+            // and "single-occurrence" (potential tag variants)
+            List<Item> singleOccurrence = new ArrayList<>();
 
-                List<Slot> slots = new ArrayList<>();
-                for (var entry : itemCounts.entrySet()) {
-                    slots.add(new Slot.Single(entry.getKey(), entry.getValue()));
+            for (var entry : itemCounts.entrySet()) {
+                if (entry.getValue() > 1) {
+                    // This item appears multiple times — it occupies that many slots
+                    result.add(new Slot.Single(entry.getKey(), entry.getValue()));
+                } else {
+                    singleOccurrence.add(entry.getKey());
                 }
-                return slots;
             }
 
-            var only = itemCounts.entrySet().iterator().next();
-            return List.of(new Slot.Single(only.getKey(), only.getValue()));
+            if (singleOccurrence.isEmpty()) {
+                return result;
+            }
+
+            // Among single-occurrence items, try to find groups that share a tag.
+            // This handles cases like [andesite, diorite, granite, stone, deepslate, tuff]
+            // all being variants of #c:stones in one slot.
+            List<Item> ungrouped = new ArrayList<>(singleOccurrence);
+            while (!ungrouped.isEmpty()) {
+                if (ungrouped.size() == 1) {
+                    // Only one item left — it's a single slot
+                    result.add(new Slot.Single(ungrouped.get(0), 1));
+                    break;
+                }
+
+                // Try to find a tag that covers a subset of the remaining items
+                TagGroup best = findLargestTagGroup(ungrouped);
+                if (best != null && best.members.size() > 1) {
+                    // Found a group — emit as a tag slot
+                    result.add(new Slot.Tag(best.tag, 1));
+                    ungrouped.removeAll(best.members);
+                } else {
+                    // No tag group found — each remaining item is its own slot
+                    for (Item item : ungrouped) {
+                        result.add(new Slot.Single(item, 1));
+                    }
+                    break;
+                }
+            }
+
+            return result;
         }
 
-        /**
-         * Find the best tag that all items share. Improvements over the previous
-         * version:
-         *   - Excludes "usage" tags (horse_food, trim_materials, etc.)
-         *   - Prefers tags from c: or minecraft: namespace over mod-specific tags
-         *   - Prefers tags whose name semantically matches "ingredient" categories
-         *     (planks, ingots, gems) over arbitrary categorization tags
-         */
-        private static TagKey<Item> findBestCommonTag(Set<Item> items) {
-            if (items.isEmpty()) return null;
+        private record TagGroup(TagKey<Item> tag, Set<Item> members) {}
 
-            // Build the set of tags shared by all items
-            List<Set<TagKey<Item>>> perItemTags = new ArrayList<>();
+        /**
+         * Find the largest subset of the given items that share a common tag.
+         * Returns null if no tag covers more than 1 item.
+         */
+        private static TagGroup findLargestTagGroup(List<Item> items) {
+            // Collect all tags for each item
+            Map<Item, Set<TagKey<Item>>> itemTags = new LinkedHashMap<>();
             for (Item item : items) {
                 Optional<Holder.Reference<Item>> holderOpt = BuiltInRegistries.ITEM.get(
                         BuiltInRegistries.ITEM.getKey(item));
-                if (holderOpt.isEmpty()) return null;
-                Set<TagKey<Item>> tags = new HashSet<>(holderOpt.get().tags().toList());
-                perItemTags.add(tags);
+                if (holderOpt.isEmpty()) continue;
+                itemTags.put(item, new HashSet<>(holderOpt.get().tags().toList()));
             }
 
-            // Intersect all tag sets
-            Set<TagKey<Item>> common = new HashSet<>(perItemTags.get(0));
-            for (int i = 1; i < perItemTags.size(); i++) {
-                common.retainAll(perItemTags.get(i));
-            }
-
-            if (common.isEmpty()) return null;
-
-            // Filter out unwanted "usage" tags
-            List<TagKey<Item>> candidates = new ArrayList<>();
-            for (TagKey<Item> tag : common) {
-                String path = tag.location().getPath();
-                boolean unwanted = false;
-                for (String pattern : UNWANTED_TAG_PATTERNS) {
-                    if (path.equals(pattern) || path.endsWith("/" + pattern)) {
-                        unwanted = true;
-                        break;
+            // For each tag that any item has, count how many of our items share it
+            Map<TagKey<Item>, Set<Item>> tagMembers = new LinkedHashMap<>();
+            for (var entry : itemTags.entrySet()) {
+                for (TagKey<Item> tag : entry.getValue()) {
+                    // Skip unwanted tags
+                    String path = tag.location().getPath();
+                    boolean unwanted = false;
+                    for (String pattern : UNWANTED_TAG_PATTERNS) {
+                        if (path.equals(pattern) || path.endsWith("/" + pattern)) {
+                            unwanted = true;
+                            break;
+                        }
                     }
+                    if (unwanted) continue;
+
+                    tagMembers.computeIfAbsent(tag, k -> new LinkedHashSet<>()).add(entry.getKey());
                 }
-                if (!unwanted) candidates.add(tag);
             }
 
-            if (candidates.isEmpty()) return null;
+            // Find the tag that covers the most of our items
+            TagKey<Item> bestTag = null;
+            Set<Item> bestMembers = Set.of();
+            int bestScore = 0;
 
-            // Score each candidate tag and pick the highest
-            TagKey<Item> best = null;
-            int bestScore = Integer.MIN_VALUE;
-            for (TagKey<Item> tag : candidates) {
-                int score = scoreTag(tag);
+            for (var entry : tagMembers.entrySet()) {
+                if (entry.getValue().size() <= 1) continue;
+                int score = entry.getValue().size() * 100 + scoreTag(entry.getKey());
                 if (score > bestScore) {
                     bestScore = score;
-                    best = tag;
+                    bestTag = entry.getKey();
+                    bestMembers = entry.getValue();
                 }
             }
-            return best;
+
+            if (bestTag == null) return null;
+            return new TagGroup(bestTag, bestMembers);
         }
 
         /**

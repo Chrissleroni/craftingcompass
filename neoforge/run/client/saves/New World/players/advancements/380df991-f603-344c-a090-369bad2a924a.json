@@ -8,7 +8,10 @@
   "minecraft:adventure/adventuring_time": {
     "criteria": {
       "minecraft:flower_forest": "2026-05-06 02:42:06 +0200",
-      "minecraft:snowy_slopes": "2026-05-06 01:39:25 +0200"
+      "minecraft:snowy_slopes": "2026-05-06 01:39:25 +0200",
+      "minecraft:sunflower_plains": "2026-05-08 13:34:03 +0200",
+      "minecraft:river": "2026-05-08 13:33:56 +0200",
+      "minecraft:frozen_peaks": "2026-05-08 13:34:06 +0200"
     },
     "done": false
   },

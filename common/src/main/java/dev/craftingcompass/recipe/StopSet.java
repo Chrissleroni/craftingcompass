@@ -2,7 +2,6 @@ package dev.craftingcompass.recipe;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -19,7 +18,6 @@ public final class StopSet {
      * under #c:ingots/<name>, #c:gems/<name>, #c:dusts/<name>, etc.
      */
     private static final List<String> RAW_MATERIAL_TAG_PREFIXES = List.of(
-            "c:ingots",
             "c:gems",
             "c:dusts",
             "c:raw_materials",
@@ -28,7 +26,6 @@ public final class StopSet {
             "c:rods",
             "c:gunpowders",
             "c:leathers",
-            "c:silicon",
             "c:wires",
             "c:slimeballs",
             "c:enderpearls",
@@ -173,6 +170,23 @@ public final class StopSet {
         s.add("minecraft:red_sand");
         s.add("minecraft:soul_sand");
         s.add("minecraft:soul_soil");
+
+        // Stones (raw blocks)
+        s.add("minecraft:stone");
+        s.add("minecraft:smooth_stone");
+        s.add("minecraft:cobblestone");
+        s.add("minecraft:deepslate");
+        s.add("minecraft:cobbled_deepslate");
+        s.add("minecraft:granite");
+        s.add("minecraft:diorite");
+        s.add("minecraft:andesite");
+        s.add("minecraft:tuff");
+        s.add("minecraft:calcite");
+        s.add("minecraft:blackstone");
+        s.add("minecraft:basalt");
+        s.add("minecraft:smooth_basalt");
+        s.add("minecraft:netherrack");
+        s.add("minecraft:end_stone");
 
         // Dyes
         s.add("minecraft:white_dye");

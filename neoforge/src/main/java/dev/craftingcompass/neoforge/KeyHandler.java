@@ -91,6 +91,22 @@ public final class KeyHandler {
                     }
                 }
             }
+            // Temporary debug — check which items we think have no recipe
+            for (var entry : shopping.entries()) {
+                if (entry instanceof dev.craftingcompass.inventory.ShoppingList.Entry.ItemEntry ie) {
+                    String name = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                            .getKey(ie.item()).toString();
+                    if (name.contains("refinedstorage")) {
+                        var recipes = resolverProvider.recipesProducing(ie.item());
+                        System.out.println("[CraftingCompass DEBUG] " + name
+                                + " has " + recipes.size() + " indexed recipes");
+                        for (var r : recipes) {
+                            System.out.println("  " + r.kind() + " inputs=" + r.inputs()
+                                    + " output=" + r.output().getCount());
+                        }
+                    }
+                }
+            }
         }, "CraftingCompass-Resolver");
         t.setDaemon(true);
         t.start();

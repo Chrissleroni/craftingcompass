@@ -47,16 +47,15 @@ public final class RecipeTreeResolver {
     public ResolvedTree resolve(ItemStack target, int amount) {
         Totals totals = new Totals();
         Set<Item> visiting = new HashSet<>();
-        Set<Item> resolved = new HashSet<>();
 
         RecipeProvider.Slot rootSlot = new RecipeProvider.Slot.Single(target.getItem(), target.getCount());
-        CraftingNode root = build(rootSlot, amount, totals, visiting, resolved, 0);
+        CraftingNode root = build(rootSlot, amount, totals, visiting, 0);
 
         return new ResolvedTree(root, totals.toList());
     }
 
     private CraftingNode build(RecipeProvider.Slot slot, int amount, Totals totals,
-                               Set<Item> visiting, Set<Item> resolved, int depth) {
+                               Set<Item> visiting, int depth) {
         if (slot instanceof RecipeProvider.Slot.Tag tagSlot) {
             totals.addTag(tagSlot.tag(), amount);
             return CraftingNode.leaf(slot, amount);
@@ -86,20 +85,11 @@ public final class RecipeTreeResolver {
         int crafts = (int) Math.ceil(amount / (double) perCraft);
 
         visiting.add(item);
-        resolved.add(item);
         List<CraftingNode> children = new ArrayList<>();
 
         for (RecipeProvider.Slot ingredientSlot : recipe.inputs()) {
             int needed = crafts * slotCount(ingredientSlot);
-
-            if (ingredientSlot instanceof RecipeProvider.Slot.Single s
-                    && resolved.contains(s.item())) {
-                totals.addItem(s.item(), needed);
-                children.add(CraftingNode.leaf(ingredientSlot, needed));
-                continue;
-            }
-
-            children.add(build(ingredientSlot, needed, totals, visiting, resolved, depth + 1));
+            children.add(build(ingredientSlot, needed, totals, visiting, depth + 1));
         }
 
         visiting.remove(item);
