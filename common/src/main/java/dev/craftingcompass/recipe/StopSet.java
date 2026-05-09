@@ -144,7 +144,6 @@ public final class StopSet {
         s.add("minecraft:milk_bucket");
         s.add("minecraft:water_bucket");
         s.add("minecraft:lava_bucket");
-        s.add("minecraft:bucket");
         s.add("minecraft:honeycomb");
         s.add("minecraft:honey_bottle");
         s.add("minecraft:glass_bottle");
@@ -205,7 +204,7 @@ public final class StopSet {
         s.add("minecraft:red_dye");
         s.add("minecraft:black_dye");
 
-        // Planks
+        /** // Planks
         s.add("minecraft:oak_planks");
         s.add("minecraft:birch_planks");
         s.add("minecraft:spruce_planks");
@@ -218,7 +217,7 @@ public final class StopSet {
         s.add("minecraft:bamboo_planks");
         s.add("minecraft:crimson_planks");
         s.add("minecraft:warped_planks");
-
+        */
         return s;
     }
 }

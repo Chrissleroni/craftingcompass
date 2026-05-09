@@ -45,32 +45,35 @@ public final class RecipeTreeResolver {
     }
 
     /**
-     * Two-pass resolver:
-     *
-     * Pass 1: Accumulate per-item demand into a single map. We don't ceil-to-crafts
-     *         per ingredient - instead we keep raw demand and a counter of how many
-     *         crafts of each item we've already provisioned. When demand grows on a
-     *         re-visit (because two different parents both consume this ingredient),
-     *         we provision only the additional crafts needed.
-     *
-     * This converges naturally for acyclic recipe graphs. The safety counter is a
-     * backstop against malformed graphs (cycles dodged by selectBestRecipe should
-     * already prevent runaway, but better safe than crashed).
+     * Single-target convenience wrapper. Equivalent to building a demand map
+     * with just this one item and calling resolveDemand.
      */
     public ResolvedTree resolve(ItemStack target, int amount) {
-        Map<Item, Integer> demand = new LinkedHashMap<>();
+        Map<Item, Integer> initial = new LinkedHashMap<>();
+        initial.merge(target.getItem(), amount, Integer::sum);
+        return resolveDemand(target, initial);
+    }
+
+    /**
+     * Resolves a pre-merged demand map. All items in {@code initialDemand}
+     * are treated as simultaneously-required outputs; intermediates are shared
+     * across all of them.
+     *
+     * The {@code displayTarget} is purely for the returned ResolvedTree's root
+     * stack — it doesn't affect the math. Pass any ItemStack from the demand,
+     * or a sentinel; nothing downstream cares.
+     */
+    public ResolvedTree resolveDemand(ItemStack displayTarget, Map<Item, Integer> initialDemand) {
+        Map<Item, Integer> demand = new LinkedHashMap<>(initialDemand);
         Map<TagKey<Item>, Integer> tagDemand = new LinkedHashMap<>();
         Map<Item, RecipeProvider.FlatRecipe> chosenRecipe = new LinkedHashMap<>();
         Map<Item, Integer> craftsProvisioned = new LinkedHashMap<>();
         Set<Item> leaves = new LinkedHashSet<>();
 
-        demand.merge(target.getItem(), amount, Integer::sum);
-
         boolean changed = true;
         int safety = 0;
         while (changed && safety++ < 10_000) {
             changed = false;
-            // Snapshot keys to avoid concurrent modification on demand growth.
             List<Item> queue = new ArrayList<>(demand.keySet());
             for (Item item : queue) {
                 int totalDemand = demand.getOrDefault(item, 0);
@@ -115,8 +118,6 @@ public final class RecipeTreeResolver {
             }
         }
 
-        // Build totals: only leaves contribute item base requirements.
-        // (Items that get crafted have their demand satisfied internally.)
         Totals totals = new Totals();
         for (Item leaf : leaves) {
             int d = demand.getOrDefault(leaf, 0);
@@ -126,11 +127,7 @@ public final class RecipeTreeResolver {
             totals.addTag(e.getKey(), e.getValue());
         }
 
-        // Tree structure for display. The current ResolvedTree consumer only reads
-        // baseRequirements() (RequirementCalculator), so we hand back a stub root.
-        // If/when the UI walks the tree, this is where to reconstruct the parent/
-        // child structure from chosenRecipe + craftsProvisioned.
-        CraftingNode root = CraftingNode.intermediate(target, amount, List.of());
+        CraftingNode root = CraftingNode.intermediate(displayTarget, displayTarget.getCount(), List.of());
         return new ResolvedTree(root, totals.toList());
     }
 

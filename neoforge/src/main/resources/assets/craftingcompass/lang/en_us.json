@@ -1,6 +1,7 @@
 {
   "key.craftingcompass.add_to_list": "Add hovered item to list",
-  "key.categories.craftingcompass.general": "CraftingCompass",
+  "key.category.craftingcompass.general": "CraftingCompass",
+  "key.craftingcompass.toggle_sidebar": "Toggle Sidebar",
   "modmenu.craftingcompass.title": "CraftingCompass",
   "modmenu.craftingcompass.description": "Recursive crafting-tree planner with JEI integration."
 }

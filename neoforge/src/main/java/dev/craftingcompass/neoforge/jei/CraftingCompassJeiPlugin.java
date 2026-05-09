@@ -1,6 +1,7 @@
 package dev.craftingcompass.neoforge.jei;
 
 import dev.craftingcompass.CraftingCompassConstants;
+import dev.craftingcompass.client.SidebarController;
 import dev.craftingcompass.recipe.RecipeProvider;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -38,6 +39,8 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
         JeiBackedRecipeProvider provider = new JeiBackedRecipeProvider(runtime);
         provider.ensureBuilding();
         PROVIDER = provider;
+
+        SidebarController.INSTANCE.install(() -> PROVIDER);
     }
 
     @Override

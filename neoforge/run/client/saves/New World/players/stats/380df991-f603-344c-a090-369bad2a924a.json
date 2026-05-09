@@ -3,22 +3,22 @@
     "minecraft:dropped": {
       "minecraft:iron_ingot": 1
     },
-    "minecraft:custom": {
-      "minecraft:sprint_one_cm": 15604,
-      "minecraft:time_since_rest": 173514,
-      "minecraft:walk_one_cm": 4412,
-      "minecraft:total_world_time": 128659,
-      "minecraft:leave_game": 10,
-      "minecraft:fly_one_cm": 77372,
-      "minecraft:sneak_time": 98,
-      "minecraft:play_time": 126778,
-      "minecraft:damage_dealt": 60,
-      "minecraft:jump": 202,
-      "minecraft:time_since_death": 126778,
-      "minecraft:drop": 1
-    },
     "minecraft:used": {
       "minecraft:grass_block": 1
+    },
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 66729,
+      "minecraft:time_since_rest": 183312,
+      "minecraft:walk_one_cm": 10241,
+      "minecraft:total_world_time": 149967,
+      "minecraft:leave_game": 14,
+      "minecraft:fly_one_cm": 154241,
+      "minecraft:sneak_time": 98,
+      "minecraft:play_time": 136576,
+      "minecraft:damage_dealt": 60,
+      "minecraft:jump": 486,
+      "minecraft:time_since_death": 136576,
+      "minecraft:drop": 1
     }
   },
   "DataVersion": 4790

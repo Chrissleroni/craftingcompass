@@ -21,9 +21,7 @@ public final class KeyHandler {
     @SubscribeEvent
     public void onClientTickToggle(ClientTickEvent.Post event) {
         while (ClientSetup.TOGGLE_SIDEBAR.consumeClick()) {
-            dev.craftingcompass.client.SidebarPanel.INSTANCE.toggle();
-            System.out.println("[CraftingCompass] Sidebar toggled: "
-                    + dev.craftingcompass.client.SidebarPanel.INSTANCE.isVisible());
+            cycleSidebar();
         }
     }
 
@@ -40,10 +38,22 @@ public final class KeyHandler {
     public void onScreenKeyPressedToggle(ScreenEvent.KeyPressed.Pre event) {
         var key = InputConstants.Type.KEYSYM.getOrCreate(event.getKeyCode());
         if (ClientSetup.TOGGLE_SIDEBAR.isActiveAndMatches(key)) {
-            dev.craftingcompass.client.SidebarPanel.INSTANCE.toggle();
-            System.out.println("[CraftingCompass] Sidebar toggled: "
-                    + dev.craftingcompass.client.SidebarPanel.INSTANCE.isVisible());
-            event.setCanceled(true); // prevent K from doing anything else (e.g. opening a chat to whisper)
+            cycleSidebar();
+        }
+    }
+
+    private static void cycleSidebar() {
+        var panel = dev.craftingcompass.client.SidebarPanel.INSTANCE;
+        if (!panel.isVisible()) {
+            panel.setVisible(true);
+            panel.setActiveTab(dev.craftingcompass.client.SidebarPanel.Tab.LIST);
+            System.out.println("[CraftingCompass] Sidebar -> LIST");
+        } else if (panel.getActiveTab() == dev.craftingcompass.client.SidebarPanel.Tab.LIST) {
+            panel.setActiveTab(dev.craftingcompass.client.SidebarPanel.Tab.INGREDIENTS);
+            System.out.println("[CraftingCompass] Sidebar -> INGREDIENTS");
+        } else {
+            panel.setVisible(false);
+            System.out.println("[CraftingCompass] Sidebar -> hidden");
         }
     }
 
