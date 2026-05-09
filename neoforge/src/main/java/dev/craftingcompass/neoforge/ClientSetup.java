@@ -27,6 +27,14 @@ public final class ClientSetup {
             CATEGORY
     );
 
+    public static final KeyMapping TOGGLE_SIDEBAR = new KeyMapping(
+            "key.craftingcompass.toggle_sidebar",
+            KeyConflictContext.UNIVERSAL,
+            InputConstants.Type.KEYSYM,
+            org.lwjgl.glfw.GLFW.GLFW_KEY_J,
+            CATEGORY
+    );
+
     private ClientSetup() {}
 
     public static void init() {
@@ -37,5 +45,6 @@ public final class ClientSetup {
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.registerCategory(CATEGORY);
         event.register(ADD_TO_LIST);
+        event.register(TOGGLE_SIDEBAR);
     }
 }

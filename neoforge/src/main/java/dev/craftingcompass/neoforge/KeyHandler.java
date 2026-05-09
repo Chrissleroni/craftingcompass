@@ -1,9 +1,11 @@
 package dev.craftingcompass.neoforge;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
+import org.lwjgl.glfw.GLFW;
 
 public final class KeyHandler {
 
@@ -12,7 +14,16 @@ public final class KeyHandler {
     @SubscribeEvent
     public void onClientTick(ClientTickEvent.Post event) {
         while (ClientSetup.ADD_TO_LIST.consumeClick()) {
-            handlePress("tick");
+            handlePress("tick", false);
+        }
+    }
+
+    @SubscribeEvent
+    public void onClientTickToggle(ClientTickEvent.Post event) {
+        while (ClientSetup.TOGGLE_SIDEBAR.consumeClick()) {
+            dev.craftingcompass.client.SidebarPanel.INSTANCE.toggle();
+            System.out.println("[CraftingCompass] Sidebar toggled: "
+                    + dev.craftingcompass.client.SidebarPanel.INSTANCE.isVisible());
         }
     }
 
@@ -20,11 +31,23 @@ public final class KeyHandler {
     public void onScreenKeyPressed(ScreenEvent.KeyPressed.Pre event) {
         var key = InputConstants.Type.KEYSYM.getOrCreate(event.getKeyCode());
         if (ClientSetup.ADD_TO_LIST.isActiveAndMatches(key)) {
-            handlePress("screen:" + event.getScreen().getClass().getSimpleName());
+        boolean shift = (event.getModifiers() & GLFW.GLFW_MOD_SHIFT) != 0;
+            handlePress("screen:" + event.getScreen().getClass().getSimpleName(), shift);
         }
     }
 
-    private static void handlePress(String source) {
+    @SubscribeEvent
+    public void onScreenKeyPressedToggle(ScreenEvent.KeyPressed.Pre event) {
+        var key = InputConstants.Type.KEYSYM.getOrCreate(event.getKeyCode());
+        if (ClientSetup.TOGGLE_SIDEBAR.isActiveAndMatches(key)) {
+            dev.craftingcompass.client.SidebarPanel.INSTANCE.toggle();
+            System.out.println("[CraftingCompass] Sidebar toggled: "
+                    + dev.craftingcompass.client.SidebarPanel.INSTANCE.isVisible());
+            event.setCanceled(true); // prevent K from doing anything else (e.g. opening a chat to whisper)
+        }
+    }
+
+    private static void handlePress(String source, boolean shift) {
         var runtime = dev.craftingcompass.neoforge.jei.CraftingCompassJeiPlugin.runtime();
         if (runtime == null) {
             System.out.println("[CraftingCompass] JEI runtime not available yet.");
@@ -38,6 +61,12 @@ public final class KeyHandler {
             System.out.println("[CraftingCompass] Nothing hovered (" + source + ").");
             return;
         }
+
+        int amount = shift ? Math.max(1, stack.getMaxStackSize()) : 1;
+        dev.craftingcompass.list.CraftingListHolder.get().add(stack.getItem(), amount);
+        String n = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+        System.out.println("[CraftingCompass] Added " + amount + "x " + n + " to list (total: "
+                + dev.craftingcompass.list.CraftingListHolder.get().quantity(stack.getItem()) + ")");
 
         var provider = dev.craftingcompass.neoforge.jei.CraftingCompassJeiPlugin.provider();
         if (provider == null) {

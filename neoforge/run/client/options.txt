@@ -207,6 +207,7 @@ key_key.jei.nextCategory:key.keyboard.page.down:SHIFT
 key_key.jei.closeRecipeGui:key.keyboard.escape
 key_key.jei.copy.recipe.id:key.keyboard.unknown
 key_key.craftingcompass.add_to_list:key.keyboard.k
+key_key.craftingcompass.toggle_sidebar:key.keyboard.j
 soundCategory_master:0.5033112582781457
 soundCategory_music:0.0
 soundCategory_record:1.0

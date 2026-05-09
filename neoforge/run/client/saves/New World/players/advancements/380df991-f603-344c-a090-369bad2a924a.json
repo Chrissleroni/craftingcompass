@@ -15,5 +15,233 @@
     },
     "done": false
   },
+  "powah:recipes/misc/crafting/dielectric_casing": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/iron_leggings": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/ender_cell_basic": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/capacitor_basic": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/iron_chestplate": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/furnator_basic": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/battery_basic": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/iron_nugget": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/bucket": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/iron_helmet": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/transportation/minecart": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/iron_hoe": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:story/smelt_iron": {
+    "criteria": {
+      "iron": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/shears": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/energy_cell_basic_2": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/building_blocks/iron_block": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/smithing_table": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/solar_panel_basic": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/lodestone": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/iron_sword": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/iron_pickaxe": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/shield": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/hopper": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/iron_bars": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/iron_boots": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/lantern": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/cable_basic_2": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/iron_chain": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/iron_shovel": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/energy_cell_basic": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/iron_trapdoor": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/magmator_basic": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/tools/iron_axe": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/crossbow": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "powah:recipes/misc/crafting/energy_cell_starter": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/combat/iron_spear": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/iron_door": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
+  "minecraft:recipes/redstone/heavy_weighted_pressure_plate": {
+    "criteria": {
+      "has_iron_ingot": "2026-05-08 16:19:30 +0200"
+    },
+    "done": true
+  },
   "DataVersion": 4790
 }

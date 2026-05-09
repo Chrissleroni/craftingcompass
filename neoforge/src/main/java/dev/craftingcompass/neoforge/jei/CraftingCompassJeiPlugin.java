@@ -71,6 +71,58 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
      */
     private static final List<String> PREFERRED_NAMESPACES = List.of("c", "minecraft");
 
+    private static boolean isTransformationRecipe(List<ItemStack> inputs, ItemStack output) {
+        String outName = BuiltInRegistries.ITEM.getKey(output.getItem()).getPath();
+        String outNamespace = BuiltInRegistries.ITEM.getKey(output.getItem()).getNamespace();
+
+        for (ItemStack in : inputs) {
+            if (in.getItem() == output.getItem()) return true; // self-loop is always transformation
+            var inKey = BuiltInRegistries.ITEM.getKey(in.getItem());
+            if (!inKey.getNamespace().equals(outNamespace)) continue; // cross-mod = not a recolor
+
+            String inName = inKey.getPath();
+            // Strip common color/material prefixes from both and compare stems
+            String inStem = stripColorPrefix(inName);
+            String outStem = stripColorPrefix(outName);
+            if (inStem.equals(outStem) && !inName.equals(outName)) {
+                // Same shape, different color/variant prefix — recolor.
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static final Set<String> COLOR_PREFIXES = Set.of(
+            "white_", "orange_", "magenta_", "light_blue_", "yellow_", "lime_",
+            "pink_", "gray_", "light_gray_", "cyan_", "purple_", "blue_",
+            "brown_", "green_", "red_", "black_"
+    );
+
+    private static String stripColorPrefix(String name) {
+        for (String p : COLOR_PREFIXES) {
+            if (name.startsWith(p)) return name.substring(p.length());
+        }
+        return name;
+    }
+
+    private static boolean isUsageTag(TagKey<Item> tag) {
+        String path = tag.location().getPath();
+        for (String pattern : UNWANTED_TAG_PATTERNS) {
+            if (path.equals(pattern) || path.endsWith("/" + pattern)) return true;
+        }
+        return false;
+    }
+
+    /** Tags so generic they don't indicate identity. */
+    private static boolean isUbiquitousTag(TagKey<Item> tag) {
+        int size = 0;
+        for (var ignored : BuiltInRegistries.ITEM.getTagOrEmpty(tag)) {
+            size++;
+            if (size > 200) return true; // very large tag, not identity
+        }
+        return false;
+    }
+
     private static final class JeiBackedRecipeProvider implements RecipeProvider {
         private final IJeiRuntime runtime;
         private final Map<Item, List<FlatRecipe>> index = new HashMap<>();
@@ -129,6 +181,25 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
                 index.putAll(local);
                 built.set(true);
                 long elapsed = System.currentTimeMillis() - start;
+
+                Item qei = BuiltInRegistries.ITEM.get(
+                                net.minecraft.resources.Identifier.fromNamespaceAndPath("refinedstorage", "quartz_enriched_iron"))
+                        .orElseThrow().value();
+                System.out.println("[CC QEI-INDEX] QEI has " + local.getOrDefault(qei, List.of()).size() + " indexed recipes");
+                for (var r : local.getOrDefault(qei, List.of())) {
+                    System.out.println("  " + r.kind() + " inputs=" + r.inputs().size() + " out=" + r.output().getCount());
+                    for (var s : r.inputs()) System.out.println("    " + s);
+                }
+
+                Item silicon = BuiltInRegistries.ITEM.get(
+                                net.minecraft.resources.Identifier.fromNamespaceAndPath("refinedstorage", "silicon"))
+                        .orElseThrow().value();
+                System.out.println("[CC SILICON-INDEX] silicon has " + local.getOrDefault(silicon, List.of()).size() + " indexed recipes");
+                for (var r : local.getOrDefault(silicon, List.of())) {
+                    System.out.println("  " + r.kind() + " inputs=" + r.inputs().size() + " out=" + r.output().getCount());
+                    for (var s : r.inputs()) System.out.println("    " + s);
+                }
+
                 System.out.println("[CraftingCompass] Recipe index built: "
                         + totalRecipeCount() + " recipes across "
                         + index.size() + " output items in " + elapsed + "ms.");
@@ -178,11 +249,12 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
          */
         private static boolean shouldSkipCategory(String uid) {
             String lower = uid.toLowerCase();
-            // Animal/entity interaction "recipes" — JEI has these for info, but they
+            // Animal/entity interaction "recipes", JEI has these for info, but they
             // aren't real recipes that produce items
             if (lower.contains("info") || lower.contains("anvil")
                     || lower.contains("brewing") || lower.contains("fuel")
-                    || lower.contains("compostable") || lower.contains("ingredient_info")) {
+                    || lower.contains("compostable") || lower.contains("ingredient_info")
+                    || lower.contains("tag_recipes")) {
                 return true;
             }
             return false;
@@ -193,51 +265,31 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             var recipeManager = runtime.getRecipeManager();
             IIngredientSupplier supplier = recipeManager.getRecipeIngredients(category, recipe);
 
-            // Temporary debug — catch ALL refinedstorage recipes regardless of extraction
-            List<ItemStack> allOutputs = new ArrayList<>();
-            for (ITypedIngredient<?> typed : supplier.getIngredients(RecipeIngredientRole.OUTPUT)) {
-                typed.getIngredient(VanillaTypes.ITEM_STACK).ifPresent(allOutputs::add);
-            }
-            List<ItemStack> allInputs = new ArrayList<>();
-            for (ITypedIngredient<?> typed : supplier.getIngredients(RecipeIngredientRole.INPUT)) {
-                typed.getIngredient(VanillaTypes.ITEM_STACK).ifPresent(allInputs::add);
-            }
-            for (ItemStack out : allOutputs) {
-                String name = BuiltInRegistries.ITEM.getKey(out.getItem()).toString();
-                if (name.contains("storage") || name.contains("housing")) {
-                    System.out.println("[CraftingCompass FOUND] " + name + " x" + out.getCount()
-                            + " in category " + category.getRecipeType().getUid()
-                            + " inputs=" + allInputs.size());
-                }
-            }
-
             List<ItemStack> outputs = extractItemStacks(supplier, RecipeIngredientRole.OUTPUT);
             if (outputs.isEmpty()) return;
 
+            List<ItemStack> inputItemStacks = extractItemStacks(supplier, RecipeIngredientRole.INPUT);
+
             List<Slot> inputs = extractSlotsFromJei(supplier);
             if (inputs.isEmpty()) return;
-            if (inputs.size() > 25) {
-                for (ItemStack out : outputs) {
-                    String name = BuiltInRegistries.ITEM.getKey(out.getItem()).toString();
-                    if (name.contains("refinedstorage")) {
-                        System.out.println("[CraftingCompass SIZE] " + name
-                                + " had " + inputs.size() + " parsed slots — skipped");
-                        for (Slot s : inputs) {
-                            System.out.println("  " + s);
-                        }
-                    }
-                }
-                return;
-            }
+            if (inputs.size() > 25) return;
 
-            Set<Item> inputItems = new HashSet<>();
+            Set<Item> singleInputItems = new HashSet<>();
             for (Slot s : inputs) {
-                if (s instanceof Slot.Single si) inputItems.add(si.item());
+                if (s instanceof Slot.Single si) singleInputItems.add(si.item());
             }
 
             for (ItemStack out : outputs) {
                 if (out.isEmpty()) continue;
-                if (inputItems.contains(out.getItem())) continue;
+                if (isTransformationRecipe(inputItemStacks, out)) {
+                    String name = BuiltInRegistries.ITEM.getKey(out.getItem()).toString();
+                    if (name.contains("storage") || name.contains("housing")) {
+                        System.out.println("[CC TRANSFORM] Skipping " + name + " — input shares identity tag");
+                    }
+                    continue;
+                }
+                if (singleInputItems.contains(out.getItem())) continue;
+
                 FlatRecipe flat = new FlatRecipe(inputs, out, kind);
                 target.computeIfAbsent(out.getItem(), k -> new ArrayList<>()).add(flat);
             }
@@ -258,54 +310,43 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             }
             if (allStacks.isEmpty()) return List.of();
 
-            // Count occurrences of each unique item
+            // Count occurrences of each unique item.
             LinkedHashMap<Item, Integer> itemCounts = new LinkedHashMap<>();
             for (ItemStack s : allStacks) {
                 itemCounts.merge(s.getItem(), 1, Integer::sum);
             }
 
+            // Bucket items by their occurrence count. Items in the same bucket
+            // are candidates to be tag-variants of the same logical slot.
+            Map<Integer, List<Item>> byCount = new LinkedHashMap<>();
+            for (var e : itemCounts.entrySet()) {
+                byCount.computeIfAbsent(e.getValue(), k -> new ArrayList<>()).add(e.getKey());
+            }
+
             List<Slot> result = new ArrayList<>();
 
-            // Separate items into "multi-occurrence" (definite single-item slots)
-            // and "single-occurrence" (potential tag variants)
-            List<Item> singleOccurrence = new ArrayList<>();
+            for (var bucket : byCount.entrySet()) {
+                int count = bucket.getKey();
+                List<Item> items = bucket.getValue();
 
-            for (var entry : itemCounts.entrySet()) {
-                if (entry.getValue() > 1) {
-                    // This item appears multiple times — it occupies that many slots
-                    result.add(new Slot.Single(entry.getKey(), entry.getValue()));
-                } else {
-                    singleOccurrence.add(entry.getKey());
-                }
-            }
-
-            if (singleOccurrence.isEmpty()) {
-                return result;
-            }
-
-            // Among single-occurrence items, try to find groups that share a tag.
-            // This handles cases like [andesite, diorite, granite, stone, deepslate, tuff]
-            // all being variants of #c:stones in one slot.
-            List<Item> ungrouped = new ArrayList<>(singleOccurrence);
-            while (!ungrouped.isEmpty()) {
-                if (ungrouped.size() == 1) {
-                    // Only one item left — it's a single slot
-                    result.add(new Slot.Single(ungrouped.get(0), 1));
-                    break;
+                if (items.size() == 1) {
+                    // Lone item with this count — literal slot.
+                    result.add(new Slot.Single(items.get(0), count));
+                    continue;
                 }
 
-                // Try to find a tag that covers a subset of the remaining items
-                TagGroup best = findLargestTagGroup(ungrouped);
-                if (best != null && best.members.size() > 1) {
-                    // Found a group — emit as a tag slot
-                    result.add(new Slot.Tag(best.tag, 1));
-                    ungrouped.removeAll(best.members);
-                } else {
-                    // No tag group found — each remaining item is its own slot
-                    for (Item item : ungrouped) {
-                        result.add(new Slot.Single(item, 1));
-                    }
-                    break;
+                // Multiple items share this count. Try to tag-group them.
+                // Repeatedly extract the largest tag-group from the bucket;
+                // anything left over becomes literal singles.
+                List<Item> remaining = new ArrayList<>(items);
+                while (remaining.size() > 1) {
+                    TagGroup g = findLargestTagGroup(remaining);
+                    if (g == null || g.members.size() < 2) break;
+                    result.add(new Slot.Tag(g.tag, count));
+                    remaining.removeAll(g.members);
+                }
+                for (Item leftover : remaining) {
+                    result.add(new Slot.Single(leftover, count));
                 }
             }
 

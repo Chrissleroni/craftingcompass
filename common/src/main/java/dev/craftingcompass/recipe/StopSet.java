@@ -80,7 +80,6 @@ public final class StopSet {
         s.add("minecraft:iron_ingot");
         s.add("minecraft:gold_ingot");
         s.add("minecraft:copper_ingot");
-        s.add("minecraft:netherite_ingot");
         s.add("minecraft:iron_nugget");
         s.add("minecraft:gold_nugget");
         s.add("minecraft:raw_iron");
