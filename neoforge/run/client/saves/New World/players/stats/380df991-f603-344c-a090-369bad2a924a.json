@@ -1,24 +1,32 @@
 {
   "stats": {
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 108910,
+      "minecraft:time_since_rest": 200926,
+      "minecraft:walk_one_cm": 13815,
+      "minecraft:total_world_time": 167736,
+      "minecraft:leave_game": 21,
+      "minecraft:fly_one_cm": 212690,
+      "minecraft:sneak_time": 98,
+      "minecraft:play_time": 154190,
+      "minecraft:damage_dealt": 60,
+      "minecraft:jump": 718,
+      "minecraft:time_since_death": 154190,
+      "minecraft:drop": 3
+    },
     "minecraft:dropped": {
-      "minecraft:iron_ingot": 1
+      "minecraft:iron_ingot": 1,
+      "minecraft:rabbit_hide": 1,
+      "minecraft:rabbit": 1
     },
     "minecraft:used": {
-      "minecraft:grass_block": 1
+      "minecraft:snow": 1,
+      "minecraft:grass_block": 1,
+      "minecraft:rabbit": 1
     },
-    "minecraft:custom": {
-      "minecraft:sprint_one_cm": 66729,
-      "minecraft:time_since_rest": 183312,
-      "minecraft:walk_one_cm": 10241,
-      "minecraft:total_world_time": 149967,
-      "minecraft:leave_game": 14,
-      "minecraft:fly_one_cm": 154241,
-      "minecraft:sneak_time": 98,
-      "minecraft:play_time": 136576,
-      "minecraft:damage_dealt": 60,
-      "minecraft:jump": 486,
-      "minecraft:time_since_death": 136576,
-      "minecraft:drop": 1
+    "minecraft:picked_up": {
+      "minecraft:rabbit": 1,
+      "minecraft:rabbit_hide": 1
     }
   },
   "DataVersion": 4790

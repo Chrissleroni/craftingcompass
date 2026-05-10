@@ -13,10 +13,13 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class SidebarPanel {
 
@@ -31,6 +34,12 @@ public final class SidebarPanel {
     private static final int PADDING = 4;
     private static final int X_SIZE = 9;
     private static final int X_INSET = 2;
+
+    private static final int CLEAR_BTN_SIZE = 10;
+    private static final int CLEAR_BTN_MARGIN = 4;
+    private static final int CLEAR_BG       = 0xFF402020;
+    private static final int CLEAR_BG_HOVER = 0xFF8B3030;
+    private static final int CLEAR_FG       = 0xFFFFE0E0;
 
     private static final int BG_COLOR        = 0xCC101010;
     private static final int BORDER_COLOR    = 0xFF303030;
@@ -51,13 +60,16 @@ public final class SidebarPanel {
     private final java.util.Set<Item> completedItems = new java.util.HashSet<>();
     private final java.util.Set<TagKey<Item>> completedTags = new java.util.HashSet<>();
 
+    private long clearArmedAt = 0;
+    private static final long CLEAR_ARM_WINDOW_MS = 3000L;
+
     private boolean visible = false;
     private Tab activeTab = Tab.LIST;
     private int scrollOffset = 0;
 
-    // Layout snapshot — rebuilt each render frame so mouse handlers can hit-test
+    // Layout snapshot, rebuilt each render frame so mouse handlers can hit-test
     // against the same coordinates that were drawn.
-    private volatile LayoutSnapshot lastLayout = new LayoutSnapshot(0, 0, 0, 0, List.of(), List.of(), -1, -1, -1, -1);
+    private volatile LayoutSnapshot lastLayout = new LayoutSnapshot(0, 0, 0, 0, List.of(), List.of(), -1, -1, -1, -1, 0, 0, 0, 0);
 
     // Inline quantity editor state (right-click prompt). Null when not editing.
     private Item editingItem = null;
@@ -70,7 +82,6 @@ public final class SidebarPanel {
         this.visible = v;
         if (!v) cancelEditor();
     }
-    public void toggle() { setVisible(!this.visible); }
     public Tab getActiveTab() { return activeTab; }
     public void setActiveTab(Tab t) {
         this.activeTab = t;
@@ -78,7 +89,103 @@ public final class SidebarPanel {
         cancelEditor();
     }
 
-    public void render(GuiGraphicsExtractor gfx, int mouseX, int mouseY, float partial) {
+    /**
+     * If the mouse is over a row, ask the GuiGraphics to render the standard
+     * Minecraft tooltip for that row's content. Called by the render hook *after*
+     * the panel has rendered, so the tooltip lands on the top stratum.
+     */
+    public void renderTooltip(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
+        if (!visible) return;
+        var l = lastLayout;
+        if (mouseX < l.x0 || mouseX >= l.x1 || mouseY < l.y0 || mouseY >= l.y1) return;
+
+        Minecraft mc = Minecraft.getInstance();
+        Font font = mc.font;
+
+        // Clear button tooltip
+        if (mouseX >= l.clearX0 && mouseX < l.clearX1
+                && mouseY >= l.clearY0 && mouseY < l.clearY1) {
+            Component line = Component.literal("Click to delete list").withStyle(ChatFormatting.RED);
+            showTooltip(gfx, font, List.of(line.getVisualOrderText()), mouseX, mouseY);
+            return;
+        }
+
+        for (RowLayout rl : l.rows) {
+            if (mouseX < rl.x0 || mouseX >= rl.x1 || mouseY < rl.y0 || mouseY >= rl.y1) continue;
+            DisplayRow row = rl.row;
+
+            if (row.itemStack != null && !row.itemStack.isEmpty()) {
+                // Standard item tooltip — pull the same lines vanilla uses for inventory.
+                List<Component> lines = net.minecraft.client.gui.screens.Screen
+                        .getTooltipFromItem(mc, row.itemStack);
+                List<FormattedCharSequence> formatted = lines.stream()
+                        .map(Component::getVisualOrderText)
+                        .collect(Collectors.toList());
+                showTooltip(gfx, font, formatted, mouseX, mouseY);
+            } else if (row.tag != null) {
+                renderTagTooltip(gfx, font, row.tag, mouseX, mouseY);
+            }
+            return;
+        }
+    }
+
+    private static void renderTagTooltip(GuiGraphicsExtractor gfx, Font font, TagKey<Item> tag, int mouseX, int mouseY) {
+        Component header = Component.literal("#" + tag.location()).withStyle(ChatFormatting.GOLD);
+
+        List<Component> lines = new ArrayList<>();
+        lines.add(header);
+
+        List<Component> memberLines = new ArrayList<>();
+        int total = 0;
+        for (Holder<Item> h : BuiltInRegistries.ITEM.getTagOrEmpty(tag)) {
+            if (h.value() == Items.AIR) continue;
+            total++;
+            if (memberLines.size() < 12) {
+                memberLines.add(Component.literal("• ")
+                        .append(new ItemStack(h.value()).getHoverName())
+                        .withStyle(ChatFormatting.GRAY));
+            }
+        }
+        lines.addAll(memberLines);
+        if (total > memberLines.size()) {
+            lines.add(Component.literal("…and " + (total - memberLines.size()) + " more")
+                    .withStyle(ChatFormatting.DARK_GRAY));
+        }
+        if (total == 0) {
+            lines.add(Component.literal("(no members)").withStyle(ChatFormatting.DARK_GRAY));
+        }
+
+        List<FormattedCharSequence> formatted = lines.stream()
+                .map(Component::getVisualOrderText)
+                .collect(Collectors.toList());
+        showTooltip(gfx, font, formatted, mouseX, mouseY);
+    }
+
+    /**
+     * Display a tooltip *replacing* whatever the underlying screen already set.
+     * Without replaceExisting=true, our tooltip silently no-ops because the
+     * screen has already populated GuiGraphics.deferredTooltip with its own
+     * (e.g. an inventory slot's tooltip).
+     */
+    private static void showTooltip(GuiGraphicsExtractor gfx, Font font,
+                                    List<FormattedCharSequence> lines,
+                                    int mouseX, int mouseY) {
+        if (lines.isEmpty()) return;
+        List<net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent> components =
+                lines.stream()
+                        .map(net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent::create)
+                        .collect(Collectors.toList());
+        gfx.tooltip(
+                font,
+                components,
+                mouseX,
+                mouseY,
+                net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner.INSTANCE,
+                null  // no custom style
+        );
+    }
+
+    public void render(GuiGraphicsExtractor gfx, int mouseX, int mouseY) {
         if (!visible) return;
 
         Minecraft mc = Minecraft.getInstance();
@@ -119,6 +226,23 @@ public final class SidebarPanel {
             gfx.text(font, dot, dx, y + (HEADER_HEIGHT - font.lineHeight) / 2 + 1, TEXT_DIM, false);
         }
 
+        // Clear button (right side of header, before the spinner area)
+        int clearX = x + WIDTH - PADDING - CLEAR_BTN_SIZE - CLEAR_BTN_MARGIN;
+        int clearY = y + (HEADER_HEIGHT - CLEAR_BTN_SIZE) / 2;
+        boolean clearHover = mouseX >= clearX && mouseX < clearX + CLEAR_BTN_SIZE
+                && mouseY >= clearY && mouseY < clearY + CLEAR_BTN_SIZE;
+        boolean armed = clearArmedAt > 0 && (System.currentTimeMillis() - clearArmedAt) < CLEAR_ARM_WINDOW_MS;
+        if (!armed) clearArmedAt = 0;
+
+        int clearBg = (clearHover || armed) ? CLEAR_BG_HOVER : CLEAR_BG;
+        gfx.fill(clearX, clearY, clearX + CLEAR_BTN_SIZE, clearY + CLEAR_BTN_SIZE, clearBg);
+        // Trash can: top lid + body
+        gfx.fill(clearX + 2, clearY + 2, clearX + CLEAR_BTN_SIZE - 2, clearY + 3, CLEAR_FG);
+        gfx.fill(clearX + 3, clearY + 3, clearX + CLEAR_BTN_SIZE - 3, clearY + CLEAR_BTN_SIZE - 2, CLEAR_FG);
+        // "Body" stripes (subtle vertical lines so it reads as a trash can)
+        gfx.fill(clearX + 4, clearY + 4, clearX + 5, clearY + CLEAR_BTN_SIZE - 3, clearBg);
+        gfx.fill(clearX + CLEAR_BTN_SIZE - 5, clearY + 4, clearX + CLEAR_BTN_SIZE - 4, clearY + CLEAR_BTN_SIZE - 3, clearBg);
+
         // Tabs
         int tabsY = y + HEADER_HEIGHT;
         int halfW = WIDTH / 2;
@@ -158,7 +282,8 @@ public final class SidebarPanel {
                 rowsAreaY,
                 rowsAreaY + visibleRows * ROW_HEIGHT,
                 totalRows,
-                visibleRows
+                visibleRows,
+                clearX, clearY, clearX + CLEAR_BTN_SIZE, clearY + CLEAR_BTN_SIZE
         );
     }
 
@@ -179,7 +304,7 @@ public final class SidebarPanel {
             gfx.fill(x + 1, y, x + WIDTH - 1, y + ROW_HEIGHT, ROW_HOVER);
         }
 
-        // Inline quantity editor — replaces row content for the editing item
+        // Inline quantity editor, replaces row content for the editing item
         if (editingItem != null && row.itemStack != null && row.itemStack.getItem() == editingItem) {
             renderEditor(gfx, font, x, y);
             return;
@@ -215,7 +340,7 @@ public final class SidebarPanel {
             gfx.fill(iconX + 16 + 2, strikeY, x + WIDTH - PADDING, strikeY + 1, TEXT_DIM);
         }
 
-        // X button — only on hover, only on List tab, only for items (not tags)
+        // X button, only on hover, only on List tab, only for items (not tags)
         if (rowHovered && activeTab == Tab.LIST && row.itemStack != null) {
             int xBtnX = x + X_INSET;
             int xBtnY = y + X_INSET;
@@ -313,6 +438,12 @@ public final class SidebarPanel {
             return false;
         }
 
+        if (mouseX >= l.clearX0 && mouseX < l.clearX1
+                && mouseY >= l.clearY0 && mouseY < l.clearY1) {
+            if (button == 0) handleClearClick();
+            return true;
+        }
+
         // Tab clicks
         for (TabLayout tab : l.tabs) {
             if (mouseX >= tab.x0 && mouseX < tab.x1 && mouseY >= tab.y0 && mouseY < tab.y1) {
@@ -372,8 +503,6 @@ public final class SidebarPanel {
         return true;
     }
 
-    public boolean isEditing() { return editingItem != null; }
-
     public boolean handleKeyPress(int keyCode) {
         if (editingItem == null) return false;
         switch (keyCode) {
@@ -400,6 +529,13 @@ public final class SidebarPanel {
             return true;
         }
         return false;
+    }
+
+    private void handleClearClick() {
+        CraftingListHolder.get().clear();
+        completedItems.clear();
+        completedTags.clear();
+        CraftingListStorage.scheduleSave(this::snapshot);
     }
 
     private void commitEditor() {
@@ -467,6 +603,7 @@ public final class SidebarPanel {
             List<TabLayout> tabs,
             List<RowLayout> rows,
             int rowsTop, int rowsBottom,
-            int totalRows, int visibleRows
+            int totalRows, int visibleRows,
+            int clearX0, int clearY0, int clearX1, int clearY1
     ) {}
 }

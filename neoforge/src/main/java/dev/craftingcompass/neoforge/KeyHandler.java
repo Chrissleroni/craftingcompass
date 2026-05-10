@@ -47,20 +47,20 @@ public final class KeyHandler {
         if (!panel.isVisible()) {
             panel.setVisible(true);
             panel.setActiveTab(dev.craftingcompass.client.SidebarPanel.Tab.LIST);
-            System.out.println("[CraftingCompass] Sidebar -> LIST");
+            // System.out.println("[CraftingCompass] Sidebar -> LIST");
         } else if (panel.getActiveTab() == dev.craftingcompass.client.SidebarPanel.Tab.LIST) {
             panel.setActiveTab(dev.craftingcompass.client.SidebarPanel.Tab.INGREDIENTS);
-            System.out.println("[CraftingCompass] Sidebar -> INGREDIENTS");
+            // System.out.println("[CraftingCompass] Sidebar -> INGREDIENTS");
         } else {
             panel.setVisible(false);
-            System.out.println("[CraftingCompass] Sidebar -> hidden");
+            // System.out.println("[CraftingCompass] Sidebar -> hidden");
         }
     }
 
     private static void handlePress(String source, boolean shift) {
         var runtime = dev.craftingcompass.neoforge.jei.CraftingCompassJeiPlugin.runtime();
         if (runtime == null) {
-            System.out.println("[CraftingCompass] JEI runtime not available yet.");
+            // System.out.println("[CraftingCompass] JEI runtime not available yet.");
             return;
         }
 
@@ -68,24 +68,24 @@ public final class KeyHandler {
                 .getIngredientUnderMouse(mezz.jei.api.constants.VanillaTypes.ITEM_STACK);
 
         if (stack == null || stack.isEmpty()) {
-            System.out.println("[CraftingCompass] Nothing hovered (" + source + ").");
+            // System.out.println("[CraftingCompass] Nothing hovered (" + source + ").");
             return;
         }
 
         int amount = shift ? Math.max(1, stack.getMaxStackSize()) : 1;
         dev.craftingcompass.list.CraftingListHolder.get().add(stack.getItem(), amount);
-        String n = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
-        System.out.println("[CraftingCompass] Added " + amount + "x " + n + " to list (total: "
-                + dev.craftingcompass.list.CraftingListHolder.get().quantity(stack.getItem()) + ")");
+        // String n = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+        // System.out.println("[CraftingCompass] Added " + amount + "x " + n + " to list (total: "
+        //         + dev.craftingcompass.list.CraftingListHolder.get().quantity(stack.getItem()) + ")");
 
         var provider = dev.craftingcompass.neoforge.jei.CraftingCompassJeiPlugin.provider();
         if (provider == null) {
-            System.out.println("[CraftingCompass] Recipe provider not ready.");
+            // System.out.println("[CraftingCompass] Recipe provider not ready.");
             return;
         }
 
         if (provider.totalRecipeCount() == 0) {
-            System.out.println("[CraftingCompass] Recipe index still building, try again in a moment.");
+            // System.out.println("[CraftingCompass] Recipe index still building, try again in a moment.");
             return;
         }
 
@@ -106,46 +106,46 @@ public final class KeyHandler {
 
             var shopping = dev.craftingcompass.inventory.RequirementCalculator.compute(tree, player);
 
-            System.out.println("[CraftingCompass] === Shopping list for "
-                    + targetStack.getDisplayName().getString()
-                    + " x" + targetStack.getCount() + " ===");
-            if (shopping.entries().isEmpty()) {
-                System.out.println("  (no recipes found)");
-            } else {
-                for (var entry : shopping.entries()) {
-                    switch (entry) {
-                        case dev.craftingcompass.inventory.ShoppingList.Entry.ItemEntry ie -> {
-                            String name = net.minecraft.core.registries.BuiltInRegistries.ITEM
-                                    .getKey(ie.item()).toString();
-                            System.out.println("  " + name
-                                    + ": need " + ie.needed()
-                                    + ", have " + ie.have()
-                                    + ", missing " + ie.missing());
-                        }
-                        case dev.craftingcompass.inventory.ShoppingList.Entry.TagEntry te -> {
-                            System.out.println("  #" + te.tag().location()
-                                    + ": need " + te.needed()
-                                    + " (tag — inventory check skipped)");
-                        }
-                    }
-                }
-            }
-            // Temporary debug — check which items we think have no recipe
-            for (var entry : shopping.entries()) {
-                if (entry instanceof dev.craftingcompass.inventory.ShoppingList.Entry.ItemEntry ie) {
-                    String name = net.minecraft.core.registries.BuiltInRegistries.ITEM
-                            .getKey(ie.item()).toString();
-                    if (name.contains("refinedstorage")) {
-                        var recipes = resolverProvider.recipesProducing(ie.item());
-                        System.out.println("[CraftingCompass DEBUG] " + name
-                                + " has " + recipes.size() + " indexed recipes");
-                        for (var r : recipes) {
-                            System.out.println("  " + r.kind() + " inputs=" + r.inputs()
-                                    + " output=" + r.output().getCount());
-                        }
-                    }
-                }
-            }
+//            System.out.println("[CraftingCompass] === Shopping list for "
+//                    + targetStack.getDisplayName().getString()
+//                    + " x" + targetStack.getCount() + " ===");
+//            if (shopping.entries().isEmpty()) {
+//                System.out.println("  (no recipes found)");
+//            } else {
+//                for (var entry : shopping.entries()) {
+//                    switch (entry) {
+//                        case dev.craftingcompass.inventory.ShoppingList.Entry.ItemEntry ie -> {
+//                            String name = net.minecraft.core.registries.BuiltInRegistries.ITEM
+//                                    .getKey(ie.item()).toString();
+//                            System.out.println("  " + name
+//                                    + ": need " + ie.needed()
+//                                    + ", have " + ie.have()
+//                                    + ", missing " + ie.missing());
+//                        }
+//                        case dev.craftingcompass.inventory.ShoppingList.Entry.TagEntry te -> {
+//                            System.out.println("  #" + te.tag().location()
+//                                    + ": need " + te.needed()
+//                                    + " (tag — inventory check skipped)");
+//                        }
+//                    }
+//                }
+//            }
+//
+//            for (var entry : shopping.entries()) {
+//                if (entry instanceof dev.craftingcompass.inventory.ShoppingList.Entry.ItemEntry ie) {
+//                    String name = net.minecraft.core.registries.BuiltInRegistries.ITEM
+//                            .getKey(ie.item()).toString();
+//                    if (name.contains("refinedstorage")) {
+//                        var recipes = resolverProvider.recipesProducing(ie.item());
+//                        System.out.println("[CraftingCompass DEBUG] " + name
+//                                + " has " + recipes.size() + " indexed recipes");
+//                        for (var r : recipes) {
+//                            System.out.println("  " + r.kind() + " inputs=" + r.inputs()
+//                                    + " output=" + r.output().getCount());
+//                        }
+//                    }
+//                }
+//            }
         }, "CraftingCompass-Resolver");
         t.setDaemon(true);
         t.start();

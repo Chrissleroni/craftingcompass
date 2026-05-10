@@ -13,3 +13,5 @@ reducedDepthStencilFormat = false
 handleAmbientOcclusionPerPart = true
 #When enabled, all usage of Blaze3D will be validated against allowed usage
 enableB3DValidationLayer = true
+#When enabled, modded splashes will not be loaded if the vanilla splash text is modified.
+skipModdedSplashesIfVanillaModified = true

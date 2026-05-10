@@ -40,7 +40,7 @@ dependencies {
 
 tasks.named<Jar>("jar") {
     from(project(":common").sourceSets.main.get().output)
-    archiveBaseName.set("${modId}-neoforge")
+    archiveBaseName.set("${modId}-neoforge-${minecraftVersion}")
 }
 
 tasks.named<ProcessResources>("processResources") {

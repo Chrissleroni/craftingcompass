@@ -67,13 +67,6 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             "trim_templates"
     );
 
-    /**
-     * Preferred tag namespaces, in order. We prefer tags from these namespaces
-     * because they're more likely to represent "what the ingredient IS" rather
-     * than "what an animal eats" or "what a brewing recipe accepts".
-     */
-    private static final List<String> PREFERRED_NAMESPACES = List.of("c", "minecraft");
-
     private static boolean isTransformationRecipe(List<ItemStack> inputs, ItemStack output) {
         String outName = BuiltInRegistries.ITEM.getKey(output.getItem()).getPath();
         String outNamespace = BuiltInRegistries.ITEM.getKey(output.getItem()).getNamespace();
@@ -106,24 +99,6 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             if (name.startsWith(p)) return name.substring(p.length());
         }
         return name;
-    }
-
-    private static boolean isUsageTag(TagKey<Item> tag) {
-        String path = tag.location().getPath();
-        for (String pattern : UNWANTED_TAG_PATTERNS) {
-            if (path.equals(pattern) || path.endsWith("/" + pattern)) return true;
-        }
-        return false;
-    }
-
-    /** Tags so generic they don't indicate identity. */
-    private static boolean isUbiquitousTag(TagKey<Item> tag) {
-        int size = 0;
-        for (var ignored : BuiltInRegistries.ITEM.getTagOrEmpty(tag)) {
-            size++;
-            if (size > 200) return true; // very large tag, not identity
-        }
-        return false;
     }
 
     private static final class JeiBackedRecipeProvider implements RecipeProvider {
@@ -159,7 +134,7 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
 
         void ensureBuilding() {
             if (building.compareAndSet(false, true)) {
-                System.out.println("[CraftingCompass] Building recipe index in background...");
+                // System.out.println("[CraftingCompass] Building recipe index in background...");
                 Thread t = new Thread(this::buildIndex, "CraftingCompass-IndexBuilder");
                 t.setDaemon(true);
                 t.start();
@@ -185,23 +160,23 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
                 built.set(true);
                 long elapsed = System.currentTimeMillis() - start;
 
-                Item qei = BuiltInRegistries.ITEM.get(
-                                net.minecraft.resources.Identifier.fromNamespaceAndPath("refinedstorage", "quartz_enriched_iron"))
-                        .orElseThrow().value();
-                System.out.println("[CC QEI-INDEX] QEI has " + local.getOrDefault(qei, List.of()).size() + " indexed recipes");
-                for (var r : local.getOrDefault(qei, List.of())) {
-                    System.out.println("  " + r.kind() + " inputs=" + r.inputs().size() + " out=" + r.output().getCount());
-                    for (var s : r.inputs()) System.out.println("    " + s);
-                }
-
-                Item silicon = BuiltInRegistries.ITEM.get(
-                                net.minecraft.resources.Identifier.fromNamespaceAndPath("refinedstorage", "silicon"))
-                        .orElseThrow().value();
-                System.out.println("[CC SILICON-INDEX] silicon has " + local.getOrDefault(silicon, List.of()).size() + " indexed recipes");
-                for (var r : local.getOrDefault(silicon, List.of())) {
-                    System.out.println("  " + r.kind() + " inputs=" + r.inputs().size() + " out=" + r.output().getCount());
-                    for (var s : r.inputs()) System.out.println("    " + s);
-                }
+//                Item qei = BuiltInRegistries.ITEM.get(
+//                                net.minecraft.resources.Identifier.fromNamespaceAndPath("refinedstorage", "quartz_enriched_iron"))
+//                        .orElseThrow().value();
+//                System.out.println("[CC QEI-INDEX] QEI has " + local.getOrDefault(qei, List.of()).size() + " indexed recipes");
+//                for (var r : local.getOrDefault(qei, List.of())) {
+//                    System.out.println("  " + r.kind() + " inputs=" + r.inputs().size() + " out=" + r.output().getCount());
+//                    for (var s : r.inputs()) System.out.println("    " + s);
+//                }
+//
+//                Item silicon = BuiltInRegistries.ITEM.get(
+//                                net.minecraft.resources.Identifier.fromNamespaceAndPath("refinedstorage", "silicon"))
+//                        .orElseThrow().value();
+//                System.out.println("[CC SILICON-INDEX] silicon has " + local.getOrDefault(silicon, List.of()).size() + " indexed recipes");
+//                for (var r : local.getOrDefault(silicon, List.of())) {
+//                    System.out.println("  " + r.kind() + " inputs=" + r.inputs().size() + " out=" + r.output().getCount());
+//                    for (var s : r.inputs()) System.out.println("    " + s);
+//                }
 
                 System.out.println("[CraftingCompass] Recipe index built: "
                         + totalRecipeCount() + " recipes across "
@@ -223,11 +198,11 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
             RecipeKind kind = classifyCategory(typeUid);
 
             // Temporary debug — log all categories
-            int[] count = {0};
-            runtime.getRecipeManager().createRecipeLookup(type).get().forEach(r -> count[0]++);
-            System.out.println("[CraftingCompass CAT] " + typeUid
-                    + " (" + count[0] + " recipes)"
-                    + (shouldSkipCategory(typeUid) ? " SKIPPED" : " indexing"));
+            // int[] count = {0};
+            // runtime.getRecipeManager().createRecipeLookup(type).get().forEach(r -> count[0]++);
+            // System.out.println("[CraftingCompass CAT] " + typeUid
+            //         + " (" + count[0] + " recipes)"
+            //         + (shouldSkipCategory(typeUid) ? " SKIPPED" : " indexing"));
 
             // Skip categories that aren't actually crafting/transformation recipes.
             // These are things like "Anvil repair", "Brewing" (we don't model fluids),
@@ -287,11 +262,24 @@ public final class CraftingCompassJeiPlugin implements IModPlugin {
                 if (isTransformationRecipe(inputItemStacks, out)) {
                     String name = BuiltInRegistries.ITEM.getKey(out.getItem()).toString();
                     if (name.contains("storage") || name.contains("housing")) {
-                        System.out.println("[CC TRANSFORM] Skipping " + name + " — input shares identity tag");
+                        // System.out.println("[CC TRANSFORM] Skipping " + name + " — input shares identity tag");
                     }
                     continue;
                 }
-                if (singleInputItems.contains(out.getItem())) continue;
+                // Reject only true self-loops:
+                //  - decompositions: 1 input -> n>1 output (e.g. iron_block -> 9 iron_ingots if input=ingot)
+                //  - identity recipes: exactly 1* A -> 1* A (no actual transformation, would be useless)
+                // Variant conversions like pipe -> vertical_pipe pass through, even though the reverse
+                // recipe also exists, they're legitimate alternate paths the player may use.
+                if (singleInputItems.contains(out.getItem())) {
+                    boolean isDecomp = inputs.size() == 1 && out.getCount() > 1;
+                    boolean isIdentity = inputs.size() == 1
+                            && out.getCount() == 1
+                            && inputs.get(0) instanceof Slot.Single si
+                            && si.count() == 1
+                            && si.item() == out.getItem();
+                    if (isDecomp || isIdentity) continue;
+                }
 
                 FlatRecipe flat = new FlatRecipe(inputs, out, kind);
                 target.computeIfAbsent(out.getItem(), k -> new ArrayList<>()).add(flat);

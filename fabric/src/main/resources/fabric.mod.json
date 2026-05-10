@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "id": "craftingcompass",
+  "version": "${version}",
+  "name": "Chris'sCraftingCompass",
+  "description": "Recursive crafting-tree planner with JEI integration.",
+  "authors": ["Kristoffer Oltegen Diehl"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.craftingcompass.fabric.CraftingCompassFabricClient"
+    ],
+    "jei_mod_plugin": [
+      "dev.craftingcompass.fabric.jei.CraftingCompassJeiPlugin"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.0",
+    "fabric-api": "*",
+    "minecraft": "~26.1.2",
+    "java": ">=25",
+    "jei": "*"
+  }
+}

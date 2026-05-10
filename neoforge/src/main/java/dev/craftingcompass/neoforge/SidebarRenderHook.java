@@ -28,8 +28,7 @@ public final class SidebarRenderHook {
         SidebarPanel.INSTANCE.render(
                 event.getGuiGraphics(),
                 -1,
-                1,
-                0f
+                1
         );
     }
 
@@ -40,8 +39,12 @@ public final class SidebarRenderHook {
         SidebarPanel.INSTANCE.render(
                 event.getGuiGraphics(),
                 mouse[0],
-                mouse[1],
-                0f
+                mouse[1]
+        );
+        SidebarPanel.INSTANCE.renderTooltip(
+                event.getGuiGraphics(),
+                mouse[0],
+                mouse[1]
         );
     }
 

@@ -204,20 +204,20 @@ public final class StopSet {
         s.add("minecraft:red_dye");
         s.add("minecraft:black_dye");
 
-        /** // Planks
-        s.add("minecraft:oak_planks");
-        s.add("minecraft:birch_planks");
-        s.add("minecraft:spruce_planks");
-        s.add("minecraft:jungle_planks");
-        s.add("minecraft:acacia_planks");
-        s.add("minecraft:dark_oak_planks");
-        s.add("minecraft:mangrove_planks");
-        s.add("minecraft:cherry_planks");
-        s.add("minecraft:pale_oak_planks");
-        s.add("minecraft:bamboo_planks");
-        s.add("minecraft:crimson_planks");
-        s.add("minecraft:warped_planks");
-        */
+        // Planks
+//        s.add("minecraft:oak_planks");
+//        s.add("minecraft:birch_planks");
+//        s.add("minecraft:spruce_planks");
+//        s.add("minecraft:jungle_planks");
+//        s.add("minecraft:acacia_planks");
+//        s.add("minecraft:dark_oak_planks");
+//        s.add("minecraft:mangrove_planks");
+//        s.add("minecraft:cherry_planks");
+//        s.add("minecraft:pale_oak_planks");
+//        s.add("minecraft:bamboo_planks");
+//        s.add("minecraft:crimson_planks");
+//        s.add("minecraft:warped_planks");
+
         return s;
     }
 }

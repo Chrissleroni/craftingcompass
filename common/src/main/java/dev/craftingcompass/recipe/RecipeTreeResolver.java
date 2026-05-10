@@ -133,19 +133,19 @@ public final class RecipeTreeResolver {
 
     private RecipeProvider.FlatRecipe selectBestRecipe(List<RecipeProvider.FlatRecipe> recipes, Item target) {
         // Optional debug - keep or remove as you like
-        String name = BuiltInRegistries.ITEM.getKey(target).toString();
-        boolean debug = name.contains("storage_disk") || name.contains("storage_part")
-                || name.contains("storage_housing") || name.contains("quartz_enriched");
-        if (debug) {
-            System.out.println("[CC SELECT] " + name + " has " + recipes.size() + " candidate recipes:");
-            for (var r : recipes) {
-                int total = 0;
-                for (var s : r.inputs()) total += slotCount(s);
-                System.out.println("  kind=" + r.kind() + " inputs=" + r.inputs().size()
-                        + " totalCount=" + total + " out=" + r.output().getCount());
-                for (var s : r.inputs()) System.out.println("    " + s);
-            }
-        }
+//        String name = BuiltInRegistries.ITEM.getKey(target).toString();
+//        boolean debug = name.contains("storage_disk") || name.contains("storage_part")
+//                || name.contains("storage_housing") || name.contains("quartz_enriched");
+//        if (debug) {
+//            System.out.println("[CC SELECT] " + name + " has " + recipes.size() + " candidate recipes:");
+//            for (var r : recipes) {
+//                int total = 0;
+//                for (var s : r.inputs()) total += slotCount(s);
+//                System.out.println("  kind=" + r.kind() + " inputs=" + r.inputs().size()
+//                        + " totalCount=" + total + " out=" + r.output().getCount());
+//                for (var s : r.inputs()) System.out.println("    " + s);
+//            }
+//        }
 
         RecipeProvider.FlatRecipe best = null;
         int bestScore = Integer.MIN_VALUE;
@@ -159,10 +159,10 @@ public final class RecipeTreeResolver {
             }
         }
 
-        if (debug && best != null) {
-            System.out.println("[CC SELECT] -> picked: kind=" + best.kind()
-                    + " inputs=" + best.inputs().size() + " out=" + best.output().getCount());
-        }
+//        if (debug && best != null) {
+//            System.out.println("[CC SELECT] -> picked: kind=" + best.kind()
+//                    + " inputs=" + best.inputs().size() + " out=" + best.output().getCount());
+//        }
         return best;
     }
 
