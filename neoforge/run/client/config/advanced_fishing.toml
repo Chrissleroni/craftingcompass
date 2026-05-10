@@ -1,0 +1,5 @@
+["Configs for Advanced Fishing Mod"]
+	#Override vanilla fishing by mod
+	"Override Vanilla Fishing" = true
+	#Enable debug mode for additional dev logs
+	"Debug Mode" = false

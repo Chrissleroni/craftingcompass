@@ -1,0 +1,44 @@
+[general]
+	#When multiple items of the same type are in the display, always merge them, preserving only the shared data.
+	compact_items = true
+	#Items to ignore when finding changes
+	ignore_items = []
+	#Items for which to ignore data component differences
+	ignore_subitem_changes = []
+	#Data components to ignore when comparing
+	ignore_data_components = ["minecraft:damage"]
+	#Show gained items in the overlay
+	show_item_additions = true
+	#Show lost items in the overlay
+	show_item_removals = true
+	#Draw item icon in the overlay
+	draw_icon = true
+	#Draw item name in the overlay
+	draw_name = true
+	#Which corner/edge of the screen to base the overlay position on
+	#Allowed Values: BottomRight, Bottom, BottomLeft, Left, TopLeft, Top, TopRight, Right, Center
+	draw_position = "BottomRight"
+	#Horizontal offset from the chosen position to draw the overlay on
+	# Default: 0
+	# Range: > -2147483648
+	draw_offset_horizontal = 0
+	#Vertical offset from the chosen position to draw the overlay on
+	# Default: 0
+	# Range: > -2147483648
+	draw_offset_vertical = 0
+	#Size of the overlay relative to the GUI scale
+	# Default: 1.0
+	# Range: 0.001 ~ 1000.0
+	draw_scale = 1.0
+	#Size of the icons relative to the overlay size
+	# Default: 0.6
+	# Range: 0.001 ~ 1000.0
+	icon_scale = 0.6
+	#Number items to show in the overlay before older items start to get forcefully faded
+	# Default: 10
+	# Range: 1 ~ 30
+	soft_limit = 10
+	#Number of items to show progressively faded, when the soft limit is reached
+	# Default: 5
+	# Range: 0 ~ 15
+	fade_limit = 5

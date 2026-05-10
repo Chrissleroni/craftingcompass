@@ -1,0 +1,2 @@
+/gamerule advance_time false
+/time set day

@@ -1,0 +1,21 @@
+{
+  "showOverlay": {
+    "comments": [
+      "This allows you hide or show the overlay in the top right of the screen when XRay is enabled"
+    ],
+    "value": true
+  },
+  "radius": {
+    "comments": [
+      "The radius area (in chunks in each direction) that XRay will search within.",
+      "This is in each direction so a radius of 1 will be a 3x3 area, a radius of 2 will be a 5x5 area, etc."
+    ],
+    "value": 2
+  },
+  "lavaActive": {
+    "comments": [
+      "When true, lava will automatically be added to the scan list when XRay is enabled."
+    ],
+    "value": false
+  }
+}

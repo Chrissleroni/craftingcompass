@@ -1,0 +1,15 @@
+[
+  {"version":1},
+  {"ingredient":{"id":"refinedstorage:machine_casing"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"powah:dielectric_rod"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"powah:dielectric_rod_horizontal"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"powah:dielectric_casing"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"powah:ender_core"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"powah:player_aerial_pearl"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"refinedstorage:construction_core"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"refinedstorage:grid"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"refinedstorage:crafting_grid"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"refinedstorage:raw_advanced_processor"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"refinedstorage:advanced_processor"},"type":"item_stack","bookmarkType":"INGREDIENT"},
+  {"ingredient":{"id":"refinedstorage:silicon"},"type":"item_stack","bookmarkType":"INGREDIENT"}
+]

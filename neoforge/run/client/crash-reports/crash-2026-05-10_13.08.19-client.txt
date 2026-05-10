@@ -1,0 +1,551 @@
+---- Minecraft Crash Report ----
+// Who set us up the TNT?
+
+Time: 2026-05-10 13:08:19
+Description: stage
+
+net.neoforged.fml.ModLoadingException: Loading errors encountered:
+	- An uncaught parallel processing error has occurred.
+	  snownee.jade.api.TraceableException: Exception occurred in evilcraftcompat
+Loading warnings encountered:
+	- loadwarning.neoforge.onlyin
+	- loadwarning.neoforge.onlyin
+
+	at net.neoforged.fml.ModLoader.waitForFuture(ModLoader.java:253) ~[loader-11.0.13.jar:11.0] {}
+	at net.neoforged.fml.ModLoader.waitForTask(ModLoader.java:155) ~[loader-11.0.13.jar:11.0] {}
+	at net.neoforged.fml.ModLoader.runInitTask(ModLoader.java:135) ~[loader-11.0.13.jar:11.0] {}
+	at net.neoforged.fml.ModLoader.dispatchParallelEvent(ModLoader.java:146) ~[loader-11.0.13.jar:11.0] {}
+	at TRANSFORMER/neoforge@26.1.2.43-beta/net.neoforged.neoforge.internal.CommonModLoader.load(CommonModLoader.java:83) ~[neoforge-26.1.2.43-beta-universal.jar:?] {}
+	at TRANSFORMER/neoforge@26.1.2.43-beta/net.neoforged.neoforge.client.loading.ClientModLoader.finish(ClientModLoader.java:66) [neoforge-26.1.2.43-beta-universal.jar:?] {}
+	at TRANSFORMER/minecraft@26.1.2/net.minecraft.client.Minecraft.<init>(Minecraft.java:695) [minecraft-patched-26.1.2.43-beta.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:mixins.iris.json:MixinOptions_Entrypoint from mod iris,APP:disenchanting_table.mixins.json:MinecraftMixin from mod disenchanting_table,APP:sodium-extra.mixins.json:gui.MixinMinecraftClient from mod sodium_extra,APP:mixins.iris.json:MixinMinecraft_Images from mod iris,APP:mixins.iris.json:MixinMinecraft_Keybinds from mod iris,APP:mixins.iris.json:MixinMinecraft_PipelineManagement from mod iris,APP:balm.neoforge.mixins.json:MinecraftMixin from mod balm,APP:sound_physics_remastered.mixins.json:MinecraftMixin from mod sound_physics_remastered,APP:resourcefulconfig.mixins.json:client.MinecraftMixin from mod resourcefulconfig,APP:lithium-neoforge.mixins.json:startup.MinecraftMixin from mod lithium,APP:laserbridges.mixins.json:MixinMinecraft from mod laserbridges,APP:glitchcore.mixins.json:client.MixinMinecraft from mod glitchcore,APP:sodium-common.mixins.json:core.MinecraftMixin from mod sodium,APP:sodium-common.mixins.json:features.gui.hooks.debug.MinecraftRenderFrameMixin from mod sodium,APP:sodium-neoforge.mixins.json:platform.neoforge.EntrypointMixin from mod sodium,APP:moreculling.mixins.json:Minecraft_managersMixin from mod moreculling,APP:moreculling.mixins.json:blockstates.Minecraft_loadBlocksMixin from mod moreculling,APP:medieval_end.mixins.json:MixinMinecraft from mod medieval_end,APP:allthetweaks.mixins.json:MinecraftMixin from mod allthetweaks,APP:medieval_nether.mixins.json:MixinMinecraft from mod medieval_nether,APP:euphoria_patcher.mixins.json:ReloadShadersOnDimensionChangeMixin from mod euphoria_patcher,APP:euphoria_patcher.mixins.json:ClientTickMixin from mod euphoria_patcher,APP:medieval_buildings.mixins.json:MixinMinecraft from mod medieval_buildings,APP:konkrete.mixins.json:client.MixinMinecraft from mod konkrete,APP:entity_model_features.mixins.json:MixinResourceReloadEnd from mod entity_model_features,APP:entity_model_features.mixins.json:MixinResourceReloadStart from mod entity_model_features,APP:entity_model_features.mixins.json:accessor.MinecraftClientAccessor from mod entity_model_features,APP:entity_texture_features.mixins.json:reloading.MixinMinecraftClient from mod entity_texture_features,APP:entity_texture_features.mixins.json:reloading.MixinResourceReload from mod entity_texture_features,APP:monolib.mixins.json:MinecraftMixin from mod monolib,APP:monolib.neoforge.mixins.json:NeoForgeMinecraftMixin from mod monolib,APP:framework.common.mixins.json:client.MinecraftMixin from mod framework,APP:journeymap.mixins.json:client.MinecraftMixin from mod journeymap,APP:DistantHorizons.neoforge.mixins.json:client.MixinMinecraft from mod distanthorizons,APP:yacl.mixins.json:MinecraftMixin from mod yet_another_config_lib_v3,APP:justzoom.neoforge.mixins.json:client.MixinMinecraft from mod justzoom]}
+	at TRANSFORMER/minecraft@26.1.2/net.minecraft.client.main.Main.main(Main.java:231) [minecraft-patched-26.1.2.43-beta.jar:?] {neoforge:mixin[APP:euphoria_patcher.mixins.json:EuphoriaPatcherMixin from mod euphoria_patcher]}
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-11.0.13.jar:11.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?] {}
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Thread: Render thread
+Stacktrace:
+	at net.neoforged.fml.ModLoader.waitForFuture(ModLoader.java:253) ~[loader-11.0.13.jar:11.0] {}
+	at net.neoforged.fml.ModLoader.waitForTask(ModLoader.java:155) ~[loader-11.0.13.jar:11.0] {}
+	at net.neoforged.fml.ModLoader.runInitTask(ModLoader.java:135) ~[loader-11.0.13.jar:11.0] {}
+	at net.neoforged.fml.ModLoader.dispatchParallelEvent(ModLoader.java:146) ~[loader-11.0.13.jar:11.0] {}
+-- Finish mod loading --
+Details:
+	Modules: 
+		15213537221511083716windows-x86_64-c2me-opts-natives-math.dll
+		ADVAPI32.dll:Advanced Windows 32 Base API:10.0.22621.5124 (WinBuild.160101.0800):Microsoft Corporation
+		AVRT.dll:Multimedia Realtime Runtime:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		COMCTL32.dll:User Experience Controls Library:6.10 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPT32.dll:Crypto API32:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPTBASE.DLL:Base cryptographic API DLL:10.0.22621.4746 (WinBuild.160101.0800):Microsoft Corporation
+		CRYPTSP.dll:Cryptographic Service Provider API:10.0.22621.6060 (WinBuild.160101.0800):Microsoft Corporation
+		CoreMessaging.dll:Microsoft CoreMessaging Dll:10.0.22621.5415 (WinBuild.160101.0800):Microsoft Corporation
+		DBGHELP.DLL:Windows Image Helper:10.0.22621.5471 (WinBuild.160101.0800):Microsoft Corporation
+		DEVOBJ.dll:Device Information Set DLL:10.0.22621.2506 (WinBuild.160101.0800):Microsoft Corporation
+		DNSAPI.dll:DNS Client API DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		GDI32.dll:GDI Client DLL:10.0.22621.5697 (WinBuild.160101.0800):Microsoft Corporation
+		GLU32.dll:OpenGL Utility Library DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		IMM32.DLL:Multi-User Windows IMM32 API Client DLL:10.0.22621.5697 (WinBuild.160101.0800):Microsoft Corporation
+		IPHLPAPI.DLL:IP Helper API:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		KERNEL32.DLL:Windows NT BASE API Client DLL:10.0.22621.5624 (WinBuild.160101.0800):Microsoft Corporation
+		KERNELBASE.dll:Windows NT BASE API Client DLL:10.0.22621.5624 (WinBuild.160101.0800):Microsoft Corporation
+		MMDevApi.dll:MMDevice API:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		MSCTF.dll:MSCTF Server DLL:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		MpOav.dll:IOfficeAntiVirus Module:4.18.26030.3011 (58e93915dbf52150fd35efdb420a24f1e40d0e23):Microsoft Corporation
+		NSI.dll:NSI User-mode interface DLL:10.0.22621.4746 (WinBuild.160101.0800):Microsoft Corporation
+		NTASN1.dll:Microsoft ASN.1 API:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		OLEAUT32.dll:OLEAUT32.DLL:10.0.22621.5697 (WinBuild.160101.0800):Microsoft Corporation
+		OpenAL.dll:Main implementation library:1.25.1:
+		POWRPROF.dll:Power Profile Helper DLL:10.0.22621.5413 (WinBuild.160101.0800):Microsoft Corporation
+		PSAPI.DLL:Process Status Helper:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		RPCRT4.dll:Remote Procedure Call Runtime:10.0.22621.2506 (WinBuild.160101.0800):Microsoft Corporation
+		SETUPAPI.dll:Windows Setup API:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		SHCORE.dll:SHCORE:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		SHELL32.dll:Windows Shell Common Dll:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		UMPDC.dll:User Mode Power Dependency Coordinator:10.0.22621.5124 (WinBuild.160101.0800):Microsoft Corporation
+		USER32.dll:Multi-User Windows USER API Client DLL:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		USERENV.dll:Userenv:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		VCRUNTIME140.dll:Microsoft® C Runtime Library:14.40.33810.0:Microsoft Corporation
+		VERSION.dll:Version Checking and File Installation Libraries:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		WINMM.dll:MCI API DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		WINSTA.dll:Winstation Library:10.0.22621.6060 (WinBuild.160101.0800):Microsoft Corporation
+		WINTRUST.dll:Microsoft Trust Verification APIs:10.0.22621.6060 (WinBuild.160101.0800):Microsoft Corporation
+		WS2_32.dll:Windows Socket 2.0 32-Bit DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		WTSAPI32.dll:Windows Remote Desktop Session Host Server SDK APIs:10.0.22621.5547 (WinBuild.160101.0800):Microsoft Corporation
+		amsi.dll:Anti-Malware Scan Interface:10.0.22621.3527 (WinBuild.160101.0800):Microsoft Corporation
+		apphelp.dll:Application Compatibility Client Library:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		awt.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		bcrypt.dll:Windows Cryptographic Primitives Library:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		bcryptPrimitives.dll:Windows Cryptographic Primitives Library:10.0.22621.4317 (WinBuild.160101.0800):Microsoft Corporation
+		cfgmgr32.dll:Configuration Manager DLL:10.0.22621.2506 (WinBuild.160101.0800):Microsoft Corporation
+		clbcatq.dll:COM+ Configuration Catalog:2001.12.10941.16384 (WinBuild.160101.0800):Microsoft Corporation
+		combase.dll:Microsoft COM for Windows:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		cryptnet.dll:Crypto Network Related API:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		dbgcore.DLL:Windows Core Debugging Helpers:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		dinput8.dll:Microsoft DirectInput:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		drvstore.dll:Driver Store API:10.0.22621.5413 (WinBuild.160101.0800):Microsoft Corporation
+		dwmapi.dll:Microsoft Desktop Window Manager API:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		dxcore.dll:DXCore:10.0.22621.5415 (WinBuild.160101.0800):Microsoft Corporation
+		extnet.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		fastprox.dll:WMI Custom Marshaller:10.0.22621.5415 (WinBuild.160101.0800):Microsoft Corporation
+		fwpuclnt.dll:FWP/IPsec User-Mode API:10.0.22621.5697 (WinBuild.160101.0800):Microsoft Corporation
+		gdi32full.dll:GDI Client DLL:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		glfw.dll:GLFW 3.5.0 DLL:3.5.0:GLFW
+		icm32.dll:Microsoft Color Management Module (CMM):10.0.22621.4455 (WinBuild.160101.0800):Microsoft Corporation
+		imagehlp.dll:Windows NT Image Helper:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		inputhost.dll:InputHost:10.0.22621.5415 (WinBuild.160101.0800):Microsoft Corporation
+		java.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		java.exe:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		jemalloc.dll
+		jimage.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		jli.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		jna2985485892121891170.dll:JNA native library:7.0.2:Java(TM) Native Access (JNA)
+		jna3201956174648405649.dll:JNA native library:7.0.2:Java(TM) Native Access (JNA)
+		jvm.dll:OpenJDK 64-Bit server VM:25.0.2.0:Eclipse Adoptium
+		kernel.appcore.dll:AppModel API Host:10.0.22621.3958 (WinBuild.160101.0800):Microsoft Corporation
+		libzstd-jni_dh-1.5.7-612841476890701525065.dll
+		lwjgl.dll
+		lwjgl_opengl.dll
+		lwjgl_stb.dll
+		management.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		management_ext.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		msasn1.dll:ASN.1 Runtime APIs:10.0.22621.2506 (WinBuild.160101.0800):Microsoft Corporation
+		mscms.dll:Microsoft Colour Matching System DLL:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		msvcp140.dll:Microsoft® C Runtime Library:14.40.33810.0:Microsoft Corporation
+		msvcp_win.dll:Microsoft® C Runtime Library:10.0.22621.3374 (WinBuild.160101.0800):Microsoft Corporation
+		msvcrt.dll:Windows NT CRT DLL:7.0.22621.2506 (WinBuild.160101.0800):Microsoft Corporation
+		mswsock.dll:Microsoft Windows Sockets 2.0 Service Provider:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		napinsp.dll:E-mail Naming Shim Provider:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		ncrypt.dll:Windows NCrypt Router:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		net.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		nio.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		nlansp_c.dll:NLA Namespace Service Provider DLL:10.0.22621.5331 (WinBuild.160101.0800):Microsoft Corporation
+		ntdll.dll:NT Layer DLL:10.0.22621.5624 (WinBuild.160101.0800):Microsoft Corporation
+		ntmarta.dll:Windows NT MARTA provider:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		nvgpucomp64.dll:NVIDIA GPU Compiler Driver, Version 596.36 :32.0.15.9636:NVIDIA Corporation
+		nvoglv64.dll:NVIDIA Compatible OpenGL ICD:32.0.15.9636:NVIDIA Corporation
+		nvspcap64.dll:NVIDIA Game Proxy 8FileVersion  1:11.0.5.420  8Produc:NVIDIA Corporation  L$FileDescriptio
+		ole32.dll:Microsoft OLE for Windows:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		opengl32.dll:OpenGL Client DLL:10.0.22621.5415 (WinBuild.160101.0800):Microsoft Corporation
+		pdh.dll:Windows Performance Data Helper DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		perfos.dll:Windows System Performance Objects DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		perfproc.dll:Windows System Process Performance Objects DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		pfclient.dll:SysMain Client:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		pnrpnsp.dll:PNRP Name Space Provider:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		profapi.dll:User Profile Basic API:10.0.22621.5840 (WinBuild.160101.0800):Microsoft Corporation
+		rasadhlp.dll:Remote Access AutoDial Helper:10.0.22621.6199 (WinBuild.160101.0800):Microsoft Corporation
+		rsaenh.dll:Microsoft Enhanced Cryptographic Provider:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		sapi.dll:Speech API:5.3.31022.00 (WinBuild.160101.0800):Microsoft Corporation
+		sechost.dll:Host for SCM/SDDL/LSA Lookup APIs:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		shlwapi.dll:Shell Light-weight Utility Library:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		sqlite-3.47.2.0-9f50ccfb-de1a-4444-94ff-5379aefa6143-sqlitejdbc.dll
+		sunmscapi.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		textinputframework.dll:"TextInputFramework.DYNLINK":10.0.22621.5983 (WinBuild.160101.0800):Microsoft Corporation
+		ucrtbase.dll:Microsoft® C Runtime Library:10.0.22621.3593 (WinBuild.160101.0800):Microsoft Corporation
+		uxtheme.dll:Microsoft UxTheme Library:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		vcruntime140_1.dll:Microsoft® C Runtime Library:14.40.33810.0:Microsoft Corporation
+		verify.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+		wbemcomn.dll:WMI:10.0.22621.2506 (WinBuild.160101.0800):Microsoft Corporation
+		wbemprox.dll:WMI:10.0.22621.3672 (WinBuild.160101.0800):Microsoft Corporation
+		wbemsvc.dll:WMI:10.0.22621.3672 (WinBuild.160101.0800):Microsoft Corporation
+		win32u.dll:Win32u:10.0.22621.6199 (WinBuild.160101.0800):Microsoft Corporation
+		windows.storage.dll:Microsoft WinRT Storage API:10.0.22621.6133 (WinBuild.160101.0800):Microsoft Corporation
+		winrnr.dll:LDAP RnR Provider DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		wintypes.dll:Windows Base Types DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		wldp.dll:Windows Lockdown Policy:10.0.22621.2506 (WinBuild.160101.0800):Microsoft Corporation
+		wshbth.dll:Windows Sockets Helper DLL:10.0.22621.5840 (WinBuild.160101.0800):Microsoft Corporation
+		wshunix.dll:AF_UNIX Winsock2 Helper DLL:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		xinput1_4.dll:Microsoft Common Controller API:10.0.22621.1 (WinBuild.160101.0800):Microsoft Corporation
+		zip.dll:OpenJDK Platform binary:25.0.2.0:Eclipse Adoptium
+Stacktrace:
+	at TRANSFORMER/neoforge@26.1.2.43-beta/net.neoforged.neoforge.client.loading.ClientModLoader.finish(ClientModLoader.java:66) [neoforge-26.1.2.43-beta-universal.jar:?] {}
+	at TRANSFORMER/minecraft@26.1.2/net.minecraft.client.Minecraft.<init>(Minecraft.java:695) [minecraft-patched-26.1.2.43-beta.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:mixins.iris.json:MixinOptions_Entrypoint from mod iris,APP:disenchanting_table.mixins.json:MinecraftMixin from mod disenchanting_table,APP:sodium-extra.mixins.json:gui.MixinMinecraftClient from mod sodium_extra,APP:mixins.iris.json:MixinMinecraft_Images from mod iris,APP:mixins.iris.json:MixinMinecraft_Keybinds from mod iris,APP:mixins.iris.json:MixinMinecraft_PipelineManagement from mod iris,APP:balm.neoforge.mixins.json:MinecraftMixin from mod balm,APP:sound_physics_remastered.mixins.json:MinecraftMixin from mod sound_physics_remastered,APP:resourcefulconfig.mixins.json:client.MinecraftMixin from mod resourcefulconfig,APP:lithium-neoforge.mixins.json:startup.MinecraftMixin from mod lithium,APP:laserbridges.mixins.json:MixinMinecraft from mod laserbridges,APP:glitchcore.mixins.json:client.MixinMinecraft from mod glitchcore,APP:sodium-common.mixins.json:core.MinecraftMixin from mod sodium,APP:sodium-common.mixins.json:features.gui.hooks.debug.MinecraftRenderFrameMixin from mod sodium,APP:sodium-neoforge.mixins.json:platform.neoforge.EntrypointMixin from mod sodium,APP:moreculling.mixins.json:Minecraft_managersMixin from mod moreculling,APP:moreculling.mixins.json:blockstates.Minecraft_loadBlocksMixin from mod moreculling,APP:medieval_end.mixins.json:MixinMinecraft from mod medieval_end,APP:allthetweaks.mixins.json:MinecraftMixin from mod allthetweaks,APP:medieval_nether.mixins.json:MixinMinecraft from mod medieval_nether,APP:euphoria_patcher.mixins.json:ReloadShadersOnDimensionChangeMixin from mod euphoria_patcher,APP:euphoria_patcher.mixins.json:ClientTickMixin from mod euphoria_patcher,APP:medieval_buildings.mixins.json:MixinMinecraft from mod medieval_buildings,APP:konkrete.mixins.json:client.MixinMinecraft from mod konkrete,APP:entity_model_features.mixins.json:MixinResourceReloadEnd from mod entity_model_features,APP:entity_model_features.mixins.json:MixinResourceReloadStart from mod entity_model_features,APP:entity_model_features.mixins.json:accessor.MinecraftClientAccessor from mod entity_model_features,APP:entity_texture_features.mixins.json:reloading.MixinMinecraftClient from mod entity_texture_features,APP:entity_texture_features.mixins.json:reloading.MixinResourceReload from mod entity_texture_features,APP:monolib.mixins.json:MinecraftMixin from mod monolib,APP:monolib.neoforge.mixins.json:NeoForgeMinecraftMixin from mod monolib,APP:framework.common.mixins.json:client.MinecraftMixin from mod framework,APP:journeymap.mixins.json:client.MinecraftMixin from mod journeymap,APP:DistantHorizons.neoforge.mixins.json:client.MixinMinecraft from mod distanthorizons,APP:yacl.mixins.json:MinecraftMixin from mod yet_another_config_lib_v3,APP:justzoom.neoforge.mixins.json:client.MixinMinecraft from mod justzoom]}
+	at TRANSFORMER/minecraft@26.1.2/net.minecraft.client.main.Main.main(Main.java:231) [minecraft-patched-26.1.2.43-beta.jar:?] {neoforge:mixin[APP:euphoria_patcher.mixins.json:EuphoriaPatcherMixin from mod euphoria_patcher]}
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-11.0.13.jar:11.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?] {}
+
+
+-- Uptime --
+Details:
+	JVM uptime: 20.265s
+	Wall uptime: 3.177s
+	High-res time: 19.485s
+	Client ticks: 0 ticks / 0.000s
+Stacktrace:
+	at TRANSFORMER/minecraft@26.1.2/net.minecraft.client.Minecraft.fillReport(Minecraft.java:2471) [minecraft-patched-26.1.2.43-beta.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:mixins.iris.json:MixinOptions_Entrypoint from mod iris,APP:disenchanting_table.mixins.json:MinecraftMixin from mod disenchanting_table,APP:sodium-extra.mixins.json:gui.MixinMinecraftClient from mod sodium_extra,APP:mixins.iris.json:MixinMinecraft_Images from mod iris,APP:mixins.iris.json:MixinMinecraft_Keybinds from mod iris,APP:mixins.iris.json:MixinMinecraft_PipelineManagement from mod iris,APP:balm.neoforge.mixins.json:MinecraftMixin from mod balm,APP:sound_physics_remastered.mixins.json:MinecraftMixin from mod sound_physics_remastered,APP:resourcefulconfig.mixins.json:client.MinecraftMixin from mod resourcefulconfig,APP:lithium-neoforge.mixins.json:startup.MinecraftMixin from mod lithium,APP:laserbridges.mixins.json:MixinMinecraft from mod laserbridges,APP:glitchcore.mixins.json:client.MixinMinecraft from mod glitchcore,APP:sodium-common.mixins.json:core.MinecraftMixin from mod sodium,APP:sodium-common.mixins.json:features.gui.hooks.debug.MinecraftRenderFrameMixin from mod sodium,APP:sodium-neoforge.mixins.json:platform.neoforge.EntrypointMixin from mod sodium,APP:moreculling.mixins.json:Minecraft_managersMixin from mod moreculling,APP:moreculling.mixins.json:blockstates.Minecraft_loadBlocksMixin from mod moreculling,APP:medieval_end.mixins.json:MixinMinecraft from mod medieval_end,APP:allthetweaks.mixins.json:MinecraftMixin from mod allthetweaks,APP:medieval_nether.mixins.json:MixinMinecraft from mod medieval_nether,APP:euphoria_patcher.mixins.json:ReloadShadersOnDimensionChangeMixin from mod euphoria_patcher,APP:euphoria_patcher.mixins.json:ClientTickMixin from mod euphoria_patcher,APP:medieval_buildings.mixins.json:MixinMinecraft from mod medieval_buildings,APP:konkrete.mixins.json:client.MixinMinecraft from mod konkrete,APP:entity_model_features.mixins.json:MixinResourceReloadEnd from mod entity_model_features,APP:entity_model_features.mixins.json:MixinResourceReloadStart from mod entity_model_features,APP:entity_model_features.mixins.json:accessor.MinecraftClientAccessor from mod entity_model_features,APP:entity_texture_features.mixins.json:reloading.MixinMinecraftClient from mod entity_texture_features,APP:entity_texture_features.mixins.json:reloading.MixinResourceReload from mod entity_texture_features,APP:monolib.mixins.json:MinecraftMixin from mod monolib,APP:monolib.neoforge.mixins.json:NeoForgeMinecraftMixin from mod monolib,APP:framework.common.mixins.json:client.MinecraftMixin from mod framework,APP:journeymap.mixins.json:client.MinecraftMixin from mod journeymap,APP:DistantHorizons.neoforge.mixins.json:client.MixinMinecraft from mod distanthorizons,APP:yacl.mixins.json:MinecraftMixin from mod yet_another_config_lib_v3,APP:justzoom.neoforge.mixins.json:client.MixinMinecraft from mod justzoom]}
+	at TRANSFORMER/neoforge@26.1.2.43-beta/net.neoforged.neoforge.client.loading.ClientModLoader.finish(ClientModLoader.java:73) [neoforge-26.1.2.43-beta-universal.jar:?] {}
+	at TRANSFORMER/minecraft@26.1.2/net.minecraft.client.Minecraft.<init>(Minecraft.java:695) [minecraft-patched-26.1.2.43-beta.jar:?] {neoforge:access_transformer,neoforge:access_transformer,neoforge:mixin[APP:mixins.iris.json:MixinOptions_Entrypoint from mod iris,APP:disenchanting_table.mixins.json:MinecraftMixin from mod disenchanting_table,APP:sodium-extra.mixins.json:gui.MixinMinecraftClient from mod sodium_extra,APP:mixins.iris.json:MixinMinecraft_Images from mod iris,APP:mixins.iris.json:MixinMinecraft_Keybinds from mod iris,APP:mixins.iris.json:MixinMinecraft_PipelineManagement from mod iris,APP:balm.neoforge.mixins.json:MinecraftMixin from mod balm,APP:sound_physics_remastered.mixins.json:MinecraftMixin from mod sound_physics_remastered,APP:resourcefulconfig.mixins.json:client.MinecraftMixin from mod resourcefulconfig,APP:lithium-neoforge.mixins.json:startup.MinecraftMixin from mod lithium,APP:laserbridges.mixins.json:MixinMinecraft from mod laserbridges,APP:glitchcore.mixins.json:client.MixinMinecraft from mod glitchcore,APP:sodium-common.mixins.json:core.MinecraftMixin from mod sodium,APP:sodium-common.mixins.json:features.gui.hooks.debug.MinecraftRenderFrameMixin from mod sodium,APP:sodium-neoforge.mixins.json:platform.neoforge.EntrypointMixin from mod sodium,APP:moreculling.mixins.json:Minecraft_managersMixin from mod moreculling,APP:moreculling.mixins.json:blockstates.Minecraft_loadBlocksMixin from mod moreculling,APP:medieval_end.mixins.json:MixinMinecraft from mod medieval_end,APP:allthetweaks.mixins.json:MinecraftMixin from mod allthetweaks,APP:medieval_nether.mixins.json:MixinMinecraft from mod medieval_nether,APP:euphoria_patcher.mixins.json:ReloadShadersOnDimensionChangeMixin from mod euphoria_patcher,APP:euphoria_patcher.mixins.json:ClientTickMixin from mod euphoria_patcher,APP:medieval_buildings.mixins.json:MixinMinecraft from mod medieval_buildings,APP:konkrete.mixins.json:client.MixinMinecraft from mod konkrete,APP:entity_model_features.mixins.json:MixinResourceReloadEnd from mod entity_model_features,APP:entity_model_features.mixins.json:MixinResourceReloadStart from mod entity_model_features,APP:entity_model_features.mixins.json:accessor.MinecraftClientAccessor from mod entity_model_features,APP:entity_texture_features.mixins.json:reloading.MixinMinecraftClient from mod entity_texture_features,APP:entity_texture_features.mixins.json:reloading.MixinResourceReload from mod entity_texture_features,APP:monolib.mixins.json:MinecraftMixin from mod monolib,APP:monolib.neoforge.mixins.json:NeoForgeMinecraftMixin from mod monolib,APP:framework.common.mixins.json:client.MinecraftMixin from mod framework,APP:journeymap.mixins.json:client.MinecraftMixin from mod journeymap,APP:DistantHorizons.neoforge.mixins.json:client.MixinMinecraft from mod distanthorizons,APP:yacl.mixins.json:MinecraftMixin from mod yet_another_config_lib_v3,APP:justzoom.neoforge.mixins.json:client.MixinMinecraft from mod justzoom]}
+	at TRANSFORMER/minecraft@26.1.2/net.minecraft.client.main.Main.main(Main.java:231) [minecraft-patched-26.1.2.43-beta.jar:?] {neoforge:mixin[APP:euphoria_patcher.mixins.json:EuphoriaPatcherMixin from mod euphoria_patcher]}
+	at net.neoforged.fml.startup.Client.main(Client.java:19) [loader-11.0.13.jar:11.0] {}
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[?:?] {}
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[?:?] {}
+	at net.neoforged.devlaunch.Main.main(Main.java:57) [DevLaunch-1.0.2.jar:?] {}
+
+
+-- Last reload --
+Details:
+	Reload number: 0
+
+-- System Details --
+Details:
+	Minecraft Version: 26.1.2
+	Minecraft Version ID: 26.1.2
+	Operating System: Windows 11 (amd64) version 10.0
+	Java Version: 25.0.2, Eclipse Adoptium
+	Java VM Version: OpenJDK 64-Bit Server VM (mixed mode, sharing), Eclipse Adoptium
+	Memory: 326794256 bytes (311 MiB) / 1417674752 bytes (1352 MiB) up to 8510242816 bytes (8116 MiB)
+	Memory (heap): init: 508MiB, used: 1034MiB, committed: 1352MiB, max: 8116MiB
+	Memory (non-head): init: 007MiB, used: 437MiB, committed: 442MiB, max: 000MiB
+	CPUs: 24
+	Processor Vendor: AuthenticAMD
+	Processor Name: AMD Ryzen 9 7900X3D 12-Core Processor          
+	Identifier: AuthenticAMD Family 25 Model 97 Stepping 2
+	Microarchitecture: Zen 3
+	Frequency (GHz): 4.40
+	Number of physical packages: 1
+	Number of physical CPUs: 12
+	Number of logical CPUs: 24
+	Graphics card #0 name: NVIDIA GeForce RTX 4070 SUPER
+	Graphics card #0 vendor: NVIDIA
+	Graphics card #0 VRAM (MiB): 12282.00
+	Graphics card #0 deviceId: VideoController1
+	Graphics card #0 versionInfo: 32.0.15.9636
+	Graphics card #1 name: AMD Radeon(TM) Graphics
+	Graphics card #1 vendor: Advanced Micro Devices, Inc.
+	Graphics card #1 VRAM (MiB): 512.00
+	Graphics card #1 deviceId: VideoController2
+	Graphics card #1 versionInfo: 31.0.24002.92
+	Memory slot #0 capacity (MiB): 16384.00
+	Memory slot #0 clockSpeed (GHz): 4.80
+	Memory slot #0 type: DDR5
+	Memory slot #1 capacity (MiB): 16384.00
+	Memory slot #1 clockSpeed (GHz): 4.80
+	Memory slot #1 type: DDR5
+	Virtual memory max (MiB): 48320.52
+	Virtual memory used (MiB): 18440.61
+	Swap memory total (MiB): 15872.00
+	Swap memory used (MiB): 295.68
+	Space in storage for jna.tmpdir (MiB): <path not set>
+	Space in storage for org.lwjgl.system.SharedLibraryExtractPath (MiB): <path not set>
+	Space in storage for io.netty.native.workdir (MiB): <path not set>
+	Space in storage for java.io.tmpdir (MiB): available: 339037.50, total: 1906757.00
+	Space in storage for workdir (MiB): available: 339037.50, total: 1906757.00
+	JVM Flags: 0 total; 
+	Debug Flags: 0 total; 
+	Launched Version: 26.1.2.43-beta
+	Backend library: LWJGL version 3.4.1+2
+	Backend API: NVIDIA GeForce RTX 4070 SUPER/PCIe/SSE2 GL version 3.3.0 NVIDIA 596.36, NVIDIA Corporation
+	Window size: 854x480
+	GFLW Platform: win32
+	Render Extensions: GL_ARB_buffer_storage, GL_KHR_debug, GL_ARB_vertex_attrib_binding, GL_ARB_direct_state_access, GL_EXT_texture_filter_anisotropic
+	GL debug messages: 
+	Is Modded: Definitely; Client brand changed to 'neoforge'
+	Universe: 400921fb54442d18
+	Type: Client
+	Transparency: regular
+	Render Distance: 16/16 chunks
+	Resource Packs: vanilla, mod_resources, mod/sodium, mod/c2me_fixes_worldgen_threading_issues, mod/almanac, mod/energizedpower, mod/disenchanting_table (incompatible), mod/sodium_extra, mod/underground_villages, mod/c2me_rewrites_chunk_serializer, mod/integratedterminals,integratedterminalscompat (incompatible), mod/mcwwindows (incompatible), mod/endercore, mod/c2me_fixes_general_threading_issues, mod/neoforge (incompatible), mod/evilcraft,evilcraftcompat (incompatible), mod/powah (incompatible), mod/mcwstairs (incompatible), mod/maxhealthfix, mod/iris, mod/guardvillagers (incompatible), mod/universalgrid, mod/c2me, mod/ironbookshelves, mod/balm (incompatible), mod/prickle, mod/c2me_base, mod/justenoughrecipesharing, mod/paraglider, mod/cloth_config (incompatible), mod/sound_physics_remastered, mod/stackrefill (incompatible), mod/refinedstorage (incompatible), mod/athena, mod/easy_piglins, mod/alltheores, mod/codedefinedgui, mod/morevillagers, mod/ironfurnaces, mod/mcwtrpdoors (incompatible), mod/resourcefulconfig, mod/auroral, mod/integratedscripting (incompatible), mod/reeses_sodium_options, mod/lootintegrations_dungeoncrawl (incompatible), mod/c2me_opts_dfc, mod/curios (incompatible), mod/searchables (incompatible), mod/measurements, mod/framedblocks, mod/mr_dungeons_andtaverns (incompatible), mod/mcwroofs (incompatible), mod/deimos (incompatible), mod/mcwfurnitures (incompatible), mod/conditional_mixin (incompatible), mod/lootintegrations_moog (incompatible), mod/journeymap_api (incompatible), mod/mcwlights (incompatible), mod/crafting_on_a_stick (incompatible), mod/lootintegration_townsandtowers (incompatible), mod/c2me_threading_lighting, mod/ftblibrary (incompatible), mod/sophisticateditemactions (incompatible), mod/xray (incompatible), mod/lithostitched, mod/lithium, mod/attributefix, mod/configlibtxf, mod/goblintraders (incompatible), mod/refinedsticks, mod/naturescompass (incompatible), mod/geore, mod/epherolib (incompatible), mod/laserbridges (incompatible), mod/glitchcore (incompatible), mod/farmingforblockheads (incompatible), mod/logisticsnetworks, mod/midnightlib, mod/c2me_rewrites_chunk_system, mod/oreberriesreplanted, mod/moreculling, mod/extradisks, mod/edivadlib, mod/c2me_opts_worldgen_vanilla, mod/c2me_opts_scheduling, mod/mcwpaths (incompatible), mod/integratedcrafting (incompatible), mod/tectonic, mod/lootintegrations_hopo (incompatible), mod/smoothchunk (incompatible), mod/logprot (incompatible), mod/terrablender (incompatible), mod/biomesoplenty (incompatible), mod/mousetweaks (incompatible), mod/allthemodium, mod/cleanswing, mod/forgeconfigapiport (incompatible), mod/kotlinforforge (incompatible), mod/pipez, mod/mmv (incompatible), mod/croptopia (incompatible), mod/bhc, mod/justenoughprofessions (incompatible), mod/c2me_notickvd, mod/underwater_village, mod/appleskin (incompatible), mod/lootr, mod/occultism, mod/refinedstorage_curios_integration (incompatible), mod/constructionstick, mod/medieval_end (incompatible), mod/puzzleslib (incompatible), mod/allthetweaks, mod/aquaculture (incompatible), mod/refinedstorage_jei_integration (incompatible), mod/mns (incompatible), mod/pipe_graph, mod/medieval_nether (incompatible), mod/euphoria_patcher (incompatible), mod/morered, mod/xpbook, mod/cristellib, mod/cyclopscore (incompatible), mod/integrateddynamics,integrateddynamicscompat (incompatible), mod/kuma_api (incompatible), mod/refinedstorage_quartz_arsenal (incompatible), mod/netherportalfix (incompatible), mod/geckolib, mod/c2me_opts_natives_math, mod/connectivity (incompatible), mod/sophisticatedcore (incompatible), mod/kleeslabs (incompatible), mod/gpumemleakfix (incompatible), mod/ktnilcks (incompatible), mod/cookingforblockheads (incompatible), mod/controlling (incompatible), mod/citadel (incompatible), mod/alexsmobs, mod/lootintegrations (incompatible), mod/sophisticatedbackpacks (incompatible), mod/c2me_opts_math, mod/mcwdoors (incompatible), mod/ironshulkerbox, mod/medieval_buildings (incompatible), mod/melody (incompatible), mod/baguettelib (incompatible), mod/ftbteams (incompatible), mod/fzzy_config, mod/c2me_fixes_worldgen_vanilla_bugs, mod/konkrete (incompatible), mod/advanced_fishing (incompatible), mod/crashexploitfixer, mod/mcwbridges (incompatible), mod/entity_model_features (incompatible), mod/entity_texture_features (incompatible), mod/commoncapabilities (incompatible), mod/compressium (incompatible), mod/getittogetherdrops, mod/c2me_fixes_chunkio_threading_issues, mod/lootintegrations_medievalbuildings (incompatible), mod/c2me_client_uncapvd, mod/chunky (incompatible), mod/mcwfences (incompatible), mod/enderio_modded_conduits, mod/collective (incompatible), mod/integratedtunnels,integratedtunnelscompat (incompatible), mod/elevatorid, mod/ftbultimine (incompatible), mod/accelerateddecay, mod/sophisticatedinventoryinteractions (incompatible), mod/resourcefullib, mod/aiimprovements, mod/asynclogger, mod/moreoverlays (incompatible), mod/cupboard (incompatible), mod/context_matters, mod/ftbezcrystals, mod/monolib (incompatible), mod/moogs_structures (incompatible), mod/inventoryessentials (incompatible), mod/framework (incompatible), mod/c2me_rewrites_chunkio, mod/justdirethings, mod/hopo (incompatible), mod/t_and_t, mod/letmedespawn, mod/utilitarian (incompatible), mod/yeetusexperimentus, mod/shulkerboxtooltip (incompatible), mod/c2me_opts_allocs, mod/preview_placement, mod/mbs (incompatible), mod/easy_mob_farm (incompatible), mod/volumetrics, mod/sathlib, mod/rootsclassic, mod/trashslot (incompatible), mod/inventoryspam, mod/flatbedrock (incompatible), mod/sophisticatedstorage (incompatible), mod/more_tier_upgrade, mod/lootintegrations_dnt (incompatible), mod/mss (incompatible), mod/exmachina, mod/commonnetworking (incompatible), mod/shogi (incompatible), mod/waystones (incompatible), mod/taxfreelevels (incompatible), mod/clumps (incompatible), mod/journeymap (incompatible), mod/artifacts, mod/alternate_current, mod/configured (incompatible), mod/dimstorage, mod/dungeoncrawl, mod/charginggadgets (incompatible), mod/mtr (incompatible), mod/hopour (incompatible), mod/guideme, mod/ftbic, mod/ftbmaterials, mod/explorerscompass (incompatible), mod/distanthorizons, mod/pipezlagfix, mod/mininggadgets (incompatible), mod/shogi_api, mod/ftbchunks (incompatible), mod/xycraft_core, mod/jei (incompatible), mod/ftbfiltersystem (incompatible), mod/xycraft_world, mod/xycraft_machines, mod/craftingcompass (incompatible), mod/ali (incompatible), mod/xycraft_override, mod/friendsandfoes (incompatible), mod/interdimensionalwirelesstransmitter, mod/craftingtweaks (incompatible), mod/freelookneoforge (incompatible), mod/lootintegrations_vanilla (incompatible), mod/enchdesc, mod/toolbelt (incompatible), mod/magnumtorch (incompatible), mod/jade (incompatible), mod/hoporp (incompatible), mod/deepnullreforged (incompatible), mod/c2me_server_utils, mod/theurgy, mod/enderio, mod/car, mod/plane, mod/easy_villagers, mod/reliquary (incompatible), mod/mes (incompatible), mod/epitaphs, mod/buildinggadgets2 (incompatible), mod/c2me_opts_worldgen_general, mod/universalenchants (incompatible), mod/c2me_opts_chunkio, mod/modonomicon (incompatible), mod/pylons, mod/mvs (incompatible), mod/ferritecore (incompatible), mod/chisel, mod/yet_another_config_lib_v3 (incompatible), mod/solcarrot (incompatible), mod/moredragoneggs (incompatible), mod/justzoom (incompatible), mod/badoptimizations (incompatible), mod/solargeneration, mod/expandability, mod/enderio_endergy, mod/overflowingbars (incompatible), mod/flickerfix, mod/sophisticatedstorageinmotion (incompatible), add_xycraft_overrides_stone, add_xycraft_overrides_metal, add_xycraft_overrides_glass, add_xycraft_overrides_ui
+	Sound Cache: 0 bytes in 0 buffers
+	Current Language: en_us
+	Locale: en_GB
+	System encoding: Cp1252
+	File encoding: UTF-8
+	CPU: 24x AMD Ryzen 9 7900X3D 12-Core Processor 
+	Class Processors: 
+		00.00%: neoforge:neoforge_dev_dist_cleaner
+		00.00%: neoforge:computing_frames (marker)
+		00.01%: neoforge:runtime_enum_extender
+		03.59%: neoforge:access_transformer
+		02.82%: neoforge:mixin
+		00.00%: neoforge:simple_processors_default (marker)
+		00.00%: neoforge.coremods:field_to_getter.net.minecraft.world.level.biome.biome
+		00.00%: neoforge.coremods:field_to_getter.net.minecraft.world.level.block.flowerpotblock
+		00.00%: neoforge.coremods:field_to_getter.net.minecraft.world.level.levelgen.structure.structure
+		00.07%: neoforge.coremods:method_redirector
+	Mod List: 
+		accelerated-decay-neoforge-26.1.2.4.jar           |Accelerated Decay             |accelerateddecay              |26.1.2.4            |Manifest: 581ec979c1f0665241de5a4611f9111c61b41d90141415b9bcae6363bd23a356
+		Advanced-Fishing-26.1-1.6.4.jar                   |Advanced Fishing              |advanced_fishing              |1.6.4               |Manifest: b2f3b6135da02d7304e27289bdd02fd73d9ab1bdb1e94a2beaf2c4817004f029
+		advanced-xray-neoforge-26.1.0.1.jar               |Advanced XRay                 |xray                          |26.1.0.1            |Manifest: 2524e98027824b09a8cf90f157c32a5e22edde6924265e06de1e7bc2eab83d4f
+		AdvancedLootInfo-neoforge-26.1.2-1.10.0.jar       |AdvancedLootInfo              |ali                           |1.9.1               |Manifest: 2dccf3c99bf52b6a14dd8a371e4b2417e90f893d00adb6d2ca54a8c9ff8a842d
+		AI-Improvements-26.1.1-0.5.4.jar                  |AI-Improvements               |aiimprovements                |0.5.4               |Manifest: 4d7ab708ec4f99092e5ec83b21c4e038f04f94644211d61b9576bcb726ddbf4e
+		alexsmobsneoforge-26.1.2-1.0.4.jar                |Alex's Mobs                   |alexsmobs                     |26.1-1.0.0          |Manifest: f21149f692065581dff7ebb96a73b17915ff9bb619c7fd58dfb234cdf4627f27
+		allthemodium-4.0.4.jar                            |AllTheModium                  |allthemodium                  |4.0.4               |Manifest: 9d456c803d7815aaba189f7437ce30a2521f97c0c6fb2e9e806aeff72f390cd8
+		alltheores-4.0.1.jar                              |AllTheOres                    |alltheores                    |4.0.1               |Manifest: 50dc37857784d57b7adf20c2ea85924229963444fe877095fd2b651cac41d43b
+		allthetweaks-3.0.0.jar                            |AllTheTweaks                  |allthetweaks                  |3.0.0               |Manifest: 28c0db2dedd71262cf071f1027bd70c80c84aec7821570987b4521ac06b065b7
+		almanac-1.26.x-neoforge-1.6.2.jar                 |Almanac                       |almanac                       |1.6.2               |Manifest: b76f645f3dd839dc9ea3b5975fc0572020de34efc2e1cb541924779eeafdce34
+		alternate_current-mc26.1-1.9.0.jar                |Alternate Current             |alternate_current             |1.9.0               |Manifest: 08babfd7a3cc750a9ede287925b13f0ffebfdc9ad10ab79bd29deac3f888042c
+		appleskin-neoforge-mc26.1-3.0.9.jar               |AppleSkin                     |appleskin                     |3.0.9+mc26.1        |Manifest: 32bfe1ed3dea0684259568dbf2b6fe02e939bf398e54af383238bb3b8cac4da6
+		Aquaculture-26.1.1-2.9.1.jar                      |Aquaculture 2                 |aquaculture                   |2.9.1               |Manifest: 30aaa4b6f53b07e998ae44e9593fca76e49ab3e843f3cbc54113695fc6731a88
+		artifacts-neoforge-15.0.0.jar                     |Artifacts                     |artifacts                     |15.0.0              |Manifest: 0faf06bf64bf58d06de4ce139d74685cf8dc9518ef2d2b9d7fb3ae616d2a964c
+		asynclogger-1.1.1+26.1.1-neoforge-mod.jar         |Async Logger                  |asynclogger                   |1.1.1+26.1.1-neoforg|Manifest: 8fb339e13027917894abbde51b1a44d35d1399aba3e9fdd6dc272eeea59d9a53
+		athena-4.7.2.jar                                  |Athena                        |athena                        |4.7.2               |Manifest: cad5dab46c6c9143e34515c4d7f0a8f81770fd6bf9d737aab17ae0df64506dfd
+		AttributeFix-neoforge-MC26.1.2-26.1.2.1.jar       |AttributeFix                  |attributefix                  |26.1.2.1            |Manifest: 34edae276d91b58c8f861dbb98f3d60e677d4e7d0633e9d16fe93c4b0d802a08
+		auroral-26.1.2-1.5.4.jar                          |Auroral                       |auroral                       |26.1.2-1.5.4        |Manifest: 9215a6b514b9abf43ec84be0423973009904040bd46f7745646ebead86c80e1a
+		BadOptimizations-2.4.1-26.1-forge.jar             |BadOptimizations              |badoptimizations              |2.4.1               |Manifest: 210a6bbd2d3a4f65748fa56d4559efeb9939fea0876ca2882dd49323b6e2a1c4
+		baguettelib-26.1.2-NeoForge-2.0.4.jar             |BaguetteLib                   |baguettelib                   |2.0.4               |Manifest: 0e53ebb4d34ee203c5d5f36933d6b610ebf44e2d49b023e223f645dbc7a1ce77
+		balm-neoforge-26.1.2-26.1.2.6.jar                 |Balm                          |balm                          |26.1.2.6            |Manifest: 2a9525aab4b20da6774333201a72e9cb7359dd876ec15c77887992219d3bd816
+		baubley-heart-canisters-26.1.2-1.7.3.jar          |Baubley Heart Canisters       |bhc                           |26.1.2-1.7.3        |Manifest: a00d51701bb4b7d4f5ef281d3aaa59f70eddfe3d46a850e4f980f37e0e6b6fd6
+		BiomesOPlenty-neoforge-26.1.2-26.1.2.0.5.jar      |Biomes O' Plenty              |biomesoplenty                 |26.1.2.0.5          |Manifest: ea72eef871c1d065fecfe3ef555f8dc899a863f7514dca8c8d6bd3657ff7bf3b
+		boatiview-neoforge-0.0.9-26.1.jar                 |Boat Item View                |boatiview                     |0.0.9               |Manifest: ee6c9700ff0f738f1fc63483b829374327fcecfcd643fa72a009d036069f3762
+		buildinggadgets2-1.4.6.jar                        |Building Gadgets 2            |buildinggadgets2              |1.4.6               |Manifest: 67c02d3a822ddd785692c581ae05b93a1b88767846bb6c89d20498b5598b72ca
+		charginggadgets-1.16.1.jar                        |Charging Gadgets              |charginggadgets               |1.16.1              |Manifest: ccdea206eed498468abd301af253785dc9ac2e6bd8294c5289a07023a948f7a1
+		chisel-3.0.9.jar                                  |Chisel                        |chisel                        |3.0.9               |Manifest: f16d99c847c369ee7957aa11d518c4426e7003bc056abe9c614cc171e1fee7b2
+		Chunky-NeoForge-1.5.3.jar                         |Chunky                        |chunky                        |1.5.3               |Manifest: 6166023e3d6ae8322cefefc186f48755506c4fbd7b3de9bd733a6eb668abab66
+		citadelneoforge-26.1-1.0.2.jar                    |Citadel                       |citadel                       |26.1-1.0.2          |Manifest: a559dd38197fc67a35ef374d2dda0ae100fccb46eed00ce7775085094e4e56dc
+		cleanswing-1.9-26.1.jar                           |Clean Swing                   |cleanswing                    |1.9.1               |Manifest: b50ef5f161ab6ae18fc26c07a65d505a164309cd535029ea68911a787affc850
+		cloth-config-26.1.154.jar                         |Cloth Config v26.1 API        |cloth_config                  |26.1.154            |Manifest: d9147c8549fedad478bd18e2ddeef172ef290a081f80bd4d242d54e027ecd9d8
+		Clumps-neoforge-26.1.2-26.1.2.1.jar               |Clumps                        |clumps                        |26.1.2.1            |Manifest: 7080b16dca245055244920f0ff08fe6929ab6a07fea13809d0ed2a6a119bd4d6
+		codedefinedgui-26.1.2-neoforge-1.9.0.jar          |Code Defined GUI              |codedefinedgui                |1.9.0               |Manifest: a0944a5e57e6db2116435253ca98ed997ad699180b6f59fbc7b9cdc4f851955f
+		collective-26.1.2-8.22.jar                        |Collective                    |collective                    |8.22                |Manifest: fb830d5eb3fff56de2444b93b92c81072b61628d02c31069d7df3b82d1553e46
+		common-networking-neoforge-1.0.22-26.1.jar        |Common Networking             |commonnetworking              |1.0.22-26.1         |Manifest: e9e6d7dc8845c158f6767b01a5a0d196da3815fb20efa7d17e2d62087a616dbd
+		commoncapabilities-26.1.2-neoforge-2.11.6.jar     |CommonCapabilities            |commoncapabilities            |2.11.6              |Manifest: 2269971d9c71670b78c85a50ca42cbe9a815ca368314b5df2ecadd6c9f63b6f0
+		compressium-26.1.2.1.jar                          |Compressium                   |compressium                   |26.1.2.1            |Manifest: aeb0ce367d24fa7610371139820d5a71a0270637a4436f83a2d7aed4fa0f64ed
+		c2me-neoforge-mc26.1.1-0.3.7+alpha.0.85.jar       |Concurrent Chunk Management En|c2me                          |0.3.7+alpha.0.85+26.|Manifest: c33b6668459d1a90a48d4b6ddbf0e1dd1965657b844128d2f75cdbbb041a04e1
+		c2me-base-mc26.1.1-0.3.7+alpha.0.85-all.jar       |Concurrent Chunk Management En|c2me_base                     |0.3.7+alpha.0.85+26.|Manifest: 6360acd802aaaffb497cc8a3b1a6c499d44096ed9ae03e96fa6f3d9272fa067a
+		c2me-client-uncapvd-mc26.1.1-0.3.7+alpha.0.85.jar |Concurrent Chunk Management En|c2me_client_uncapvd           |0.3.7+alpha.0.85+26.|Manifest: 9822d9986d99b2661f338e16b8e7a688fe148717c14c523478b1deb754d49c29
+		c2me-fixes-chunkio-threading-issues-mc26.1.1-0.3.7|Concurrent Chunk Management En|c2me_fixes_chunkio_threading_i|0.3.7+alpha.0.85+26.|Manifest: ff2ae872b6c23da873163d40d9ba4a3f8cdd672d9ce5dc94fae282c6e1d03078
+		c2me-fixes-general-threading-issues-mc26.1.1-0.3.7|Concurrent Chunk Management En|c2me_fixes_general_threading_i|0.3.7+alpha.0.85+26.|Manifest: 3664005ad36f0aded5cc06b8db85472ac0b3387d90582cc485b40eb0ff1a8748
+		c2me-fixes-worldgen-threading-issues-mc26.1.1-0.3.|Concurrent Chunk Management En|c2me_fixes_worldgen_threading_|0.3.7+alpha.0.85+26.|Manifest: ff18238e2f1a013c54768a9fb5c1fa2f63728b13e71333101d1139681a8b42b8
+		c2me-fixes-worldgen-vanilla-bugs-mc26.1.1-0.3.7+al|Concurrent Chunk Management En|c2me_fixes_worldgen_vanilla_bu|0.3.7+alpha.0.85+26.|Manifest: 2e490ce686eae1da2b29ba8db5e2c71ade27cbe5343336ee66455d2d87efb1e8
+		c2me-notickvd-mc26.1.1-0.3.7+alpha.0.85.jar       |Concurrent Chunk Management En|c2me_notickvd                 |0.3.7+alpha.0.85+26.|Manifest: ec35fbb10b5b0e54c2035b943252511e288ec25e173ca6af76509f4e968c2728
+		c2me-opts-chunkio-mc26.1.1-0.3.7+alpha.0.85.jar   |Concurrent Chunk Management En|c2me_opts_chunkio             |0.3.7+alpha.0.85+26.|Manifest: 228dab3b56c1566a7c8962b3e7a2330dde91340004d3712be62133286ccde57a
+		c2me-opts-dfc-mc26.1.1-0.3.7+alpha.0.85.jar       |Concurrent Chunk Management En|c2me_opts_dfc                 |0.3.7+alpha.0.85+26.|Manifest: 36d70442153e0aebfdd308c8629f1ff4ae8d77e82e981536c8172aa14ce03bb1
+		c2me-opts-worldgen-general-mc26.1.1-0.3.7+alpha.0.|Concurrent Chunk Management En|c2me_opts_worldgen_general    |0.3.7+alpha.0.85+26.|Manifest: 1e48494b0fb40134138b431af379dd92bad919fb55ae84f1fd03f516f7e2318c
+		c2me-opts-math-mc26.1.1-0.3.7+alpha.0.85.jar      |Concurrent Chunk Management En|c2me_opts_math                |0.3.7+alpha.0.85+26.|Manifest: 47a01efa8b4429779223e97a60be094a2380fdeaf8ba33062b67bca822fc57b1
+		c2me-opts-allocs-mc26.1.1-0.3.7+alpha.0.85.jar    |Concurrent Chunk Management En|c2me_opts_allocs              |0.3.7+alpha.0.85+26.|Manifest: 3a78ebf9f779835a8e6a73a468a3b0c2978bd1a012a9d33f16f7a93d08c059c7
+		c2me-opts-natives-math-mc26.1.1-0.3.7+alpha.0.85.j|Concurrent Chunk Management En|c2me_opts_natives_math        |0.3.7+alpha.0.85+26.|Manifest: 90b03209c19b5b3f9017d56fc13aa4aba4599a1e8c2bcf3494333098c80ef3fa
+		c2me-opts-scheduling-mc26.1.1-0.3.7+alpha.0.85.jar|Concurrent Chunk Management En|c2me_opts_scheduling          |0.3.7+alpha.0.85+26.|Manifest: 839ecbae212ef93e4e48a90e155b64262356b80ccd96f92b710dd0274cc83baf
+		c2me-opts-worldgen-vanilla-mc26.1.1-0.3.7+alpha.0.|Concurrent Chunk Management En|c2me_opts_worldgen_vanilla    |0.3.7+alpha.0.85+26.|Manifest: 489ca40c4fc3e31c0460822b79626731c1fcbccdc8efbe541d4934ed58a4f922
+		c2me-rewrites-chunkio-mc26.1.1-0.3.7+alpha.0.85.ja|Concurrent Chunk Management En|c2me_rewrites_chunkio         |0.3.7+alpha.0.85+26.|Manifest: 1d172c12d7c1a157674cff5fb13e6abf2fd523ef38a6bcfa130b05e2b2d8479a
+		c2me-rewrites-chunk-serializer-mc26.1.1-0.3.7+alph|Concurrent Chunk Management En|c2me_rewrites_chunk_serializer|0.3.7+alpha.0.85+26.|Manifest: 2bb9cbb32df22fe1ad87b525ee7b1c3f71f2a444508c5ffd9dad30a9db6e2fa4
+		c2me-rewrites-chunk-system-mc26.1.1-0.3.7+alpha.0.|Concurrent Chunk Management En|c2me_rewrites_chunk_system    |0.3.7+alpha.0.85+26.|Manifest: dd50397097dbe1394c193f5ee16c489677926c66608b0a0708c8429570795044
+		c2me-server-utils-mc26.1.1-0.3.7+alpha.0.85.jar   |Concurrent Chunk Management En|c2me_server_utils             |0.3.7+alpha.0.85+26.|Manifest: 1435574c088d536340dad63ae8e51c3b0a1f9af3a15be783e6d14a90bd3c2954
+		c2me-threading-lighting-mc26.1.1-0.3.7+alpha.0.85.|Concurrent Chunk Management En|c2me_threading_lighting       |0.3.7+alpha.0.85+26.|Manifest: e1439fe628134437b9418984dd85668d05ae2278058bb1c3b07a7f75e391a7ae
+		conditional-mixin-neoforge-0.6.3.jar              |conditional mixin             |conditional_mixin             |0.6.3               |Manifest: a990b68c40161596fd9cebb98a715b11882aa55be9391ff543dfbf1ede594560
+		configlibtxf-14.3.2-neoforge.jar                  |ConfigLib TXF                 |configlibtxf                  |14.3.2-neoforge     |Manifest: ccca7117bb11df21883e56cd1d858a7bcc869614cc8c07c34f421de913846abb
+		configured-neoforge-26.1.2-2.7.5.jar              |Configured                    |configured                    |2.7.5               |Manifest: 2cdba40e2b06429a5b705c5aa7e54aaac466325b62bad34ad8eed76cee17e8ff
+		connectivity-26.1-7.6.jar                         |Connectivity Mod              |connectivity                  |7.6                 |Manifest: 5fe2eba7e56ed273907f2eba5050b5b819e3288ab8036158a5661371e43e1725
+		ConstructionSticks-26.1.2-3.1.2.jar               |Construction Sticks           |constructionstick             |3.1.2               |Manifest: e6bd4bd1e7cc8928f980914e7fa0160cc8b417eb55e2dee621787fd7f70b1467
+		context-matters-0.9.0-beta.10.jar                 |ConText Matters               |context_matters               |0.9.0-beta.10       |Manifest: ab752f66e3bb8e337018bbc9639275261d0a10960e5cb8b26cbc18169e24c865
+		Controlling-neoforge-26.1.2-26.1.2.3.jar          |Controlling                   |controlling                   |26.1.2.3            |Manifest: 90993bd84b9d6af75097b05d0b36f3935fb4bad75d811a640599edd872dd7706
+		cookingforblockheads-neoforge-26.1.2-26.1.2.1.jar |Cooking for Blockheads        |cookingforblockheads          |26.1.2.1            |Manifest: 408a100c05fa4b4a6df7a20b60f7268e621b106987cbe6b2d8e9abe1584bfba3
+		crafting_on_a_stick-neoforge-26.1-1.0.jar         |Crafting on a Stick           |crafting_on_a_stick           |26.1-1.0            |Manifest: b120be7ecb9c3435da0a01b6d009c7b7072f60d2311c67525da547e260b242eb
+		craftingtweaks-neoforge-26.1.2-26.1.2.1.jar       |Crafting Tweaks               |craftingtweaks                |26.1.2.1            |Manifest: 38a3d86d38c005ca9b36262f2bc3086ab024941b243117c64dfbb34ec6316ee4
+		main                                              |CraftingCompass               |craftingcompass               |0.0.0               |Manifest: NOSIGNATURE
+		crashexploitfixer-neoforge-1.2.0+26.1-rc-3.jar    |CrashExploitFixer             |crashexploitfixer             |1.2.0               |Manifest: 46b4c4143048dded6c38ed9609a12cbd098c3cc5b5889ac9f83b9089a6504387
+		cristellib-neoforge-26.1-3.1.3.jar                |Cristel Lib                   |cristellib                    |3.1.3               |Manifest: d21e7208738be5a7c16e50f87c95183281a7e67688297c0dc1f4eff71b089cf2
+		croptopia-neoforge-26.1-4.3.0.jar                 |Croptopia                     |croptopia                     |4.3.0               |Manifest: 435da6f08ad320919a4076d1ed39b4196d4f04e4373965c4be4d573e0063780b
+		cupboard-26.1-3.7.jar                             |Cupboard mod                  |cupboard                      |3.7                 |Manifest: 3f19ca03fe4954fd03b6670846887ef7446360d96ff9b83c7e9111038b4ec693
+		curios-neoforge-15.0.0-beta.2+26.1.2.jar          |Curios API                    |curios                        |15.0.0-beta.2+26.1.2|Manifest: dd19b0964a615f0771b177eff668f45de5ffd9e8443937b598a5dd35c4a63136
+		cyclopscore-26.1.2-neoforge-1.29.7.jar            |Cyclops Core                  |cyclopscore                   |1.29.7              |Manifest: 69805e5e1bf2a022facb3dbcd9fbcf01bc2ebae558e36a95fe12e2f86f7ddd1d
+		deepnull-reforged-4.2.0-beta.jar                  |DeepNull Reforged             |deepnullreforged              |4.2.0-beta          |Manifest: f667f5bebb0b7b6a61ccc344d12650fb3f91b0d4ad22c60b1ad4daaa31a5ffc2
+		deimos-26.1.2-neoforge-2.6.jar                    |Deimos                        |deimos                        |2.6                 |Manifest: 628993684ea1c8bdc895f4898719ff950e4b73ecacc3c5a42d50e230c501bca1
+		DimStorage-26.1.2-10.0.1.jar                      |DimStorage                    |dimstorage                    |10.0.1              |Manifest: e6808c0fe40f671dd0625c9ab612fd75fe5453a528a58580f13c21a0b93c7511
+		disenchanting_table-neoforge-26.1.2-6.0.1.jar     |Dis-Enchanting Table          |disenchanting_table           |6.0.1               |Manifest: e22b1cb1d88912be67e9ae5cad77325d6c2e06426a31ebf66bb6240a151bc267
+		DistantHorizons-3.0.3-b-26.1.2-fabric-neoforge.jar|Distant Horizons              |distanthorizons               |3.0.3-b             |Manifest: 6ef41931843f542688b14e0bf792605ae2bc17af75ce01586161247effec3155
+		DungeonCrawl-NeoForge-26.1-2.3.17.jar             |Dungeon Crawl                 |dungeoncrawl                  |2.3.17              |Manifest: 9e0e9ac002282eeabb48d7506d09a91acb11e931b92bf05dfb28d09e9f0a4787
+		dungeons-and-taverns-5.2.0 [NeoForge].jar         |Dungeons and Taverns          |mr_dungeons_andtaverns        |5.2.0               |Manifest: cd681ab497d439eac531c516e4bd9a3f3d97a2db6c6dbb65abb2cfe08fb77ade
+		easy_mob_farm-neoforge-26.1.2-10.7.0.jar          |Easy Mob Farm                 |easy_mob_farm                 |0.0NONE             |Manifest: 53128d6b3aab53fee5b5f86648d1d85ec80e416e6c1735a301d679dbda09e152
+		easy-piglins-neoforge-1.1.7+26.1.2.jar            |Easy Piglins                  |easy_piglins                  |1.1.7+26.1.2        |Manifest: d1106966cc5c9a8903979ef1f216341883a0ea61b63d6e5e28ef477b32d775c0
+		easy-villagers-neoforge-1.1.42+26.1.2.jar         |Easy Villagers                |easy_villagers                |1.1.42+26.1.2       |Manifest: 6c8c0e0caf6931d1eee09d92656a971f03a920627e83fbf2f090779263b15c5f
+		EdivadLib-26.1.2-4.0.1.jar                        |EdivadLib                     |edivadlib                     |4.0.1               |Manifest: b6e8d169d7f0154094e11336f7c6431ff517a8605d60f14e2e6af57e4c570cf3
+		elevatorid-neoforge-26.1-1.16.2.jar               |ElevatorMod                   |elevatorid                    |26.1-1.16.2         |Manifest: f367a6eb009c595fa051368d61473a028fa7f3e1c76d55300a06ab546d3b1bad
+		EnchantmentDescriptions-neoforge-MC26.1.2-26.1.2.1|EnchantmentDescriptions       |enchdesc                      |26.1.2.1            |Manifest: 2c8389c466330e0a40b0a23477b65c8b25b87358bf06ac890a31e790e66a90b4
+		com.enderio.endercore-9.0.2-alpha.jar             |Ender Core                    |endercore                     |9.0.2-alpha         |Manifest: b26f36a109a7328222abbdef59881c7cc409adae69eba7b4cf57f9fa28022b0d
+		enderio-9.0.2-alpha.jar                           |Ender IO                      |enderio                       |9.0.2-alpha         |Manifest: abcb2f53576873e6f2dbefd49eeca83f2f1585230ce19786788b9db49a61da5c
+		enderio_endergy-9.0.1-alpha.jar                   |Ender IO - Endergy            |enderio_endergy               |9.0.1-alpha         |Manifest: 834fa135c0277aa8304b762b24b2fe216bdadd4925995e2e169634fa90494b5f
+		com.enderio.enderio-modded-conduits-9.0.2-alpha.ja|Ender IO - Modded Conduits    |enderio_modded_conduits       |9.0.2-alpha         |Manifest: 69d1726420c112c5da2c71f3664c28349c0684fa8be32d212af449449aa50257
+		energizedpower-26.1.x-2.15.20-neoforge.jar        |Energized Power               |energizedpower                |26.1.x-2.15.20-neofo|Manifest: 8336a750ebf9af2df79376e6a7d9ac7828635e290030ff49a04073b397c21697
+		entity_model_features-3.2.4-26.1-neoforge.jar     |Entity Model Features         |entity_model_features         |3.2.4               |Manifest: 5d189cd24eae241a4002c33fb95e057fdbbc613508903acb4cb58393215c0d7f
+		entity_texture_features_26.1-neoforge-7.1.jar     |Entity Texture Features       |entity_texture_features       |7.1                 |Manifest: a2ba626a57883b875acd74542b46e63047d4084ca95f54e9a663c5469b62c650
+		epherolib-neoforge-26.1-1.3.0.jar                 |EpheroLib                     |epherolib                     |1.3.0               |Manifest: 209dd8b39fc56ca251963c93060f688683f43706c007653d37fd2a8273763069
+		epitaphs-2.0.1+26.1.2.jar                         |Epitaphs                      |epitaphs                      |2.0.1               |Manifest: 142921afd4530b719b4a9a91b715c0ae2729b1675657462db339600ee2b83bf8
+		EuphoriaPatcher-1.8.6-r5.7.1-neoforge.jar         |Euphoria Patcher              |euphoria_patcher              |1.8.6-r5.7.1-neoforg|Manifest: ed61db7ab3c5d43a404cbe09663d0ce59d7cf9e3a3dd3d0d224afea4b5213efa
+		evilcraft-26.1.2-neoforge-1.2.93-926.jar          |EvilCraft                     |evilcraft                     |1.2.93-926          |Manifest: 81d27bf1864ce4a7159c2bfec5763bd34561b0fe22d49529ad25b5ee32307533
+		exmachina-26.1.0.0.jar                            |Ex Machina                    |exmachina                     |26.1.0.0            |Manifest: 6a9c8c317f98e53c71bfa421253b33d1e0d05c31f770f39162be3f33212e2252
+		expandability-neoforge-14.0.0.jar                 |ExpandAbility                 |expandability                 |14.0.0              |Manifest: 202b80345f4e7d0f69c1e77ff41b229b8f75651bbf4085c9fa41f86eb50b7c3b
+		ExplorersCompass-26.1-3.3.0-neoforge.jar          |Explorer's Compass            |explorerscompass              |26.1-3.3.0-neoforge |Manifest: e6169781fa2692bf670f6fd0aab3cb53f049ed097290208b1552f7fcc73fd59e
+		ExtraDisks-26.1.0.jar                             |Extra Disks                   |extradisks                    |26.1.0              |Manifest: 5ff917d2c0f318f7af76eb3635d4adfb1abc17757d167f828d154e316bcad23b
+		farmingforblockheads-neoforge-26.1.2-26.1.2.1.jar |Farming for Blockheads        |farmingforblockheads          |26.1.2.1            |Manifest: 7729d6ebb0138784a1f0b3a13e321aeb09faae88b73215009a443e2d4fbb441c
+		ferritecore-9.0.0-neoforge.jar                    |Ferrite Core                  |ferritecore                   |9.0.0               |Manifest: a3292dadb1caf7ad220d3a4b68abff2ad58592ddd372160f9cf66c57d159b539
+		flatbedrock-neoforge-99.0.0.jar                   |Flat Bedrock                  |flatbedrock                   |99.0.0              |Manifest: 390a79211cb15ec80f092c11b980a415e35150ccbd347dbc65af0ec5b9df1139
+		flickerfix-26.1-7.0.0.jar                         |FlickerFix                    |flickerfix                    |7.0.0               |Manifest: 3743715e4d7f6303c258b1f81bbd621e88a3f6bb45591284543063c35ccf3f12
+		ForgeConfigAPIPort-v26.1.4-mc26.1.x-NeoForge.jar  |Forge Config API Port         |forgeconfigapiport            |26.1.4              |Manifest: 07502601a7755628bd5679e2627c21221e95b2d5fa943674ac6d02e618c5b07d
+		FramedBlocks-11.2.0.jar                           |FramedBlocks                  |framedblocks                  |11.2.0              |Manifest: e083d8f51554d7011034fed724ba53bf501e5c3c36ee8975d38474bd891180f6
+		framework-neoforge-26.1.2-0.13.23.jar             |Framework                     |framework                     |0.13.23             |Manifest: 5c5a51df7236e456fe5e62c757839e3e13a34c8ba96c306139114f1a4b7a8b71
+		free_look_neoforge 26.1 V11.jar                   |Free Look                     |freelookneoforge              |11                  |Manifest: 30e5cd25b78d62f38bb1983a8687b894b002839ebe05405baea905446c4f3fdd
+		friendsandfoes-neoforge-4.0.25+mc26.1.2.jar       |Friends&Foes                  |friendsandfoes                |4.0.25              |Manifest: 16b90c91aee0332dafbc81e683eda2779be49b2219ec2a611ba6c6ba0b4106dd
+		ftb-chunks-neoforge-26.1.2.2.jar                  |FTB Chunks                    |ftbchunks                     |26.1.2.2            |Manifest: 806ffe29a173f2f1d1262210e9f4dfdf898343c5578231292479bb47a884417b
+		ftb-ez-crystals-26.1.2.1.jar                      |FTB EZ Crystals               |ftbezcrystals                 |26.1.2.1            |Manifest: d74a5322086805974e8e3665d158aa6f9b921d4e075f6669fb4a2e56bc5a4c0b
+		ftb-filter-system-neoforge-26.1.2.1.jar           |FTB Filter System             |ftbfiltersystem               |26.1.2.1            |Manifest: cb3cf2981f52471a23f3b1d07faac498d9114ef89dcd8fc88931f7af364d684c
+		ftb-industrial-contraptions-26.1.2.6.jar          |FTB Industrial Contraptions   |ftbic                         |26.1.2.6            |Manifest: 7746d128fcd64c37e3f334f1d5f6e15a448f0ff5625ce08bf3e991f645fc9aa2
+		ftb-library-neoforge-26.1.2.2.jar                 |FTB Library                   |ftblibrary                    |26.1.2.2            |Manifest: 75332a5f9f6df8bf5a69f0e73eebd7a3a734ffcbefdcac190293111d91f65e7f
+		ftb-materials-26.1.2.3.jar                        |FTB Materials                 |ftbmaterials                  |26.1.2.3            |Manifest: d65c1c18f897f4a79eecae45905cb5f3960ceff06d0bd1b92fd76c76800e66f7
+		ftb-teams-neoforge-26.1.2.3.jar                   |FTB Teams                     |ftbteams                      |26.1.2.3            |Manifest: 154355301a81a8b352809c670baef5a87140bd54803c3029ecc1c82edc48f923
+		ftb-ultimine-neoforge-26.1.2.3.jar                |FTB Ultimine                  |ftbultimine                   |26.1.2.3            |Manifest: 768c34ed6ab60be91ecce15edaf762b6bcebc70c8ea09c2a75ffa9623fbf563d
+		fzzy_config-0.7.6+26.1+neoforge.jar               |Fzzy Config                   |fzzy_config                   |0.7.6+26.1+neoforge |Manifest: b3848ffbe5bbfcf0e76b3a0f4c8278ce28789fd4fc2e41d914a089b3e2465721
+		geckolib-neoforge-26.1.2-5.5.1.jar                |GeckoLib 5                    |geckolib                      |5.5.1               |Manifest: 1d1f9eecfe48225556c38220d1cb97dc5b7ee23372d16791475ab4c79c603a1b
+		GeOre-26.1.2-8.0.3.jar                            |GeOre                         |geore                         |8.0.3               |Manifest: 85a1f46bbe350e4f268108cc920fa727af5fb300dce6c0ef8fd69d780031665e
+		getittogetherdrops-neoforge-26.1.1-1.5.jar        |Get It Together, Drops!       |getittogetherdrops            |1.5                 |Manifest: fc9c0b5ca81feb7a2c6f92fecbad0bf42f6d3b11c5d24ff3d1a2648457413d07
+		GlitchCore-neoforge-26.1.2-26.1.2.0.0.jar         |GlitchCore                    |glitchcore                    |26.1.2.0.0          |Manifest: 96f0d91175ec3a393200909b5eee4fa9a4e410721c0975ad5f5c5b2b64423323
+		goblintraders-neoforge-26.1.2-1.12.0.jar          |Goblin Traders                |goblintraders                 |1.12.0              |Manifest: 5b03f0c69aa33b0afc7dcdc2e3ef10ee8ed5b4275bd2b78ee74945b6ea1ce376
+		gpumemleakfix-26.1-1.9.jar                        |Gpu memory leak fix           |gpumemleakfix                 |1.9                 |Manifest: 25abc8dfdde95edae32c3a9c8e225a9ff7c5df5733f815acc5e413abc03455fd
+		guardvillagers-3.0.1-26.1.0.jar                   |Guard Villagers               |guardvillagers                |3.0.1               |Manifest: 3bcc230939b08555ab7f0a620561a6b014731ec5e3f97867e1d4a700771d62f6
+		guideme-26.1.10-alpha.jar                         |GuideME                       |guideme                       |26.1.10-alpha       |Manifest: a121879b85e501d31191abef00bcb7bc453120d964f30a9180a8d6c017ceb2d7
+		HopoBetterMineshaft-[26.1]-1.3.6.jar              |HopoBetterMineshaft           |hopo                          |1.3.6               |Manifest: 2836ac9962ad96ec019b39cddf1d83441ec52a863c138cab6fc13033772c473e
+		HopoBetterRuinedPortals-[26.1]-1.5.0.jar          |HopoBetterRuinedPortals       |hoporp                        |1.4.9               |Manifest: dfa4547e4f6a2b86de8fa9cb96021b06edbb877f5cba7321acf809bf9cabe499
+		HopoBetterUnderwaterRuins-[26.1]-1.2.7.jar        |HopoBetterUnderwaterRuins     |hopour                        |1.2.7               |Manifest: a3dc8ec7c2e379e26da54df646d341dc11bd1cf3b6ab7384cda7e6c6bb6c8a78
+		integratedcrafting-26.1.2-neoforge-1.4.7.jar      |IntegratedCrafting            |integratedcrafting            |1.4.7               |Manifest: 137e5057d66996ec419b6b87d6776c17ee9092d217918b968c374ed39de8f2fc
+		integrateddynamics-26.1.2-neoforge-1.32.12.jar    |IntegratedDynamics            |integrateddynamics            |1.32.12             |Manifest: ffb160fe7143b63c04cd85807bc692da056a6552b0feddecb1a45e60179e8095
+		integratedscripting-26.1.2-neoforge-1.0.21.jar    |IntegratedScripting           |integratedscripting           |1.0.21              |Manifest: 2d565476217a37b54b5e1b239b001cb1df94b650209c6d95f09d09e7c75c1636
+		integratedterminals-26.1.2-neoforge-1.6.31-776.jar|IntegratedTerminals           |integratedterminals           |1.6.31-776          |Manifest: b6f091cd0d798586954ba9b3225537b4a9c7b08e6343765bd7d54f89c9f9646e
+		integratedtunnels-26.1.2-neoforge-1.9.5-627.jar   |IntegratedTunnels             |integratedtunnels             |1.9.5-627           |Manifest: 2b7312ee95236a6cefa9bcc8cc6ce4f5c8e352b48a2ed3fe5ddae2a67fd2e55b
+		interdimensionalwirelesstransmitter-neoforge-26.1.|Interdimensional Wireless Tran|interdimensionalwirelesstransm|26.1.2-1.0.0        |Manifest: 9f5ddc851f3f5c882811ea5ab36ba3b3e536807c7e7c9b000536a4c21ea4a6d2
+		inventoryessentials-neoforge-26.1.2-26.1.2.2.jar  |Inventory Essentials          |inventoryessentials           |26.1.2.2            |Manifest: 68fe20fd8dc5caf3313d54fa0ee79cdeaa76a2b12a75354925c4216838578d3d
+		InventorySpam-26.1-1.11.0.jar                     |Inventory Spam                |inventoryspam                 |1.11.0              |Manifest: e6f067975ea9deacb72871e550b0d1e5a1643de802c54a6fb1810a5cfdc67fcf
+		iris-neoforge-1.10.9+mc26.1.1.jar                 |Iris                          |iris                          |1.10.9+mc26.1.1     |Manifest: 12d054d1ec800583b45de67acbf257ccdc0718ce95e2bd58b05b20a3c0940d7d
+		ironbookshelves-26.1.2-1.4.12-neoforge.jar        |Iron Bookshelves              |ironbookshelves               |26.1.2-1.4.12-neofor|Manifest: dc4a968d8eaf235103b48b6f2dd1c2a0931bd2944835899e8b6291079b62ec68
+		ironfurnacesneoforge-26.1-1.0.0.jar               |Iron Furnaces                 |ironfurnaces                  |1.0.0               |Manifest: 0b9b24e84f083510a5de13bdb2e75a5e9ccb04ec5717ea55d85e6a400fe7632b
+		ironshulkerboxneoforge-26.1.2-1.0.0.jar           |Iron Shulker Boxes            |ironshulkerbox                |26.1.2-1.0.0        |Manifest: 8f75a1488aa6da21dcbae61df69175e0276c2e49ae21d12f84601bceeb546c01
+		ItemLocks-NeoForged-26.1-1.3.13.jar               |ItemLocks                     |ktnilcks                      |26.1-1.3.13         |Manifest: 48e1b4883fbaf74c3285fbbd1d2d8130db3116366b953bd65ddefe2151a14882
+		Jade-mc26.1-NeoForge-26.0.10.jar                  |Jade                          |jade                          |26.0.10+neoforge    |Manifest: edc87002e4df47b848d19308fc3a1a4d02b838fff57770f613ae9901c9382568
+		journeymap-neoforge-26.1.2-6.0.0-beta.71.jar      |Journeymap                    |journeymap                    |26.1.2-6.0.0-beta.71|Manifest: 24139d244ff99e00ce3770a91961a364ebf99fbf1f6dc6f111abac2f516af82e
+		journeymap-api-neoforge-2.0.0-26.1-SNAPSHOT.jar   |JourneyMap API                |journeymap_api                |2.0.0-26.1-SNAPSHOT |Manifest: 7d7a6bbe8a8de8b7dacd5a90ad692650a679f29e262d17a58c68e8ff35e69956
+		justdirethings-1.6.8.jar                          |Just Dire Things              |justdirethings                |1.6.8               |Manifest: c685949506d3c4a31287e34c1d5873e5f58ce1010c7d8dc4d46585c7a50593e0
+		jei-26.1.2-neoforge-29.5.0.28.jar                 |Just Enough Items             |jei                           |29.5.0.28           |Manifest: 7df38e0fe135cdae398303289282ea2f2fe6695a110c25a1ee6a820b245e8e7f
+		JustEnoughProfessions-neoforge-26.1.2-11.0.2.jar  |Just Enough Professions (JEP) |justenoughprofessions         |11.0.2              |Manifest: b0103242eef5c20e802f8a46ce8f408032f859406aa0f329eed9105f9a419f12
+		justenoughrecipesharing-neoforge-26.1.2-1.1.0.jar |Just Enough Recipe Sharing (JE|justenoughrecipesharing       |26.1.2-1.1.0        |Manifest: 6efccc7cc61ba16c9bdd79e77c9eabd789cccf2d8b14d640181d34340eaf11a7
+		justzoom_neoforge_2.1.4_MC_1.21.11.jar            |Just Zoom                     |justzoom                      |2.1.4               |Manifest: 4efd61366c44783da6692874af5859ac0b53f4461f11ab1349d75c2d7779d73e
+		kleeslabs-neoforge-26.1-26.1.0.1.jar              |KleeSlabs                     |kleeslabs                     |26.1.0.1            |Manifest: ea310c7b21866791cb2f89f12d41e5354908f4e631a9eac3290a46215944ef38
+		konkrete_neoforge_1.10.1_MC_26.1.1.jar            |Konkrete                      |konkrete                      |1.10.1              |Manifest: f06e5919536b38e209af0455ba765e2f9dbbfd9b2e23ff83e62b3c8da07dd0ea
+		thedarkcolour.kffmod-6.2.0.jar                    |Kotlin For Forge              |kotlinforforge                |6.2.0               |Manifest: 8ae4f9ef98637494a29ca61260f1aebc805ebb9f9f0b4a21455c7200755201b0
+		kuma-api-neoforge-26.1.2.2.jar                    |KumaAPI                       |kuma_api                      |26.1.2.2            |Manifest: 95ea7006585360931ce4c6846d1234e81ed5e765cc234d0a4318d991ebe66abe
+		laserbridges-26.1.2-neoforge-5.4.jar              |Laser Bridges & Doors         |laserbridges                  |5.4                 |Manifest: 4694dac0f997584b3cdd468dbb37132a196443f36963eda255747ce62186bb11
+		letmedespawn-1.26.x-neoforge-1.6.2.jar            |LetMeDespawn                  |letmedespawn                  |1.6.2               |Manifest: 9b4d57cf1ccbc3cdd5dddd5e2a2c2d901c7b8a674cffbd0205e24d6b58a5ef21
+		lithium-neoforge-0.24.2+mc26.1.2.jar              |Lithium                       |lithium                       |0.24.2              |Manifest: e35294217549751f9c233d715ac9028d526f2b3175b36f5294707fde25b0f35f
+		lithostitched-1.7.3-neoforge-26.1.jar             |Lithostitched                 |lithostitched                 |1.7.3               |Manifest: 25d86824d3476b11758dfce8ffa2c1a6fb59bf2fc551f7729c544d5cbcb80be0
+		logisticsnetworks-26.1.2-1.3.1.jar                |LogisticsNetworks             |logisticsnetworks             |1.3.1               |Manifest: f30d9d42afb6aad2ad91aaa2af745405aa5cf841bce2748511f039bb1a1ee072
+		logprot-26.1-3.5.jar                              |Logprot                       |logprot                       |3.5                 |Manifest: 2b75784d9d9077ee7a666ad8cd2e963cfbbb4ca78ac5c022f0cebaf02c48f5f9
+		lootintegration_townsandtowers-1.3.jar            |lootintegration_townsandtowers|lootintegration_townsandtowers|1                   |Manifest: 6760d6f11b66e7794866ca432f415807533afc42cf15840e4f01643e19ae5df3
+		lootintegrations-26.1-4.8.jar                     |Lootintegrations mod          |lootintegrations              |4.8                 |Manifest: 0bb50ce20dd97e8c3e5e7de72a1e36f477e7f06637d1751027158ea67d702a0f
+		lootintegrations_dnt-2.5.jar                      |lootintegrations_dnt mod      |lootintegrations_dnt          |1                   |Manifest: d8cb9c553ab626cce27c39fb8707d1e67b7440a37be03dd2d9fb35abc113be7d
+		lootintegrations_dungeoncrawl-1.2.jar             |lootintegrations_dungeoncrawl |lootintegrations_dungeoncrawl |1                   |Manifest: 3674c83c766822fa072dff9ffbae4c12c54c84e678a280972c2981b82c06bddb
+		lootintegrations_hopo-1.5.jar                     |lootintegrations_hopo mod     |lootintegrations_hopo         |1                   |Manifest: 8513856985bd1d5bab1c7754330fb33288624d1be4563c697051f1b038371cd3
+		lootintegrations_medievalbuildings-1.5.jar        |lootintegrations_medievalbuild|lootintegrations_medievalbuild|1                   |Manifest: 96830522f41081604b7046b421c78c6565d38fa1644e4af6bb45dd7e78f46af1
+		lootintegrations_moog-2.0.jar                     |lootintegrations_moog mod     |lootintegrations_moog         |1                   |Manifest: 463b549c4893f7331bb65d05d4f694635edf7111a5b1d6b5e387293be3b69759
+		lootintegrations_vanilla-1.6.jar                  |lootintegrations_vanilla mod  |lootintegrations_vanilla      |1                   |Manifest: 95ce46d9bd45b7b12c8e3ccb398987af102b3a447c5d169fca2bea36823b4819
+		lootr-neoforge-26.1.2-1.22.36.109.jar             |Lootr                         |lootr                         |1.22.36.109         |Manifest: 64f7604efb0911919e39b7606bd6499b1ae8c3c749d9b3c6bae273812ec008df
+		mcw-bridges-3.1.2-mc26.1neoforge.jar              |Macaw's Bridges               |mcwbridges                    |3.1.2               |Manifest: 549b356c503647fbbe0406d6bab4c8ba9ba5286471ee470a4afd831204574c90
+		mcw-doors-1.1.5-mc26.1neoforge.jar                |Macaw's Doors                 |mcwdoors                      |1.1.5               |Manifest: 17ae91a6552538d9b63a37321d42cc29d08ae8def75e2bfeb2dcb699644870f5
+		mcw-fences-1.2.1-mc26.1neoforge.jar               |Macaw's Fences and Walls      |mcwfences                     |1.2.1               |Manifest: f48d53e896f6344b6424afe2f94807eeb8826b9b523bd076ddf10719c4e49cbb
+		mcw-furniture-3.4.2-mc26.1neoforge.jar            |Macaw's Furniture             |mcwfurnitures                 |3.4.2               |Manifest: f3c8abf38c6eda3127ee72db968c5b7f5880aab3aef3d4853eb2c45084b39227
+		mcw-lights-1.1.5-mc26.1neoforge.jar               |Macaw's Lights and Lamps      |mcwlights                     |1.1.5               |Manifest: 899c2aaae8d3f500f9982796bceddb389fc6152071f1b1b9ecd3b66cbb2ab97c
+		mcw-paths-1.1.1-mc26.1neoforge.jar                |Macaw's Paths and Pavings     |mcwpaths                      |1.1.1               |Manifest: b690d1cc8ed79847ff80cd229e0f2986ee53bfc308520de32984e10466cb01d3
+		mcw-roofs-2.3.2-mc26.1neoforge.jar                |Macaw's Roofs                 |mcwroofs                      |2.3.2               |Manifest: ba4bcdbfab3c0330f919ff92f22a9aa4e7808afca43f4a24f086ce24ee04700f
+		mcw-stairs-1.0.2-mc26.1neoforge.jar               |Macaw's Stairs and Balconies  |mcwstairs                     |1.0.2               |Manifest: 80c94be8f8514fa51201c001236a6aa6a9274564d2dc1ef3ffd312c1c230de3e
+		mcw-trapdoors-1.1.5-mc26.1neoforge.jar            |Macaw's Trapdoors             |mcwtrpdoors                   |1.1.5               |Manifest: 1c49ed1bbfa39d4ba6a1f5c26db2ecd8a62c9d6f7664a3e6f5ea16bb99ad8efd
+		mcw-windows-2.4.2-mc26.1neoforge.jar              |Macaw's Windows               |mcwwindows                    |2.4.2               |Manifest: 7ce78596e06a3e20d2c91cc291b6e942d781ff1ec422b0099cc1432b6b7a4961
+		MagnumTorch-v26.1.0-mc26.1.x-NeoForge.jar         |Magnum Torch                  |magnumtorch                   |26.1.0              |Manifest: 83891fd855550f51869b3f558682866dac3c476b5198fd671a2ebd789c017c32
+		MaxHealthFix-neoforge-MC26.1.2-26.1.2.1.jar       |MaxHealthFix                  |maxhealthfix                  |26.1.2.1            |Manifest: b5c9a4a4205f7f62cf0d95293ad3a7bdf2eaa1e70568d13857228e3c6bad535c
+		Measurements-neoforge-26.1-4.0.0.jar              |Measurements                  |measurements                  |4.0.0               |Manifest: e72dadf160dce841d3c395138938eaee0ce09b9986bb7c1d5d3591c27752af11
+		medieval_buildings-neoforge-26.1.2-1.2.0.jar      |Medieval Buildings            |medieval_buildings            |1.2.0               |Manifest: 9b7f91e56979aaac38eb1b00f35946ff0b108adf2e27ab0d8d4987e09b0157bc
+		medieval_end-neoforge-26.1.2-1.2.0.jar            |Medieval Buildings [The End Ed|medieval_end                  |1.2.0               |Manifest: 9fc96143369dc32e6af5c66cf2282e5344fafa19623182bcd4848a098eb7cec9
+		medieval_nether-neoforge-26.1.2-1.2.1.jar         |Medieval Buildings [The Nether|medieval_nether               |1.2.1               |Manifest: 3cfbda6e41b021747e4157b05e8a0b88f35962ab45ec1e6aae6090624514d60f
+		melody_neoforge_1.0.16_MC_26.1.1.jar              |Melody                        |melody                        |1.0.16              |Manifest: 51d408e5e41b81e342a0267ed18297acbc6b3c9abd0df385c83f4655fb0b8c8c
+		midnightlib-neoforge-1.9.3+26.1.jar               |MidnightLib                   |midnightlib                   |1.9.3               |Manifest: 94fdb848cb491d904ddb2e591c4f529eba4b67285c1a63019c8de9b7ee986454
+		minecraft-patched-26.1.2.43-beta.jar              |Minecraft                     |minecraft                     |26.1.2              |Manifest: NOSIGNATURE
+		mininggadgets-1.19.0.jar                          |Mining Gadgets                |mininggadgets                 |1.19.0              |Manifest: d9fbc147d4bb5daf5629fa58d4b1bafd49375c5c4fab28a1868081988525d2d6
+		modonomicon-26.1.2-neoforge-1.142.0.jar           |Modonomicon                   |modonomicon                   |1.142.0             |Manifest: 5196bce8d793eb4668370cf3d4a3f8ee2924849571d883536d0533205857a9fb
+		monolib-neoforge-26.1.2-4.0.2.jar                 |MonoLib                       |monolib                       |4.0.2               |Manifest: d523f0e7f45023ee962f7d8dbe2b24952a760e32e93ee8bd53d250f63a11ae80
+		moogs_structure_lib-2.0.1-26.1.0-26.1.2.jar       |Moog's Structure Lib          |moogs_structures              |2.0.1-26.1.0-26.1.2 |Manifest: 852c18c2d5e871eafb7d21b2dbf5875acb0a598930cc0fde9fc3073d5f7fdb08
+		MoogsBountifulStructures-1.21-1.0.4.jar           |MoogsBountifulStructures      |mbs                           |1.0.4               |Manifest: 0eacc52cdf7349495479d6458275061cfc8b973b17dade30e624cc0a1d5129a1
+		MoogsEndStructures-1.21-2.0.2.jar                 |MoogsEndStructures            |mes                           |2.0.2               |Manifest: 9840922ffe6dc0c44f0c99588220b3cbabc94e9fc7d134ff18d8a0b4129f792d
+		MoogsMissingVillages-1.21-2.0.0.jar               |MoogsMissingVillages          |mmv                           |2.0.0               |Manifest: 33de63032c126268cbf8b3b1c8de09a9974d30da5aa7f158ac4bd346c06e9c4a
+		MoogsNetherStructures-1.21-2.0.4.jar              |MoogsNetherStructures         |mns                           |2.0.4               |Manifest: 9d2c0ce7fb9b81a7155e74f2203320269012deb7df81ead0f8a61dce906adbd4
+		MoogsSoaringStructures-1.21-2.1.0.jar             |MoogsSoaringStructures        |mss                           |2.1.0               |Manifest: 569aa32baf5801d9afbed04173a3f861934c40b4496211317f1e34f9437ed9a3
+		MoogsTemplesReimagined-1.21-1.1.1.jar             |MoogsTemplesReimagined        |mtr                           |1.1.1               |Manifest: cc7e5d1e9b70a2124ae218adc9dd6fd7334da027c5a1d172f3fe291be8208870
+		MoogsVoyagerStructures-1.21-5.0.9.jar             |MoogsVoyagerStructures        |mvs                           |5.0.9               |Manifest: 2e8ac33b313173d513b258f33160fbd15fb9b82bb8fba01e964f69a026759c0b
+		moreculling-neoforge-26.1.1-1.7.0.jar             |More Culling                  |moreculling                   |1.7.0               |Manifest: 327bc3b11146d7d547abf02ba760c226be3600eba96b2b5d19eb4d7b91a57b99
+		moredragoneggs-6.0.jar                            |More Dragon Eggs              |moredragoneggs                |6.0                 |Manifest: 844256efc5cc2688cbb85ba80518dc58ce4d2bcd9babaad633c15260315a873b
+		moreoverlays-1.24.4-mc26.1.2-neoforge.jar         |More Overlays Updated         |moreoverlays                  |1.24.4              |Manifest: c493dc1570d008c5a9fb55466fc3b35b25a43d4250956a837365ea3648dc9df1
+		morered-26.1.2.0.jar                              |More Red                      |morered                       |26.1.2.0            |Manifest: 12035dd66ec51ebd65cbba807d2e70b40493e1553fd79795857ad41a354662dc
+		more_tier_upgrade-1.1.0-mc26.1.x-neoforge.jar     |More Tier Upgrade             |more_tier_upgrade             |1.1.0-mc26.1.x-neofo|Manifest: 5c9177f2807af08d0cba38cfe2cc01e43320f72d52fcc1a5592b47d8dccda254
+		morevillagers-neoforge-8.0.0+26.1.1.jar           |More Villagers                |morevillagers                 |8.0.0               |Manifest: e97412a656a1587b5b72d2a3500b5c25a046606916b8ca3820143b8e3ef82029
+		MouseTweaks-neoforge-mc26.1-2.31.jar              |Mouse Tweaks                  |mousetweaks                   |2.31                |Manifest: b4923774b96f14364d9e249096ea9f93e10c63ef0b9b7b8cc81f9b047e48c430
+		NaturesCompass-26.1-3.3.0-neoforge.jar            |Nature's Compass              |naturescompass                |26.1-3.3.0-neoforge |Manifest: aa58cccc7c40230b75494d53fa21f008e0d76825c7881c5edbc59cf30abb79d5
+		neoforge-26.1.2.43-beta-universal.jar             |NeoForge                      |neoforge                      |26.1.2.43-beta      |Manifest: NOSIGNATURE
+		netherportalfix-neoforge-26.1-26.1.0.1.jar        |NetherPortalFix               |netherportalfix               |26.1.0.1            |Manifest: b5789acf440bdfdc8c2d118b2842a6ef2812b413d75c150a32d91d4638ac3577
+		occultism-26.1.2-neoforge-1.227.0.jar             |Occultism                     |occultism                     |1.227.0             |Manifest: 43f4aca7380cf9614b8bd1e315236a907de462482d950ead64e34246d169d9d7
+		OreBerries-Replanted-26.1.2-0.12.0.jar            |Oreberries Replanted          |oreberriesreplanted           |0.12.0              |Manifest: a5a125c5fc1f528ac8a0543358428556651367f72652a8a871a51bb9da1a438b
+		OverflowingBars-v26.1.0-mc26.1.x-NeoForge.jar     |Overflowing Bars              |overflowingbars               |26.1.0              |Manifest: 10717bf55173e372900bec0e3bff4a7230be73a01ffe340d70a0f7d0e853b8b4
+		Paraglider-neoforge-26.1.0-beta.3.jar             |Paraglider                    |paraglider                    |26.1.0-beta.3       |Manifest: 09f56b1bcaf7ac5268c38f565947374669f676433966cec64c5b47c2ce53b2e1
+		pipe-graph-0.9.0-beta.9.jar                       |Pipe Graph                    |pipe_graph                    |0.9.0-beta.9        |Manifest: 1545f38380585487922530f41ee18073509f4c57d26d1d231baa37e446ee38c8
+		pipez-neoforge-1.2.30+26.1.2.jar                  |Pipez                         |pipez                         |1.2.30+26.1.2       |Manifest: a7b0059d890a63cceff012a675ea93d0013d48346bda648594e46d15c0f6faa2
+		pipezlagfix-26.1.2-1.0.0.jar                      |PipezLagFix                   |pipezlagfix                   |1.0.0               |Manifest: 05c1406b2f00ee9ce7f80eddf8e3683a13954de5982cc2f89aaa9c297d2cbe7f
+		Powah-7.0.4-alpha.jar                             |Powah                         |powah                         |7.0.4-alpha         |Manifest: c91523449abef54d76f7f01ef6dd2b7ac7060524a49b524beb781617b7340fed
+		preview_placement-26.1.0.0.jar                    |Preview Placement             |preview_placement             |26.1.0.0            |Manifest: 5430e88e81961d33dd582cb937dd094c106c9a4eb72da5e91207c90ea6c1eafc
+		PrickleMC-neoforge-MC26.1.2-26.1.2.2.jar          |PrickleMC                     |prickle                       |26.1.2.2            |Manifest: dc905afe3d5d08a2c11ebb7366512e7b5a75e9962093bba48709d1f512f8ea97
+		PuzzlesLib-v26.1.6-mc26.1.x-NeoForge.jar          |Puzzles Lib                   |puzzleslib                    |26.1.6              |Manifest: c0a20277f1aa1ec27a0ba237226cc95dc141e8029d94573361043c6e1e346058
+		pylons-26.1-6.0.1.jar                             |Pylons                        |pylons                        |6.0.1               |Manifest: 3396cf4de6f6df73704f6c66b3b20eb485af0b49d5c6fb15405f6befd45a82de
+		reeses-sodium-options-neoforge-2.0.5+mc26.1.1.jar |Reese's Sodium Options        |reeses_sodium_options         |2.0.5+mc26.1.1      |Manifest: c4640fabda45bc7d435580e4a16bd1f894f45b77ce2ebd57297d83ff574718b5
+		refinedsticks-26.1.2-2.0.3.jar                    |Refined Construction Sticks   |refinedsticks                 |2.0.3               |Manifest: 8d89cf01d4122f69b414c65f0a84ae030b582140c783b86ac2ba8ff983abfa49
+		refinedstorage-neoforge-3.0.0-beta.8.jar          |Refined Storage               |refinedstorage                |3.0.0-beta.8        |Manifest: d425724b7a13fc680129e4fb47cdea888f8f652175f1b551f764339151f04077
+		refinedstorage-curios-integration-2.0.1.jar       |Refined Storage - Curios Integ|refinedstorage_curios_integrat|2.0.1               |Manifest: 80405c2242dda5bb13afc4981428b88b7a00b62d64b4bd7c2952938988c99fa6
+		refinedstorage-jei-integration-neoforge-2.0.0.jar |Refined Storage - JEI Integrat|refinedstorage_jei_integration|2.0.0               |Manifest: b5d5a166d9009828b1d59bf90143264fc2bd745f475c8ff85037ce27bff50ae7
+		refinedstorage-quartz-arsenal-neoforge-2.0.4.jar  |Refined Storage - Quartz Arsen|refinedstorage_quartz_arsenal |2.0.4               |Manifest: 50cf95ea9c1e805de5e9359e577ea511124e73358342a702771b6fc7879d6835
+		reliquary-26.1.2-2.0.81.1429.jar                  |Reliquary Reincarnations      |reliquary                     |2.0.81              |Manifest: be70ca260454c94eb7b354ae398fc3b35a8eea566c0bf418d3d3d0090625d056
+		ResourcefulLib-4.0.1.jar                          |Resourceful Lib               |resourcefullib                |4.0.1               |Manifest: 4ccedbc89c82a73132eb3a83a5dd3b1923c62d1373aa5cd707780dc5160e9e15
+		ResourcefulConfig-4.0.1.jar                       |Resourcefulconfig             |resourcefulconfig             |4.0.1               |Manifest: c2725f7f2f077f2746acfc5fad997d8510319425c45ee4c1a2ea8d968db324f1
+		RootsClassic-26.1.2-1.6.4.jar                     |Roots Classic                 |rootsclassic                  |26.1.2-1.6.4        |Manifest: 5631931d7d74945bb561e77e717181d6336576f041db3c9f296c1321adae77e9
+		sathlib-1.0.0+26.1.2.jar                          |SathLib                       |sathlib                       |1.0.0               |Manifest: 0a451634264c48cc929363681660e96a63d9ef9ba479537f07c2efcad84103a4
+		Searchables-neoforge-26.1.2-1.0.1.jar             |Searchables                   |searchables                   |1.0.1               |Manifest: 62a1de5710cbf728020dd6d74656b84c2c4d4cb74b0fc3b1c29fa9f9155f5010
+		shogi-neoforge-26.1.2-26.1.2.3.jar                |Shogi                         |shogi                         |26.1.2.3            |Manifest: d13318951526ff5a10c0566b21662bbcbce219777fa7c59931726cf693b94b76
+		net.blay09.mods.shogi-api-26.1.2.3.jar            |Shogi API                     |shogi_api                     |26.1.2.3            |Manifest: d4d89de9806d74716144e34b88c1ea1f18fa73619d2b799d8f28d95d8031916d
+		shulkerboxtooltip-neoforge-5.2.18+26.1.jar        |ShulkerBoxTooltip             |shulkerboxtooltip             |5.2.18+26.1         |Manifest: 638648cece6b91546ead4e3a15377f7d7ced6f8062c3d0e407752abfe74074f6
+		smoothchunk-26.1-4.2.jar                          |Smoothchunk mod               |smoothchunk                   |4.2                 |Manifest: f57477067f9c9a4c385c447f507d86c683752855ba55339a846dadeb5226ca7c
+		net.caffeinemc.sodium-neoforge-0.8.12-beta.1+mc26.|Sodium                        |sodium                        |0.8.12-beta.1+mc26.1|Manifest: a6f269f5e0914590800a5e9b56c66cf04a7e60f14ba83f7b5dcf2f9a87b1c578
+		sodium-extra-neoforge-0.8.7+mc26.1.1.jar          |Sodium Extra                  |sodium_extra                  |0.8.7+mc26.1.1      |Manifest: 9ad95c144683a42b5583b03e765b6e8d59c204dcd1b11b39ce6ebf05166470a1
+		SolarGeneration-26.1.2-8.0.0.jar                  |SolarGeneration               |solargeneration               |8.0.0               |Manifest: 9cc5b776c0fa1e1c68342ea4aa67c6d0bc8f23ee9d9b0c0d0a90635098e673ec
+		sophisticatedbackpacks-26.1.2-3.25.52.1714.jar    |Sophisticated Backpacks       |sophisticatedbackpacks        |3.25.52             |Manifest: aae5c2d7328bb92d9efa0ae67fb595688f0e4b892c5ee370fb16285bfc0690a8
+		sophisticatedcore-26.1.2-1.4.39.1812.jar          |Sophisticated Core            |sophisticatedcore             |1.4.39              |Manifest: 0e34cf245be07e0eca41666e838874262116d415be4e6970fbb4eef5f51cf4c2
+		sophisticatedinventoryinteractions-26.1-0.1.10.83.|Sophisticated Inventory Intera|sophisticatedinventoryinteract|0.1.10              |Manifest: c495cee25c139ed47e7eb3512ec51cbcfa0942d358735c0255ceacbcdcac9368
+		sophisticateditemactions-26.1.2-0.4.1.231.jar     |Sophisticated Item Actions    |sophisticateditemactions      |0.4.1               |Manifest: c15b070d7aa264e4753dec66499012e02e44f9920573c1615442897eeeac89ea
+		sophisticatedstorage-26.1.2-1.5.61.1706.jar       |Sophisticated Storage         |sophisticatedstorage          |1.5.61              |Manifest: 4587081f7d2913949520ba41d81533cfb1dbf31079dd9b2fd4397527c6bf85ad
+		sophisticatedstorageinmotion-26.1-0.10.28.225.jar |Sophisticated Storage In Motio|sophisticatedstorageinmotion  |0.10.28             |Manifest: 0089fe9e1b538faf35af1de8052b7982dba82e3d8ce0febeae4c4c541abd99e3
+		sound-physics-remastered-neoforge-1.5.1+26.1.2.jar|Sound Physics Remastered      |sound_physics_remastered      |1.5.1+26.1.2        |Manifest: b4f36d89b7a99b5d3def065ad76781368bc307f37b580c2eb25c9f0528c23333
+		solcarrot-26.1-1.19.0.jar                         |Spice of Life: Carrot Edition |solcarrot                     |1.19.0              |Manifest: fae331045f5729808641891dee1d312a6bdc7a85312ef0a05ecff42efacd2b0d
+		stackrefill-26.1.2-5.0.jar                        |Stack Refill                  |stackrefill                   |5.0                 |Manifest: e588754a505fedf6a6e31bcd59f441821600ebbb4759b3ee44e02b1fdf90a484
+		TaxFreeLevels-1.5.0-neoforge-26.1.jar             |Tax Free Levels               |taxfreelevels                 |1.5.0               |Manifest: b4ba5d93206f659fab598682743ad8e3d912a674493b6e8594750d0fee6e7ec3
+		tectonic-3.0.22-neoforge-26.1.jar                 |Tectonic                      |tectonic                      |3.0.22              |Manifest: d2618105b63ae2dcc4fb4ccc62e2f1d251e1fe441121cd92b6df2ea34fc1c2a3
+		TerraBlender-neoforge-26.1.2-26.1.2.0.1.jar       |TerraBlender                  |terrablender                  |26.1.2.0.1          |Manifest: 60aa1793adff90f5164a122549e2418e03ca2d954fd308ab8d0cb1cc3779cb30
+		theurgy-26.1.2-neoforge-1.94.0.jar                |Theurgy                       |theurgy                       |1.94.0              |Manifest: a2b6b92d1145a27661526148060c84651cf9b1ab81b489ba8f5df44409dce60d
+		ToolBelt-26.1.2-2.9.5.jar                         |Tool Belt                     |toolbelt                      |2.9.5               |Manifest: 5df697905865a66f681c7c0f74cc4c44e5ed1b03c1a5bf64901b25d6e9c439e2
+		t_and_t-fabric-neoforge-1.13.11.jar               |Towns and Towers              |t_and_t                       |1.13.11             |Manifest: 13b38f18cff6103b02f2b7d768b0d495edb8969df724e1538e13ce5bcc05f8be
+		trashslot-neoforge-26.1.2-26.1.2.2.jar            |TrashSlot                     |trashslot                     |26.1.2.2            |Manifest: faf9e193127a4af73b18c05c55848e34320f32c5d233a9ce3d90ee64fa835520
+		car-neoforge-1.0.49+26.1.2.jar                    |Ultimate Car Mod              |car                           |1.0.49+26.1.2       |Manifest: 9a77755dc3cc79c0dd17b6cfdb8684264ade70b50c0ec647949e975cbb434065
+		plane-neoforge-1.5.8+26.1.2.jar                   |Ultimate Plane Mod            |plane                         |1.5.8+26.1.2        |Manifest: 7140a5eee546f355b2d9e1f066aba98947f3b76f346ebcd278eddef7b43c239d
+		UndergroundVillages-neoforge-26.1.2-11.0.0.jar    |Underground Villages Mod      |underground_villages          |11.0.0              |Manifest: 2ef3c4471ed91f99b8f8333461455558c4b6d69386dc92016347ed9ae7d2cf1a
+		underwater_village-1.0.0 Neoforge 26.1.2.jar      |Underwater Village            |underwater_village            |1.0.0               |Manifest: 81a1bf6e1cc545752d0aac4e28e025d16cbdd3a2bd0e2393f6d91b12d147a217
+		UniversalEnchants-v26.1.0-mc26.1.x-NeoForge.jar   |Universal Enchants            |universalenchants             |26.1.0              |Manifest: fd3f09361b42475b3062426ac2cc9a1fe8209b003b0c7f85f7f4c70513ea3fa8
+		universalgrid-neoforge-26.1.2-1.0.1.jar           |Universal Grid                |universalgrid                 |26.1.2-1.0.1        |Manifest: eea1972cf408c58296a90b59d62eeedf49069efa6550f642e0f9a5543b5a7a25
+		utilitarian-26.1.2-0.19.1.jar                     |Utilitarian                   |utilitarian                   |26.1.2-0.19.1       |Manifest: e5b6df7e107f046c0ee8c8a593be5a60843d44e1f8e253b7930141c54fbbcb67
+		volumetrics-1.0.16.jar                            |Volumetrics                   |volumetrics                   |1.0.16              |Manifest: 5e1d9d1cfbc9bbf3e2ae888b4c0c5cfd88444b3afa3df6d69d1ab7fc20842c07
+		waystones-neoforge-26.1.2-26.1.2.2.jar            |Waystones                     |waystones                     |26.1.2.2            |Manifest: 9bc268a0a188e86a0550f1791559042559426d3ce6b99ed33249907d5d9f98d2
+		xptome-neoforge-26.1.2-2.5.1.jar                  |XP Tome                       |xpbook                        |2.5.1               |Manifest: d29a776edb1ca6ed3a249bd57525d82aef48c19a0010ba9c364912a8d9cb65af
+		xycraft-core-0.9.0-beta.21.jar                    |XyCraft: Core                 |xycraft_core                  |0.9.0-beta.21       |Manifest: fa1855d6b2f9ccd2a243e44c279c11d245ec416a40b671a448414c453e77f3fa
+		xycraft-machines-0.9.0-beta.21.jar                |XyCraft: Machines             |xycraft_machines              |0.9.0-beta.21       |Manifest: 004acdb61251fbb276749a7255d283dc34c477c4f5e04a1eef416c033b92edea
+		xycraft-override-0.9.0-beta.21.jar                |XyCraft: Override             |xycraft_override              |0.9.0-beta.21       |Manifest: 94e9746cdcb7278b5e5dc2ac69127dad2d0b721c0db6f7fb741376b0dcbbdc83
+		xycraft-world-0.9.0-beta.21.jar                   |XyCraft: World                |xycraft_world                 |0.9.0-beta.21       |Manifest: f37822001cdf5742b5524b330fbfc5c2d6ba0e648c7d42a6a24cb9ab65f392ba
+		yeetusexperimentus-neoforge-99.0.0.jar            |Yeetus Experimentus           |yeetusexperimentus            |99.0.0              |Manifest: 07b036a10cba8c9752e5791920b63f106620a183431d5bd1dc2129a5bc05aacd
+		yet_another_config_lib_v3-3.9.3+26.1-neoforge.jar |YetAnotherConfigLib           |yet_another_config_lib_v3     |3.9.3+26.1-neoforge |Manifest: efecea6b2ac96612be3463d42eedacebb801732f2a461f6d5ecd42355130ed64
+	Crash Report UUID: 3e3de6b5-a4da-456f-9d72-2ab61a950de4
+	FML: 11.0.13
+	NeoForge: 26.1.2.43-beta
