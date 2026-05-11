@@ -5,7 +5,7 @@
   "name": "Chris'sCraftingCompass",
   "description": "Recursive crafting-tree planner with JEI integration.",
   "authors": ["Kristoffer Oltegen Diehl"],
-  "license": "MIT",
+  "license": "ARR",
   "environment": "client",
   "entrypoints": {
     "client": [
