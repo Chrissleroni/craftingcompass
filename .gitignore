@@ -1,15 +1,33 @@
-.gradle
+### Gradle ###
+.gradle/
+**/.gradle/
 build/
+**/build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
 .kotlin
 
+### Minecraft mod development ###
+# Loom/Forge dev run directories — world saves, configs, logs, caches
+run/
+**/run/
+
+# Built jars (ship via releases, not git)
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Logs and crash reports
+*.log
+logs/
+**/logs/
+crash-reports/
+**/crash-reports/
+
+# Loom cache
+.loom-cache/
+**/.loom-cache/
+
 ### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea/
 *.iws
 *.iml
 *.ipr
@@ -39,5 +57,7 @@ bin/
 ### VS Code ###
 .vscode/
 
-### Mac OS ###
+### OS files ###
 .DS_Store
+Thumbs.db
+desktop.ini
